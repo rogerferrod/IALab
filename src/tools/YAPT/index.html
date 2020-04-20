@@ -1,0 +1,66 @@
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>Maze Painter</title>
+  <meta name="description" content="The HTML5 Herald">
+  <meta name="author" content="SitePoint">
+
+</head>
+
+<body>
+  <div>
+    <div id="maze_canvas"></div>
+    <div id="maze_params">
+      <p>Maze Properties</p>
+      <label for="n_rows">Rows:</label><br>
+      <input type="number" id="n_rows" data-bind="value: rows"><br>
+      
+  
+      <label for="n_cols">Columns:</label><br>
+      <input type="number" id="n_cols" data-bind="value: cols"><br>
+
+      <input type="button" id="generate_maze_btn" value="Generate Maze">
+
+      <select data-bind="value: selected_brush, options: brushes, optionsText: 'name'"></select>
+    </div>
+  </div>
+
+  <div id="prolog_params">
+      <p>Prolog Predicates</p>
+      <label for="pos_predicate">Cell Position:</label>
+      <input type="text" id="pos_predicate" name="pos_predicate" data-bind="textInput: position_symbol"><br>
+      
+      <label for="occupied_predicate">Cell Occupied:</label>
+      <input type="text" id="occupied_predicate" name="occupied_predicate" data-bind="textInput: occupied_symbol"><br>
+  
+      <label for="start_predicate">Cell Start:</label>
+      <input type="text" id="start_predicate" name="start_predicate" data-bind="textInput: start_symbol"><br>
+  
+      <label for="end_predicate">End Predicate:</label><br>
+      <input type="text" id="end_predicate" name="end_predicate" data-bind="textInput: end_symbol"><br>
+  
+      <label for="rows_predicate">Rows Predicate:</label><br>
+      <input type="text" id="rows_predicate" name="rows_predicate" data-bind="textInput: rows_symbol"><br>
+  
+      <label for="cols_predicate">Columns Predicate:</label><br>
+      <input type="text" id="cols_predicate" name="cols_predicate" data-bind="textInput: cols_symbol"><br>
+
+      <div>
+        <p>Prolog Code
+        <input type="button" id="generate_code_btn" value="Generate Code"></p>
+        <p id="text_program"></p>
+      <div>
+  </div>
+  
+  
+  
+
+
+
+  <script src="https://unpkg.com/konva@4.0.0/konva.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.5.0/knockout-min.js"></script>
+  <script src="maze.js"></script>
+  <script src="maze_compiler.js"></script>
+</body>
+</html>
