@@ -54,5 +54,5 @@ $RECYCLE.BIN/
 *.lnk
 
 # Parsed Excels and results ----------------------------------------------------
-tools/parser/temp.txt
-tools/parser/Answer_*.xlsx
+src/tools/timetable_maker/temp.txt
+src/tools/timetable_maker/Answer_*.xlsx
