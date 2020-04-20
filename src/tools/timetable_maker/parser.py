@@ -10,7 +10,6 @@ Calendar = namedtuple("Calendar",["week","day","hour","id","lecture","professor"
 
 def parse_file(input_file):
 
-    
     with open(input_file,"r") as file:
         lines = file.read()
 
@@ -32,8 +31,6 @@ def parse_file(input_file):
             parsed_content[answer_set_name.replace(": ","_")] = predicates
     
     return parsed_content
-    
-    
 
 
 if __name__ == '__main__':
