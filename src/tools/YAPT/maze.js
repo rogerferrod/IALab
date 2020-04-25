@@ -31,8 +31,8 @@ isBrushing=false;
 class Maze {
     constructor(n_rows, n_cols){
         this.ViewModel = {
-            rows : ko.observable(5),
-            cols : ko.observable(5),
+            rows : ko.observable(10),
+            cols : ko.observable(10),
             brushes : ko.observableArray(brushes),
             selected_brush: ko.observable(),
         }
@@ -45,13 +45,13 @@ class Maze {
 
     }
 
-    generate_maze(rows,cols){
+    generate_maze(){
         this.stage = new Konva.Stage({
             container: 'maze_canvas',   // id of container <div>
-            width:800,
-            height:800
+            width:$("#maze_canvas").width(),
+            height:$("#maze_canvas").height()
         });
-        var cell_size = this.stage.height() / this.ViewModel.cols()
+        var cell_size = Math.min(this.stage.width(),this.stage.height()) / this.ViewModel.cols()
         this.cells_layer = new Konva.Layer();
 
         this.cells = []
@@ -201,15 +201,15 @@ function download_file(filename, data) {
 }
 
 // UI EVENTS
-document.getElementById("generate_code_btn").addEventListener('click',function (){
+$("#generate_code_btn").on('click',function (){
 
     prolog_code = maze_compiler.compile(maze)
     //chek if prolog code is shorter than 25 lines write directly to html otherwise download a file
     if (prolog_code.split(/\r\n|\r|\n/).length <= 25){ 
-        document.getElementById('text_program').innerText = prolog_code;
+        document.getElementById('text_program').value = prolog_code;
     }
     else{
-        document.getElementById('text_program').innerText = "";
+        document.getElementById('text_program').value = "";
         download_file("maze.pl",prolog_code);
     }
 }); 

@@ -1,66 +1,130 @@
+
+
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="utf-8">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-  <title>Maze Painter</title>
-  <meta name="description" content="The HTML5 Herald">
-  <meta name="author" content="SitePoint">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
-</head>
+    <title>YAPT</title>
+  </head>
+  <nav class="navbar navbar-light bg-light">
+    <a class="navbar-brand" href="#">
+      <img src="assets/maze_logo.svg" width="80" height="80" class="d-inline-block align-center" alt="">
+      <span class="display-4">YAPT</span>
+    </a>
+  </nav>
+  <div class="container-fluid">
+    <div class="row">
+      <!-- Maze-->
+      <div id="maze_canvas" class="col-lg-7 col-md-7">
+      </div>
 
-<body>
-  <div>
-    <div id="maze_canvas"></div>
-    <div id="maze_params">
-      <p>Maze Properties</p>
-      <label for="n_rows">Rows:</label><br>
-      <input type="number" id="n_rows" data-bind="value: rows"><br>
-      
-  
-      <label for="n_cols">Columns:</label><br>
-      <input type="number" id="n_cols" data-bind="value: cols"><br>
+      <!-- Controls -->
+      <div class="col-lg-5 col-md-4">
+        <form id="maze_params">
+          <div class="row">
+            <div class="col">               
+              <h3>Maze Properties</h3>
+              <div class="form-row">
+                  <div class="col">
+                    <label for="n_rows">Rows</label>
+                    <input type="number" id="n_rows" data-bind="value: rows" class="form-control" placeholder="# Rows"><br>  
+                  </div>
+                  <div class="col">
+                    <label for="n_cols">Columns</label>
+                    <input type="number" id="n_cols" data-bind="value: cols" class="form-control" placeholder="# Rows"><br>  
+                  </div>
+              </div>
+              <div class="form-row">
+                  <div class="col-6">
+                    <label for="brush_type_select">Brush Type</label>
+                    <select id="brush_type_select" data-bind="value: selected_brush, options: brushes, optionsText: 'name'" class="form-control"></select>
+                  </div>
+              </div>
 
-      <input type="button" id="generate_maze_btn" value="Generate Maze">
+              <button type="button" id="generate_maze_btn" class="btn btn-primary">Generate Maze</button>
 
-      <select data-bind="value: selected_brush, options: brushes, optionsText: 'name'"></select>
+            </div>
+          </div>
+        </form>
+        <form  id="prolog_params">
+          <div form-row>
+            <div col>
+              <h3>Prolog Predicates</h3>
+              
+              <div class="form-group row">
+                <div class="col-sm-6">
+                  <label for="rows_predicate"># of Rows</label>
+                  <input type="text" class="form-control" id="rows_predicate" name="rows_predicate" data-bind="textInput: rows_symbol"><br>
+                </div>
+                <div class="col-sm-6">
+                  <label for="rows_predicate"># of Columns</label>
+                  <input type="text" class="form-control" id="cols_predicate" name="cols_predicate" data-bind="textInput: cols_symbol"><br>
+                </div>
+              </div>
+              
+              <div class="form-group row">
+                <label for="pos_predicate" class="col-sm-3 col-form-label">Cell Position</label>
+                <div class="col-sm-9">
+                  <input type="text" id="pos_predicate" data-bind="textInput: position_symbol" class="form-control" >
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label for="occupied_predicate" class="col-sm-3 col-form-label">Cell Occupied</label>
+                <div class="col-sm-9">
+                  <input type="text" id="occupied_predicate" name="occupied_predicate" data-bind="textInput: occupied_symbol" class="form-control">
+                </div>
+              </div>
+              
+              <div class="form-group row">
+                <label for="start_predicate" class="col-sm-3 col-form-label">Cell Start</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" id="start_predicate" name="start_predicate" data-bind="textInput: start_symbol">
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label for="end_predicate" class="col-sm-3 col-form-label">Cell End</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" id="end_predicate" name="end_predicate" data-bind="textInput: end_symbol">
+                </div>
+              </div>
+
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <button type="button" id="generate_code_btn" class="btn btn-primary">Generate Code</button>
+                </div>
+                <textarea class="form-control" id="text_program"></textarea>
+              </div>
+
+            </div>
+          </div>
+        </form>
+ 
+        </form>
+      </div>
     </div>
-  </div>
-
-  <div id="prolog_params">
-      <p>Prolog Predicates</p>
-      <label for="pos_predicate">Cell Position:</label>
-      <input type="text" id="pos_predicate" name="pos_predicate" data-bind="textInput: position_symbol"><br>
-      
-      <label for="occupied_predicate">Cell Occupied:</label>
-      <input type="text" id="occupied_predicate" name="occupied_predicate" data-bind="textInput: occupied_symbol"><br>
-  
-      <label for="start_predicate">Cell Start:</label>
-      <input type="text" id="start_predicate" name="start_predicate" data-bind="textInput: start_symbol"><br>
-  
-      <label for="end_predicate">End Predicate:</label><br>
-      <input type="text" id="end_predicate" name="end_predicate" data-bind="textInput: end_symbol"><br>
-  
-      <label for="rows_predicate">Rows Predicate:</label><br>
-      <input type="text" id="rows_predicate" name="rows_predicate" data-bind="textInput: rows_symbol"><br>
-  
-      <label for="cols_predicate">Columns Predicate:</label><br>
-      <input type="text" id="cols_predicate" name="cols_predicate" data-bind="textInput: cols_symbol"><br>
-
-      <div>
-        <p>Prolog Code
-        <input type="button" id="generate_code_btn" value="Generate Code"></p>
-        <p id="text_program"></p>
-      <div>
-  </div>
+  </div>  
+    
+    
   
   
   
 
 
-
-  <script src="https://unpkg.com/konva@4.0.0/konva.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.5.0/knockout-min.js"></script>
-  <script src="maze.js"></script>
-  <script src="maze_compiler.js"></script>
-</body>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/konva@4.0.0/konva.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.5.0/knockout-min.js"></script>
+    <script src="maze.js"></script>
+  </body>
 </html>
