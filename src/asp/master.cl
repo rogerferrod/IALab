@@ -44,44 +44,50 @@ propaedeutic("subj2", "subj4").
 
 % settimane
 week(1..n_weeks).
-day(1..n_days).
+day(1..6).
 hour(1..8).
 
-%total_days(1..n_days).
+total_days(1..n_days).
 
 fullweek(2). % la seconda settimana è piena
 
-%fullday(1..5). % giorni feriali (lun-ven) da 8 ore
+fullday(1..5). % giorni feriali (lun-ven) da 8 ore
 
-1 {calendar(W, D, H, W*100+D*10+H, lecture(S, P)) : week(W), hour(H), subject(S, _, P)} 8 :- day(D). % max 8 ore al giorno
+
+temp(5..6).
+temp2(1..6).
+
+1 {calendar(W, D, H, W*100+D*10+H, lecture(S, P)) : week(W), day(D), hour(H), subject(S, _, P)} 8 :- total_days(_). % max 8 ore al giorno
 
 % tutte le settimane hanno 2 giorni, eccotto quelle "full"
 :- not 2 = #count{D : calendar(W, D, _, _, lecture(_, _))}, week(W), not fullweek(W).
 
-% tutti i giorni hanno 8 ore, eccotto quelli non "fullday"
-%:- not 8 = #count{D : calendar(_, D, _, _, lecture(_, _))}, day(D), not fullday(D).
-
 % settimane full hanno 6 giorni
 :- not 6 = #count{D : calendar(W, D, _, _, lecture(_, _))}, fullweek(W).
 
+% tutti i giorni hanno 8 ore, eccotto quelli non "fullday"
+%:- not 8 = #count{I : calendar(_, D, _, I, lecture(_, _))}, day(D), fullday(D).
+%:- not 8 = #count{I : calendar(W, 1, _, I, lecture(_, _))}, week(W).
+%test(X) :- X = #count{I : calendar(W, 1, _, I, lecture(_, _))}, week(W).
+
 % vincoli ore corso
-:- not X = #count{I : calendar(_, _, _, I, lecture(S, _))}, subject(S, X, _).
+%:- not X = #count{I : calendar(_, _, _, I, lecture(S, _))}, subject(S, X, _).
 
 % vincolo no due corsi nello stesso slot
-:- calendar(_, _, _, I, lecture(S1, _)), calendar(_, _, _, I, lecture(S2, _)), S1 != S2.
+%:- calendar(_, _, _, I, lecture(S1, _)), calendar(_, _, _, I, lecture(S2, _)), S1 != S2.
 
 % vincolo propedeutica
-:- calendar(_, _, _, I1, lecture(S1, _)), calendar(_, _, _, I2, lecture(S2, _)), propaedeutic(S1, S2), I1 > I2.
+%:- calendar(_, _, _, I1, lecture(S1, _)), calendar(_, _, _, I2, lecture(S2, _)), propaedeutic(S1, S2), I1 > I2.
 
 % Vincoli Hard -----------------------------------------------------------------
 
 % 1. lo stesso docente non può svolgere più di 4 ore di lezione in un giorno
-:- #count{I : calendar(_, D, _, I, lecture(_, P))} > 4, day(D), prof(P).
+%:- #count{I : calendar(_, D, _, I, lecture(_, P))} > 4, day(D), prof(P).
 
-% 2. a ciascun insegnamento vengono assegnate minimo 2 ore e massimo 4 ore al giorno
-:- 1 = #count{I : calendar(W, D, _, I, lecture(S, _))} > 4, day(D), week(W), subject(S, _, _).
+% % 2. a ciascun insegnamento vengono assegnate minimo 2 ore e massimo 4 ore al giorno
+% :- 1 = #count{I : calendar(W, D, _, I, lecture(S, _))} > 4, day(D), week(W), subject(S, _, _).
 
-test(W, D, X) :- X = #count{I : calendar(W, D, _, I, lecture("subj2", _))}, day(D), week(W).
+% test(W, D, X) :- X = #count{I : calendar(W, D, _, I, lecture("subj2", _))}, day(D), week(W).
 
 % testw11(X):- X = #count{I : calendar(1, 1, _, I, lecture(_, "prof1"))}.
 % testw12(X):- X = #count{I : calendar(1, 2, _, I, lecture(_, "prof1"))}.
