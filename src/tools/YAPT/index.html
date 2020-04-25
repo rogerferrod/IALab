@@ -26,34 +26,35 @@
 
       <!-- Controls -->
       <div class="col-lg-5 col-md-4">
-        <form id="maze_params">
-          <div class="row">
+        
+          <div class="row mb-10">
             <div class="col">               
               <h3>Maze Properties</h3>
-              <div class="form-row">
-                  <div class="col">
-                    <label for="n_rows">Rows</label>
-                    <input type="number" id="n_rows" data-bind="value: rows" class="form-control" placeholder="# Rows"><br>  
-                  </div>
-                  <div class="col">
-                    <label for="n_cols">Columns</label>
-                    <input type="number" id="n_cols" data-bind="value: cols" class="form-control" placeholder="# Rows"><br>  
-                  </div>
-              </div>
-              <div class="form-row">
-                  <div class="col-6">
-                    <label for="brush_type_select">Brush Type</label>
-                    <select id="brush_type_select" data-bind="value: selected_brush, options: brushes, optionsText: 'name'" class="form-control"></select>
-                  </div>
-              </div>
+              <form id="maze_params">
+                <div class="form-row">
+                    <div class="col">
+                      <label for="n_rows">Rows</label>
+                      <input type="number" id="n_rows" data-bind="value: rows" class="form-control" placeholder="# Rows"><br>  
+                    </div>
+                    <div class="col">
+                      <label for="n_cols">Columns</label>
+                      <input type="number" id="n_cols" data-bind="value: cols" class="form-control" placeholder="# Rows"><br>  
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col-6">
+                      <label for="brush_type_select">Brush Type</label>
+                      <select id="brush_type_select" data-bind="value: selected_brush, options: brushes, optionsText: 'name'" class="form-control"></select>
+                    </div>
+                </div>
 
-              <button type="button" id="generate_maze_btn" class="btn btn-primary">Generate Maze</button>
-
+                <button type="button" id="generate_maze_btn" class="btn btn-primary">Generate Maze</button>
+              </form>  
             </div>
           </div>
-        </form>
+        
         <form  id="prolog_params">
-          <div form-row>
+          <div>
             <div col>
               <h3>Prolog Predicates</h3>
               
