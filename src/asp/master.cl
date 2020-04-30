@@ -18,9 +18,6 @@ fullweek(7). % la settima settimana è piena
 fullweek(16). % la sedicesima settimana è piena
 fullday(1..5). % giorni feriali (lun-ven) da 8 ore (ci serve per il sabato)
 
-%--parallel-mode n
-%-t n
-
 % Prodotto cartesiano con possibilità nullable
 0 {calendar(W, D, H, W*100+D*10+H, lecture(S, P))} 1 :- week(W), day(D), hour(H), subject(S, P, _).
 
