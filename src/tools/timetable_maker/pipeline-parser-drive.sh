@@ -15,7 +15,7 @@ do
     case $opt in
         "Lorenzo")
             echo "you chose Lorenzo's path to Google Drive"
-            clingo master.cl > /Volumes/GoogleDrive/Il\ mio\ Drive/Magistrale/Corsi/IALAB/Progetto/Progetto\ 19-20/1\ -\ PROLOG\ e\ ASP/test/temp.txt
+            clingo master.cl > /Volumes/GoogleDrive/Il\ mio\ Drive/Magistrale/Corsi/IALAB/Progetto/Progetto\ 19-20/1\ -\ PROLOG\ e\ ASP/test/out.txt
             echo "temp.txt successfully copied at the specified location. Exiting from program."
             break
             ;;
