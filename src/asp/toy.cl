@@ -6,20 +6,40 @@
 %   2 settimane "full" (44)
 % 352 -> 6 sabati da 5 necessari
 
-#const n_weeks = 24. % 24 settimane
+% TOY PROBLEM:
+%
+% per semplicità considero solo 2 settimane:
+% la prima ridotta e la seconda piena
+% 1 settimana ridotta (1 giorno da 8 ore + sabato)
+% 2 settimana piena (5 giorni da 8 ore + sabato)
+% sabato può avere 4 o 5 ore
+
+#const n_weeks = 2. % 2 settimane
 #const n_days = 6. % max giorni in una settimana
+
+prof("prof1").
+prof("prof2").
+prof("prof3").
+prof("prof4").
+
+% subj, prof, n_hours
+subject("intro", "", 2).
+subject("subj1", "prof1", 6).
+subject("subj2", "prof2", 14).
+subject("subj3", "prof3", 22).
+subject("subj4", "prof1", 11).
+subject("recupero", "", 2).
+
+% subj2 viene prima di subj4
+propaedeutic("subj2", "subj4").
 
 % settimane
 week(1..n_weeks).
 day(1..n_days).
 hour(1..8).
 
-fullweek(7). % la settima settimana è piena
-fullweek(16). % la sedicesima settimana è piena
+fullweek(2). % la seconda settimana è piena
 fullday(1..5). % giorni feriali (lun-ven) da 8 ore (ci serve per il sabato)
-
-%--parallel-mode n
-%-t n
 
 % Prodotto cartesiano con possibilità nullable
 0 {calendar(W, D, H, W*100+D*10+H, lecture(S, P))} 1 :- week(W), day(D), hour(H), subject(S, P, _).
@@ -59,6 +79,8 @@ fullday(1..5). % giorni feriali (lun-ven) da 8 ore (ci serve per il sabato)
 % vincolo no due corsi nello stesso slot
 :- calendar(_, _, _, I, lecture(S1, _)), calendar(_, _, _, I, lecture(S2, _)), S1 != S2.
 
+% vincolo propedeutica
+:- calendar(_, _, _, I1, lecture(S1, _)), calendar(_, _, _, I2, lecture(S2, _)), propaedeutic(S1, S2), I1 > I2.
 
 % Vincoli Hard -----------------------------------------------------------------
 
@@ -69,12 +91,11 @@ fullday(1..5). % giorni feriali (lun-ven) da 8 ore (ci serve per il sabato)
 % serve lo 0 perchè non possiamo obbligare ogni subj a essere presente tutt i giorni
 :- 1 = #count{I : calendar(W, D, _, I, lecture(S, _))} > 4, week(W), day(D), subject(S, _, _).
 
-% TODO: Da sistemare
 % 3. il primo giorno di lezione prevede che, nelle prime due ore, vi sia la presentazione del master
-:- calendar(_, _, _, I1, lecture("Intro", _)), calendar(_, _, _, I2, lecture(S, _)), subject(S, _, _), I1 > I2, S != "Intro".
+:- calendar(_, _, _, I1, lecture("intro", _)), calendar(_, _, _, I2, lecture(S, _)), subject(S, _, _), I1 > I2, S != "intro".
 
 % il corso 1 deve iniziare prima che il corso 2 termini, non serve >= (che negato diventa < stretto) xke c'è già il vincolo sulla non sovrapposizione
-:- calendar(_, _, _, I1, lecture("Accessibilità e usabilità nella progettazione multimediale", _)), calendar(_, _, _, I2, lecture("Linguaggi di markup", _)), first(I1, "Accessibilità e usabilità nella progettazione multimediale") > last(I2, "Linguaggi di markup").
+:- calendar(_, _, _, I1, lecture("subj1", _)), calendar(_, _, _, I2, lecture("subj2", _)), first(I1, "subj1") > last(I2, "subj2").
 last(X, S) :- X = #max{I : calendar(_, _, _, I, lecture(S, _))}, subject(S, _, _).
 first(X, S) :- X = #min{I : calendar(_, _, _, I, lecture(S, _))}, subject(S, _, _).
 %test2(X) :- X = #max{I : calendar(_, _, _, I, lecture("subj2", _))}.
@@ -82,10 +103,7 @@ first(X, S) :- X = #min{I : calendar(_, _, _, I, lecture(S, _))}, subject(S, _, 
 %#show test2/1.
 %#show test1/1.
 
-% 5. l’insegnamento “Project Management” deve concludersi non oltre la prima settimana full-time, W <= 7
-:- calendar(W, _, _, _, lecture("Project Management", _)), W > 7.
-
-% 6. Le lezioni dei vari insegnamenti devono rispettare la propedeuticità sul testo del progetto
-:- calendar(_, _, _, I1, lecture(S1, _)), calendar(_, _, _, I2, lecture(S2, _)), propaedeutic(S1, S2), I1 > I2.
+% TODO: da fare dopo l'esempio giocattolo.
+% l’insegnamento “Project Management” deve concludersi non oltre la prima settimana full-time
 
 #show calendar/5.
