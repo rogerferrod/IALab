@@ -23,10 +23,10 @@ prof("prof3").
 prof("prof4").
 
 % subj, n_hour, prof
-subject("subj1", 8, "prof1").
-subject("subj2", 14, "prof2").
-subject("subj3", 24, "prof3").
-subject("subj4", 11, "prof1").
+subject("subj1", "prof1", 8).
+subject("subj2", "prof2", 14).
+subject("subj3", "prof3", 24).
+subject("subj4", "prof1", 11).
 %subject("recupero", 1, _).
 
 % subj2 viene prima di subj4
