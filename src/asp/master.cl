@@ -43,7 +43,7 @@ fullday(1..5). % giorni feriali (lun-ven) da 8 ore (ci serve per il sabato)
 
 
 % Prodotto cartesiano con possibilità nullable
-0 {calendar(W, D, H, W*100+D*10+H, lecture(S, P))} 1 :- week(W), day(D), hour(H), subject(S, _, P).
+0 {calendar(W, D, H, W*100+D*10+H, lecture(S, P))} 1 :- week(W), day(D), hour(H), subject(S, P, _).
 
 % Tutte le settimane hanno 2 giorni, eccotto quelle "full"
 :- 2 != #count{D : calendar(W, D, _, _, lecture(_, _))}, week(W), not fullweek(W).
@@ -73,7 +73,7 @@ fullday(1..5). % giorni feriali (lun-ven) da 8 ore (ci serve per il sabato)
 %#show test5/3.
 
 % vincoli ore corso
-:- X != #count{I : calendar(_, _, _, I, lecture(S, _))}, subject(S, X, _).
+:- X != #count{I : calendar(_, _, _, I, lecture(S, _))}, subject(S, _, X).
 %test6(S, X) :- X = #count{I : calendar(_, _, _, I, lecture(S, _))}, subject(S, _, _).
 %#show test6/2.
 
