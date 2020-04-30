@@ -60,7 +60,7 @@ fullday(1..5). % giorni feriali (lun-ven) da 8 ore (ci serve per il sabato)
 :- calendar(_, _, _, I, lecture(S1, _)), calendar(_, _, _, I, lecture(S2, _)), S1 != S2.
 
 
-% Vincoli Hard -----------------------------------------------------------------
+% Vincoli rigidi -------------------------------------------------------------------------------------------------------
 
 % 1. lo stesso docente non può svolgere più di 4 ore di lezione in un giorno
 :- #count{I : calendar(W, D, _, I, lecture(_, P))} > 4, week(W), day(D), prof(P).
@@ -88,4 +88,18 @@ first(X, S) :- X = #min{I : calendar(_, _, _, I, lecture(S, _))}, subject(S, _, 
 % 6. Le lezioni dei vari insegnamenti devono rispettare la propedeuticità sul testo del progetto
 :- calendar(_, _, _, I1, lecture(S1, _)), calendar(_, _, _, I2, lecture(S2, _)), propaedeutic(S1, S2), I1 > I2.
 
-#show calendar/5.
+% Vincoli auspicabili --------------------------------------------------------------------------------------------------
+
+% 1. La lunghezza corsi non deve superare le 6 settimane
+%:- first_week(X1, S), last_week(X2, S), subject(S, _, _), (X2 + X1) > 6.
+last_week(X, S) :- X = #max{W : calendar(W, _, _, _, lecture(S, _))}, subject(S, _, _).
+first_week(X, S) :- X = #min{W : calendar(W, _, _, _, lecture(S, _))}, subject(S, _, _).
+test1b(S, X) :- first_week(X1, S), last_week(X2, S), subject(S, _, _), X = minus(X2, X1).
+
+% 2. la prima lezione degli insegnamenti “Crossmedia: articolazione delle scritture multimediali” e “Introduzione al social media management” 
+% devono essere collocate nella seconda settimana full-time
+:- calendar(W, _, _, _, lecture("Crossmedia: articolazione delle scritture multimediali", _)), W != 16.
+:- calendar(W, _, _, _, lecture("Introduzione al social media management", _)), W != 16.
+
+%#show calendar/5.
+#show test1b/2.
