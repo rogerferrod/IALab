@@ -88,15 +88,39 @@ first(X, S) :- X = #min{I : calendar(_, _, _, I, lecture(S, _))}, subject(S, _, 
 % Vincoli auspicabili --------------------------------------------------------------------------------------------------
 
 % 1. La lunghezza corsi non deve superare le 6 settimane
-%:- first_week(X1, S), last_week(X2, S), subject(S, _, _), (X2 + X1) > 6.
-last_week(X, S) :- X = #max{W : calendar(W, _, _, _, lecture(S, _))}, subject(S, _, _).
-first_week(X, S) :- X = #min{W : calendar(W, _, _, _, lecture(S, _))}, subject(S, _, _).
-test1b(S, X) :- first_week(X1, S), last_week(X2, S), subject(S, _, _), X = minus(X2, X1).
+:- X = #count{W : calendar(W, _, _, _, lecture(S, _))}, subject(S, _, _), subject(S, _, _), X > 6.
+%length(X, S) :- X = #count{W : calendar(W, _, _, _, lecture(S, _))}, subject(S, _, _).
+%#show length/2.
 
 % 2. la prima lezione degli insegnamenti “Crossmedia: articolazione delle scritture multimediali” e “Introduzione al social media management” 
 % devono essere collocate nella seconda settimana full-time
 :- calendar(W, _, _, _, lecture("Crossmedia: articolazione delle scritture multimediali", _)), W != 16.
 :- calendar(W, _, _, _, lecture("Introduzione al social media management", _)), W != 16.
 
-%#show calendar/5.
-#show test1b/2.
+% 3. le lezioni dei vari insegnamenti devono rispettare le seguenti propedeuticità, in particolare la prima lezione 
+% dell’insegnamento della colonna di destra deve essere successiva alle prime 4 ore di lezione del corrispondente 
+% insegnamento della colonna di sinistra
+:- fourth_hour(X, S1), first_hour(Y, S2), propaedeuticSoft(S1, S2), Y < X.
+
+first_hour(X, S) :- X = #min{I : calendar(_, _, _, I, lecture(S, _))}, propaedeuticSoft(S,_).
+
+% Ritorna tutti gli slot (X) del subject S maggiori di I
+gt(X, I, S) :- calendar(_, _, _, X, lecture(S, _)), calendar(_, _, _, I, lecture(S, _)), X > I, propaedeuticSoft(S, _).
+
+all_greter_than_1(X, S) :- gt(X, Y, S), first_hour(Y, S), propaedeuticSoft(S, _).
+second_hour(X, S) :- X = #min{Y : all_greter_than_1(Y, S)}, propaedeuticSoft(S, _).
+all_greter_than_2(X, S) :- gt(X, Y, S), second_hour(Y, S), propaedeuticSoft(S, _).
+third_hour(X, S) :- X = #min{Y : all_greter_than_2(Y, S)}, propaedeuticSoft(S, _).
+all_greter_than_3(X, S) :- gt(X, Y, S), third_hour(Y, S), propaedeuticSoft(S, _).
+fourth_hour(X, S) :- X = #min{Y : all_greter_than_3(Y, S)}, propaedeuticSoft(S, _).
+
+% 4. la distanza fra l’ultima lezione di “Progettazione e sviluppo di applicazioni web su dispositivi mobile I” e la 
+% prima di “Progettazione e sviluppo di applicazioni web su dispositivi mobile II” non deve superare le due settimane.
+% :- X = #count{W : calendar(W, _, _, _, lecture(S, _))}, subject(S, _, _), subject(S, _, _), X > 6.
+
+#show calendar/5.
+#show first_hour/2.
+%#show second_hour/2.
+%#show third_hour/2.
+%#show forth_hour/2.
+#show fourth_hour/2.
