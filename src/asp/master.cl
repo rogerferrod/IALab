@@ -102,11 +102,10 @@ first(X, S) :- X = #min{I : calendar(_, _, _, I, lecture(S, _))}, subject(S, _, 
 % insegnamento della colonna di sinistra
 :- fourth_hour(X, S1), first_hour(Y, S2), propaedeuticSoft(S1, S2), Y < X.
 
-first_hour(X, S) :- X = #min{I : calendar(_, _, _, I, lecture(S, _))}, propaedeuticSoft(S,_).
-
 % Ritorna tutti gli slot (X) del subject S maggiori di I
 gt(X, I, S) :- calendar(_, _, _, X, lecture(S, _)), calendar(_, _, _, I, lecture(S, _)), X > I, propaedeuticSoft(S, _).
 
+first_hour(X, S) :- X = #min{I : calendar(_, _, _, I, lecture(S, _))}, propaedeuticSoft(S,_).
 all_greter_than_1(X, S) :- gt(X, Y, S), first_hour(Y, S), propaedeuticSoft(S, _).
 second_hour(X, S) :- X = #min{Y : all_greter_than_1(Y, S)}, propaedeuticSoft(S, _).
 all_greter_than_2(X, S) :- gt(X, Y, S), second_hour(Y, S), propaedeuticSoft(S, _).
@@ -114,13 +113,12 @@ third_hour(X, S) :- X = #min{Y : all_greter_than_2(Y, S)}, propaedeuticSoft(S, _
 all_greter_than_3(X, S) :- gt(X, Y, S), third_hour(Y, S), propaedeuticSoft(S, _).
 fourth_hour(X, S) :- X = #min{Y : all_greter_than_3(Y, S)}, propaedeuticSoft(S, _).
 
+test_first_right(X, S) :- X = #min{I : calendar(_, _, _, I, lecture(S, _))}, propaedeuticSoft(_,S).
+
 % 4. la distanza fra l’ultima lezione di “Progettazione e sviluppo di applicazioni web su dispositivi mobile I” e la 
 % prima di “Progettazione e sviluppo di applicazioni web su dispositivi mobile II” non deve superare le due settimane.
 % :- X = #count{W : calendar(W, _, _, _, lecture(S, _))}, subject(S, _, _), subject(S, _, _), X > 6.
 
 #show calendar/5.
-#show first_hour/2.
-%#show second_hour/2.
-%#show third_hour/2.
-%#show forth_hour/2.
+#show test_first_right/2.
 #show fourth_hour/2.
