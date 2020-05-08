@@ -1,5 +1,5 @@
 
-% Professor
+% Professors
 
 prof("Muzzetto").
 prof("Pozzato").
@@ -25,7 +25,7 @@ prof("Lombardo").
 prof("Travostino").
 
 
-% Subjects name, prof, hours
+% Subjects (Subject name, professor, hours)
 
 subject("Intro", "", 2).
 subject("Recupero", "", 4).
@@ -57,7 +57,7 @@ subject("Progettazione e sviluppo di applicazioni web su dispositivi mobile II",
 subject("La gestione delle risorse umane","Lombardo", 10).
 subject("I vincoli giuridici del progetto: diritto dei media","Travostino", 10).
 
-% Subjects pre-requisites (propaeudeutic(A,B) => A is a pre-requisite of B)
+% Subjects pre-requisites (propaeudeutic(A,B) => subject A is a pre-requisite of subject B)
 
 propaedeutic("Fondamenti di ICT e Paradigmi di Programmazione", "Ambienti di sviluppo e linguaggi client-side per il web").
 propaedeutic("Ambienti di sviluppo e linguaggi client-side per il web", "Progettazione e sviluppo di applicazioni web su dispositivi mobile I").

@@ -6,6 +6,8 @@
 % vincolo no due corsi nello stesso slot
 :- calendar(_, _, _, I, S1, _), calendar(_, _, _, I, S2, _), S1 != S2.
 
+
+
 % Vincoli rigidi -------------------------------------------------------------------------------------------------------
 
 % 1. lo stesso docente non può svolgere più di 4 ore di lezione in un giorno
@@ -26,8 +28,9 @@
 
 % 6. il corso 1 deve iniziare prima che il corso 2 termini, non serve >= (che negato diventa < stretto) perchè c'è già il vincolo sulla non sovrapposizione
 :- calendar(_, _, _, I1, "Accessibilità e usabilità nella progettazione multimediale", _), 
-calendar(_, _, _, I2, "Linguaggi di markup", _), 
-first(I1, "Accessibilità e usabilità nella progettazione multimediale"), last(I2, "Linguaggi di markup"), I1 > I2.
+   calendar(_, _, _, I2, "Linguaggi di markup", _), 
+   first(I1, "Accessibilità e usabilità nella progettazione multimediale"), last(I2, "Linguaggi di markup"), I1 > I2.
+
 last(X, S) :- X = #max{I : calendar(_, _, _, I, S, _)}, subject(S, _, _).
 first(X, S) :- X = #min{I : calendar(_, _, _, I, S, _)}, subject(S, _, _).
 %test2(X) :- X = #max{I : calendar(_, _, _, I, "subj2", _)}.
@@ -37,6 +40,8 @@ first(X, S) :- X = #min{I : calendar(_, _, _, I, S, _)}, subject(S, _, _).
 
 % 7. Le lezioni dei vari insegnamenti devono rispettare la propedeuticità sul testo del progetto
 :- calendar(_, _, _, I1, S1, _), calendar(_, _, _, I2, S2, _), propaedeutic(S1, S2), I1 > I2.
+
+
 
 % Vincoli auspicabili --------------------------------------------------------------------------------------------------
 
