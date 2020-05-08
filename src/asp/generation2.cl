@@ -15,6 +15,9 @@ isFullWeek(7;16).
 in_week_hours(1..5,1..8). %% available hours from monday to friday (Day number, Hours range)
 saturday_hours(6,1..5). %% available hours in saturday only
 
+day(1..n_days).
+
+
 % generare nella prima settimana alle prime due ore la lezione intro
 %calendar(1, 1, 1, 111, "Intro", "").
 %calendar(1, 1, 2, 112, "Intro", "").
