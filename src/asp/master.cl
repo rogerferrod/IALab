@@ -1,52 +1,4 @@
-% PROBLEMA ORIGINALE
-%
-% 358 ore + 2 ore di introduzione = 360 ore
-% 24 settimane
-%   22 settimane "normali" (da 12 ore, di cui 4 il sabato)
-%   2 settimane "full" (44)
-% 352 -> 6 sabati da 5 necessari
-
-#const n_weeks = 24. % 24 settimane
-#const n_days = 6. % max giorni in una settimana
-
-% settimane
-week(1..n_weeks).
-day(1..n_days).
-hour(1..8).
-
-fullweek(7). % la settima settimana è piena
-fullweek(16). % la sedicesima settimana è piena
-fullday(1..5). % giorni feriali (lun-ven) da 8 ore (ci serve per il sabato)
-
-% Prodotto cartesiano con possibilità nullable
-0 {calendar(W, D, H, W*100+D*10+H, lecture(S, P))} 1 :- week(W), day(D), hour(H), subject(S, P, _).
-
-% Tutte le settimane hanno 2 giorni, eccotto quelle "full"
-:- 2 != #count{D : calendar(W, D, _, _, lecture(_, _))}, week(W), not fullweek(W).
-%test1(W, X) :- X = #count{D : calendar(W, D, _, _, lecture(_, _))}, week(W), not fullweek(W).
-%#show test1/2.
-
-% settimane full hanno 6 giorni
-:- 6 != #count{D : calendar(W, D, _, _, lecture(_, _))}, fullweek(W).
-%test2(W, X) :- X = #count{D : calendar(W, D, _, _, lecture(_, _))}, fullweek(W).
-%#show test2/2.
-
-% il sabato ha 4 o 5 ore
-% TODO: da controllare la sitassi
-:- #count{I : calendar(W, D, _, I, lecture(_, _))} > 5, week(W), day(D), not fullday(D).
-:- #count{I : calendar(W, D, _, I, lecture(_, _))} < 4, week(W), day(D), not fullday(D).
-%test3(W, X) :- X = #count{I : calendar(W, D, _, I, lecture(_, _))}, week(W), day(D), not fullday(D).
-%#show test3/2.
-
-% I giorni delle settimane fullweek (lun-ven) hanno 8 ore
-:- 8 != #count{I : calendar(W, D, _, I, lecture(_, _))}, fullweek(W), fullday(D).
-%test4(W, D, X) :- X = #count{I : calendar(W, D, _, I, lecture(_, _))}, week(W), day(D).
-%#show test4/3.
-
-% I venerdì delle settimane "normali" (non fullweek) hanno 8 ore
-:- 8 != #count{I : calendar(W, 5, _, I, lecture(_, _))}, week(W), not fullweek(W).
-%test5(W, D, X) :- X = #count{I : calendar(W, D, _, I, lecture(_, _))}, week(W), day(D).
-%#show test5/3.
+%+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 % vincoli ore corso
 :- X != #count{I : calendar(_, _, _, I, lecture(S, _))}, subject(S, _, X).
@@ -66,9 +18,10 @@ fullday(1..5). % giorni feriali (lun-ven) da 8 ore (ci serve per il sabato)
 % serve lo 0 perchè non possiamo obbligare ogni subj a essere presente tutt i giorni
 :- 1 = #count{I : calendar(W, D, _, I, lecture(S, _))} > 4, week(W), day(D), subject(S, _, _).
 
-% TODO: Da sistemare
 % 3. il primo giorno di lezione prevede che, nelle prime due ore, vi sia la presentazione del master
 :- calendar(_, _, _, I1, lecture("Intro", _)), calendar(_, _, _, I2, lecture(S, _)), subject(S, _, _), I1 > I2, S != "Intro".
+% è bene tenere il vincolo e non due fatti separati, perchè se no, avremo dovuto modellare il venerdì da 6 e non da 8 ore
+% poiché se no, le ore 151 e 152 in altri modelli verrebbero sovrascritti da altri subject!
 
 % il corso 1 deve iniziare prima che il corso 2 termini, non serve >= (che negato diventa < stretto) xke c'è già il vincolo sulla non sovrapposizione
 :- calendar(_, _, _, I1, lecture("Accessibilità e usabilità nella progettazione multimediale", _)), calendar(_, _, _, I2, lecture("Linguaggi di markup", _)), first(I1, "Accessibilità e usabilità nella progettazione multimediale") > last(I2, "Linguaggi di markup").
@@ -100,7 +53,7 @@ first(X, S) :- X = #min{I : calendar(_, _, _, I, lecture(S, _))}, subject(S, _, 
 % 3. le lezioni dei vari insegnamenti devono rispettare le seguenti propedeuticità, in particolare la prima lezione 
 % dell’insegnamento della colonna di destra deve essere successiva alle prime 4 ore di lezione del corrispondente 
 % insegnamento della colonna di sinistra
-:- fourth_hour(X, S1), first_hour(Y, S2), propaedeuticSoft(S1, S2), Y < X.
+:- fourth_hour(X, S1), first_right(Y, S2), propaedeuticSoft(S1, S2), Y < X.
 
 % Ritorna tutti gli slot (X) del subject S maggiori di I
 gt(X, I, S) :- calendar(_, _, _, X, lecture(S, _)), calendar(_, _, _, I, lecture(S, _)), X > I, propaedeuticSoft(S, _).
@@ -112,13 +65,12 @@ all_greter_than_2(X, S) :- gt(X, Y, S), second_hour(Y, S), propaedeuticSoft(S, _
 third_hour(X, S) :- X = #min{Y : all_greter_than_2(Y, S)}, propaedeuticSoft(S, _).
 all_greter_than_3(X, S) :- gt(X, Y, S), third_hour(Y, S), propaedeuticSoft(S, _).
 fourth_hour(X, S) :- X = #min{Y : all_greter_than_3(Y, S)}, propaedeuticSoft(S, _).
-
-test_first_right(X, S) :- X = #min{I : calendar(_, _, _, I, lecture(S, _))}, propaedeuticSoft(_,S).
+first_right(X, S) :- X = #min{I : calendar(_, _, _, I, lecture(S, _))}, propaedeuticSoft(_,S).
 
 % 4. la distanza fra l’ultima lezione di “Progettazione e sviluppo di applicazioni web su dispositivi mobile I” e la 
 % prima di “Progettazione e sviluppo di applicazioni web su dispositivi mobile II” non deve superare le due settimane.
 % :- X = #count{W : calendar(W, _, _, _, lecture(S, _))}, subject(S, _, _), subject(S, _, _), X > 6.
 
 #show calendar/5.
-#show test_first_right/2.
+#show first_right/2.
 #show fourth_hour/2.

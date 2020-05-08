@@ -72,12 +72,9 @@ propaedeutic("Acquisizione ed elaborazione di immagini statiche - grafica", "Ele
 propaedeutic("Elementi di fotografia digitale", "Acquisizione ed elaborazione di sequenze di immagini digitali").
 propaedeutic("Acquisizione ed elaborazione di immagini statiche - grafica", "Grafica 3D").
 
-% vincolo auspicabile 3
+% Vincolo auspicabile 3
 
 propaedeuticSoft("Fondamenti di ICT e Paradigmi di Programmazione", "Progettazione di basi di dati").
 propaedeuticSoft("Tecniche e strumenti di Marketing digitale", "Introduzione al social media management").
 propaedeuticSoft("Comunicazione pubblicitaria e comunicazione pubblica", "La gestione delle risorse umane").
 propaedeuticSoft("Tecnologie server-side per il web", "Progettazione e sviluppo di applicazioni web su dispositivi mobile I").
-
-
-soft_subj().
