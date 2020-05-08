@@ -56,3 +56,5 @@ $RECYCLE.BIN/
 # Parsed Excels and results ----------------------------------------------------
 src/tools/timetable_maker/temp.txt
 src/tools/timetable_maker/Answer_*.xlsx
+
+src/output/*
