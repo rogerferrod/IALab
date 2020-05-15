@@ -1,21 +1,20 @@
-% PROBLEMA ORIGINALE
-%
-% 358 ore + 2 ore di introduzione = 360 ore
-% 24 settimane
-%   22 settimane "normali" (da 12 ore, di cui 4 il sabato)
-%   2 settimane "full" (44)
-% 352 -> 6 sabati da 5 necessari
-
 % TOY PROBLEM:
 %
-% per semplicità considero solo 2 settimane:
+% per semplicità consideriamo solo 2 settimane:
 % la prima ridotta e la seconda piena
 % 1 settimana ridotta (1 giorno da 8 ore + sabato)
 % 2 settimana piena (5 giorni da 8 ore + sabato)
 % sabato può avere 4 o 5 ore
 
-#const n_weeks = 2. % 2 settimane
-#const n_days = 6. % max giorni in una settimana
+#const n_weeks = 2.
+#const n_days = 6.
+
+week(1..n_weeks).
+day(1..n_days).
+hour(1..8).
+fullweek(2). % la seconda settimana è piena
+fullday(1..5). % giorni feriali (lun-ven) da 8 ore (ci serve per il sabato)
+
 
 prof("prof1").
 prof("prof2").
@@ -33,14 +32,6 @@ subject("recupero", "", 2).
 % subj2 viene prima di subj4
 propaedeutic("subj2", "subj4").
 
-% settimane
-week(1..n_weeks).
-day(1..n_days).
-hour(1..8).
-
-fullweek(2). % la seconda settimana è piena
-fullday(1..5). % giorni feriali (lun-ven) da 8 ore (ci serve per il sabato)
-
 % Prodotto cartesiano con possibilità nullable
 0 {calendar(W, D, H, W*100+D*10+H, lecture(S, P))} 1 :- week(W), day(D), hour(H), subject(S, P, _).
 
@@ -55,7 +46,6 @@ fullday(1..5). % giorni feriali (lun-ven) da 8 ore (ci serve per il sabato)
 %#show test2/2.
 
 % il sabato ha 4 o 5 ore
-% TODO: da controllare la sitassi
 :- #count{I : calendar(W, D, _, I, lecture(_, _))} > 5, week(W), day(D), not fullday(D).
 :- #count{I : calendar(W, D, _, I, lecture(_, _))} < 4, week(W), day(D), not fullday(D).
 %test3(W, X) :- X = #count{I : calendar(W, D, _, I, lecture(_, _))}, week(W), day(D), not fullday(D).
@@ -102,8 +92,5 @@ first(X, S) :- X = #min{I : calendar(_, _, _, I, lecture(S, _))}, subject(S, _, 
 %test1(X) :- X = #min{I : calendar(_, _, _, I, lecture("subj1", _))}.
 %#show test2/1.
 %#show test1/1.
-
-% TODO: da fare dopo l'esempio giocattolo.
-% l’insegnamento “Project Management” deve concludersi non oltre la prima settimana full-time
 
 #show calendar/5.
