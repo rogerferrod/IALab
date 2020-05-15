@@ -6,9 +6,7 @@
 % vincolo no due corsi nello stesso slot
 :- calendar(_, _, _, I, S1, _), calendar(_, _, _, I, S2, _), S1 != S2.
 
-
-
-% Vincoli rigidi -------------------------------------------------------------------------------------------------------
+% Vincoli Hard ---------------------------------------------------------------------------------------------------------
 
 % 1. lo stesso docente non può svolgere più di 4 ore di lezione in un giorno
 :- #count{I : calendar(W, D, _, I, _, P)} > 4, week(W), day(D), prof(P).
@@ -78,6 +76,16 @@ fourth_hour(X, S) :- X = #min{Y : all_greater_than_3(Y, S)}, propaedeuticSoft(S,
 % 4. la distanza fra l’ultima lezione di “Progettazione e sviluppo di applicazioni web su dispositivi mobile I” e la 
 % prima di “Progettazione e sviluppo di applicazioni web su dispositivi mobile II” non deve superare le due settimane.
 
+% per ogni subject S genera un predicato period(F,L,S) che indica il primo slot F e l'ultimo slot L
+diff(L-F,S) :- period(F,L,S), subject(S, _ ,_) L!=#inf, F!=#sup.
+period(F,L,S) :-F=#min{I: calendar(_,_,_,I,S,_)}, L=#max{I: calendar(_,_,_,I,S,_)},  subject(S,_,_). 
+#show period/3.
+
+
+
+
+
+
 % TEMP 1
 %pred("Progettazione e sviluppo di applicazioni web su dispositivi mobile I").
 %pred("Progettazione e sviluppo di applicazioni web su dispositivi mobile II").
@@ -104,7 +112,9 @@ fourth_hour(X, S) :- X = #min{Y : all_greater_than_3(Y, S)}, propaedeuticSoft(S,
 %minus(L-R) :- left(L), right(R)
 %totals(P, S) :- S = #sum[ curr(P,I) = I ], pick(P).
 
-#show calendar/6.
+
+
+%#show calendar/6.
 %#show test1/2.
 %#show test2/2.
 %#show test3/2.
