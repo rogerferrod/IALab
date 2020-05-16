@@ -53,8 +53,6 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
-# Parsed Excels and results ----------------------------------------------------
-src/tools/timetable_maker/temp.txt
-src/tools/timetable_maker/Answer_*.xlsx
-
-src/output/*
+# Outputs folders across all the repo ------------------------------------------
+src/asp/output
+src/tools/timetable_maker/output
