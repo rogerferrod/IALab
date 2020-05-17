@@ -15,7 +15,7 @@
 :- 1 = #count{I : calendar(W, D, _, I, S, _)} > 4, week(W), day(D), subject(S, _, _).
 
 %% 3. Il primo giorno di lezione prevede che, nelle prime due ore, vi sia la presentazione del master
-:- calendar(_, _, _, I1, "Intro", _), calendar(_, _, _, I2, S, _), subject(S, _, _), I1 > I2, S != "Intro".
+:- calendar(_, _, _, I1, "Introduzione al Master", _), calendar(_, _, _, I2, S, _), subject(S, _, _), I1 > I2, S != "Introduzione al Master".
 
 %% 4. Il calendario deve prevedere almeno 2 blocchi liberi di 2 ore ciascuno per eventuali recuperi di lezioni annullate o rinviate
 % questo vincolo è modellato implicitamente in facts.cl
