@@ -27,7 +27,7 @@ prof("Travostino").
 
 % Subjects (Subject name, professor, hours)
 
-subject("Intro", "", 2).
+subject("Introduzione al Master", "", 2).
 subject("Recupero", "", 4).
 
 subject("Project Management","Muzzetto",14).
