@@ -252,7 +252,7 @@
 	(assert (resetted ?x ?y))
 )
 
-(defrule make-visible-sub (declare (salience 10))
+(defrule make-visible-sub (declare (salience 5))
 	(fire ?x ?y)
 	(cell (x ?x) (y ?y) (content boat))
 	(boat-hor (x ?x) (ys ?y $?) (size 1))
