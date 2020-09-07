@@ -1,7 +1,6 @@
 (load 0_Main.clp)
 (load 1_Env.clp)
-::(load ../maps/fleet0.clp)
-(load case1_obs_2.clp)
+(load ../maps/fleet0.clp)
 (load 4_Deliberate.clp)
 (load 5_Planning.clp)
 (load 3_Agent.clp)

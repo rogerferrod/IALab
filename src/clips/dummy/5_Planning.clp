@@ -14,12 +14,12 @@
 ; AIR-CARRIER RULES ------------------------------------------------------------
 ; si potrebbe rendere più generica
 (defrule plan-air-carriers-ver
-    (printout t "Plan Air-Carrier" crlf)
 	(status (step ?s)(currently running))
     (intention-sink (x-stern ?x) (y-stern ?y) (orientation ver) (type air-carrier))
     (air-carriers-info ?n ?size)
     ?p <- (plan)
 =>
+    (printout t "Plan Air-Carrier" crlf)
     (bind ?id1 (gensym*))
     (bind ?id2 (gensym*))
     (bind ?id3 (gensym*))

@@ -38,8 +38,8 @@
 
  =>
 
-    ;(printout t crlf crlf)
-    ;(printout t "vado ad agent  step" ?s)
+    (printout t crlf crlf)
+    (printout t "vado ad agent  step" ?s crlf)
     (focus AGENT)
 )
 

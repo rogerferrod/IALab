@@ -12,12 +12,16 @@
 (defrule go-on-deliberate (declare (salience 30))
 	(status (step ?s)(currently running))
 =>
+	(printout t crlf crlf)
+    (printout t "vado a deliberate  step" ?s crlf)
 	(focus DELIBERATE) 
 )
 
 (defrule go-on-planning (declare (salience 20))
 	(status (step ?s)(currently running))
 =>
+	(printout t crlf crlf)
+    (printout t "vado a planning  step" ?s crlf)
 	(focus PLANNING)
 )
 
@@ -32,6 +36,7 @@
 =>
 	(modify ?p (action-sequence ?tail ))
 	(assert (exec (step ?s) (action ?t) (x ?x) (y ?y)))
+	(printout t "Exec " ?t " on " ?x " " ?y crlf)
 	(pop-focus)
 )
 
