@@ -21,10 +21,10 @@
 
 ; TEST -------------------------------------------------------------------------
 
-(defrule inerzia1
-    (printout t "Focus on DELIBERATE" crlf)
-	(status (step ?s)(currently running))
-=>
-	(assert (intention-sink (x-stern 5) (y-ster 5)  ))
-	(focus DELIBERATE) 
-)
+;(defrule sink-air-carriers
+;    (printout t "Focus on DELIBERATE" crlf)
+;	(status (step ?s)(currently running))
+;=>
+;	(assert (intention-sink (x-stern 5) (y-ster 5) (orientation ver) (type air-carrier)))
+;	(focus PLANNING) 
+;)
