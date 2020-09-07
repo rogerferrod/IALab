@@ -16,42 +16,23 @@
 (defrule plan-air-carriers-ver
     (printout t "Plan Air-Carrier" crlf)
 	(status (step ?s)(currently running))
-    (intention-sink (x-stern ?x) (y-ster ?y) (orientation ver) (type air-carrier)
+    (intention-sink (x-stern ?x) (y-stern ?y) (orientation ver) (type air-carrier))
     (air-carriers-info ?n ?size)
     ?p <- (plan)
 =>
-	?f1 <- (assert (action (?x) (?y) (type guess)))
-    ?f2 <- (assert (action (?x+1) (?y) (type guess)))
-    ?f3 <- (assert (action (?x+2) (?y) (type guess)))
-    ?f4 <- (assert (action (?x+3) (?y) (type guess)))
-    ?id1 <- (fact-slot-value ?f1 id)
-    ?id2 <- (fact-slot-value ?f2 id)
-    ?id3 <- (fact-slot-value ?f3 id)
-    ?id4 <- (fact-slot-value ?f4 id)
+    (bind ?id1 (gensym*))
+    (bind ?id2 (gensym*))
+    (bind ?id3 (gensym*))
+    (bind ?id4 (gensym*))
+	(assert (action (id ?id1) (x ?x) (y ?y) (type guess)))
+    (assert (action (id ?id2) (x (+ ?x 1)) (y ?y) (type guess)))
+    (assert (action (id ?id3) (x (+ ?x 2)) (y ?y) (type guess)))
+    (assert (action (id ?id4) (x (+ ?x 3)) (y ?y) (type guess)))
 
     (modify ?p (action-sequence (create$ ?id1 ?id2 ?id3 ?id4)))
 	(pop-focus)
 )
 
-; (defrule plan-air-carriers-hor
-;     (printout t "Plan Air-Carrier" crlf)
-; 	(status (step ?s)(currently running))
-;     (intention-sink (x-stern ?x) (y-ster ?y) (orientation hor) (type air-carrier)
-;     (air-carriers-info ?n ?size)
-;     ?p <- (plan)
-; =>
-; 	?f1 <- (assert (action (?x) (?y) (type guess)))
-;     ?f2 <- (assert (action (?x) (?y+1) (type guess)))
-;     ?f3 <- (assert (action (?x) (?y+2) (type guess)))
-;     ?f4 <- (assert (action (?x) (?y+3) (type guess)))
-;     ?id1 <- (fact-slot-value ?f1 id)
-;     ?id2 <- (fact-slot-value ?f2 id)
-;     ?id3 <- (fact-slot-value ?f3 id)
-;     ?id4 <- (fact-slot-value ?f4 id)
-
-;     (modify ?p (action-sequence (create$ ?id1 ?id2 ?id3 ?id4)))
-; 	(pop-focus)
-; )
 
 ; (foreach <list-variable> <multifield-expression> <expression>*)
 

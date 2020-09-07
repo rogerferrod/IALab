@@ -25,7 +25,7 @@
     (printout t "Sink Air-Carrier" crlf)
 	(status (step ?s)(currently running))
 =>
-	(assert (intention-sink (x-stern 6) (y-ster 4) (orientation ver) (type air-carrier)))
+	(assert (intention-sink (x-stern 6) (y-stern 4) (orientation ver) (type air-carrier)))
 	; TODO aggionare num navi da affondare....
 	(pop-focus)
 )
@@ -36,7 +36,7 @@
     (printout t "Sink Cruiser1" crlf)
 	(status (step ?s)(currently running))
 =>
-	(assert (intention-sink (x-stern 6) (y-ster 2) (orientation ver) (type cruiser)))
+	(assert (intention-sink (x-stern 6) (y-stern 2) (orientation ver) (type cruiser)))
 	(pop-focus) 
 )
 
@@ -44,7 +44,7 @@
     (printout t "Sink Cruiser2" crlf)
 	(status (step ?s)(currently running))
 =>
-	(assert (intention-sink (x-stern 6) (y-ster 6) (orientation ver) (type cruiser)))
+	(assert (intention-sink (x-stern 6) (y-stern 6) (orientation ver) (type cruiser)))
 	(pop-focus) 
 )
 
@@ -54,7 +54,7 @@
     (printout t "Sink Destroyer1" crlf)
 	(status (step ?s)(currently running))
 =>
-	(assert (intention-sink (x-stern 6) (y-ster 0) (orientation ver) (type destroyer))
+	(assert (intention-sink (x-stern 6) (y-stern 0) (orientation ver) (type destroyer)))
 	(pop-focus) 
 )
 
@@ -62,7 +62,7 @@
     (printout t "Sink Destroyer2" crlf)
 	(status (step ?s)(currently running))
 =>
-	(assert (intention-sink (x-stern 6) (y-ster 8) (orientation ver) (type destroyer)))
+	(assert (intention-sink (x-stern 6) (y-stern 8) (orientation ver) (type destroyer)))
 	(pop-focus) 
 )
 
@@ -70,7 +70,7 @@
     (printout t "Sink Destroyer3" crlf)
 	(status (step ?s)(currently running))
 =>
-	(assert (intention-sink (x-stern 9) (y-ster 4) (orientation ver) (type destroyer)))
+	(assert (intention-sink (x-stern 9) (y-stern 4) (orientation ver) (type destroyer)))
 	(pop-focus) 
 )
 
@@ -80,7 +80,7 @@
     (printout t "Sink Submarine1" crlf)
 	(status (step ?s)(currently running))
 =>
-	(assert (intention-sink (x-stern 0) (y-ster 0) (orientation ver) (type submarine)))
+	(assert (intention-sink (x-stern 0) (y-stern 0) (orientation ver) (type submarine)))
 	(pop-focus) 
 )
 
@@ -88,7 +88,7 @@
     (printout t "Sink Submarine2" crlf)
 	(status (step ?s)(currently running))
 =>
-	(assert (intention-sink (x-stern 9) (y-ster 9) (orientation ver) (type submarine)))
+	(assert (intention-sink (x-stern 9) (y-stern 9) (orientation ver) (type submarine)))
 	(pop-focus) 
 )
 
@@ -96,7 +96,7 @@
     (printout t "Sink Submarine3" crlf)
 	(status (step ?s)(currently running))
 =>
-	(assert (intention-sink (x-stern 0) (y-ster 9) (orientation ver) (type submarine)))
+	(assert (intention-sink (x-stern 0) (y-stern 9) (orientation ver) (type submarine)))
 	(pop-focus) 
 )
 
@@ -104,6 +104,6 @@
     (printout t "Sink Submarine4" crlf)
 	(status (step ?s)(currently running))
 =>
-	(assert (intention-sink (x-stern 9) (y-ster 0) (orientation ver) (type submarine)))
+	(assert (intention-sink (x-stern 9) (y-stern 0) (orientation ver) (type submarine)))
 	(pop-focus) 
 )
