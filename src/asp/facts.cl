@@ -1,5 +1,4 @@
-
-% Professors
+%% Professors
 
 prof("Muzzetto").
 prof("Pozzato").
@@ -24,8 +23,7 @@ prof("Schifanella").
 prof("Lombardo").
 prof("Travostino").
 
-
-% Subjects (Subject name, professor, hours)
+%% Subjects (Subject name, professor, hours)
 
 subject("Introduzione al Master", "", 2).
 subject("Recupero", "", 4).
@@ -57,7 +55,7 @@ subject("Progettazione e sviluppo di applicazioni web su dispositivi mobile II",
 subject("La gestione delle risorse umane","Lombardo", 10).
 subject("I vincoli giuridici del progetto: diritto dei media","Travostino", 10).
 
-% Subjects pre-requisites (propaeudeutic(A,B) => subject A is a pre-requisite of subject B)
+%% Subjects pre-requisites (propaeudeutic(A,B) => subject A is a pre-requisite of subject B)
 
 propaedeutic("Fondamenti di ICT e Paradigmi di Programmazione", "Ambienti di sviluppo e linguaggi client-side per il web").
 propaedeutic("Ambienti di sviluppo e linguaggi client-side per il web", "Progettazione e sviluppo di applicazioni web su dispositivi mobile I").
@@ -72,7 +70,7 @@ propaedeutic("Acquisizione ed elaborazione di immagini statiche - grafica", "Ele
 propaedeutic("Elementi di fotografia digitale", "Acquisizione ed elaborazione di sequenze di immagini digitali").
 propaedeutic("Acquisizione ed elaborazione di immagini statiche - grafica", "Grafica 3D").
 
-% Vincolo auspicabile 3
+%% Vincolo auspicabile 3
 
 propaedeuticSoft("Fondamenti di ICT e Paradigmi di Programmazione", "Progettazione di basi di dati").
 propaedeuticSoft("Tecniche e strumenti di Marketing digitale", "Introduzione al social media management").

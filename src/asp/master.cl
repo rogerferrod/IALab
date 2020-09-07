@@ -5,20 +5,21 @@
 %% Vincolo no due corsi nello stesso slot
 :- calendar(_, _, _, I, S1, _), calendar(_, _, _, I, S2, _), S1 != S2.
 
-% Vincoli Rigidi ---------------------------------------------------------------------------------------------------------
+% Vincoli Rigidi -------------------------------------------------------------------------------------------------------
 
 %% 1. lo stesso docente non può svolgere più di 4 ore di lezione in un giorno
 :- #count{I : calendar(W, D, _, I, _, P)} > 4, week(W), day(D), prof(P).
 
 %% 2. A ciascun insegnamento vengono assegnate minimo 2 ore e massimo 4 ore al giorno
-% bisogna considerare anche la possibilità di non avere una lezione, pertanto escludiamo solamente il valore 1 (unico valore discreto tra 0 e 2)
+% bisogna considerare anche la possibilità di non avere una lezione, pertanto escludiamo solamente il valore 1 (unico 
+%% valore discreto tra 0 e 2).
 :- 1 = #count{I : calendar(W, D, _, I, S, _)} > 4, week(W), day(D), subject(S, _, _).
 
 %% 3. Il primo giorno di lezione prevede che, nelle prime due ore, vi sia la presentazione del master
 :- calendar(_, _, _, I1, "Introduzione al Master", _), calendar(_, _, _, I2, S, _), subject(S, _, _), I1 > I2, S != "Introduzione al Master".
 
-%% 4. Il calendario deve prevedere almeno 2 blocchi liberi di 2 ore ciascuno per eventuali recuperi di lezioni annullate o rinviate
-% questo vincolo è modellato implicitamente in facts.cl
+%% 4. Il calendario deve prevedere almeno 2 blocchi liberi di 2 ore ciascuno per eventuali recuperi di lezioni 
+%% annullate o rinviate. Questo vincolo è modellato implicitamente in facts.cl
 
 %% 5. L’insegnamento “Project Management” deve concludersi non oltre la prima settimana full-time (W <= 7)
 :- calendar(W, _, _, _, "Project Management", _), W > 7.
@@ -28,7 +29,6 @@
 :- calendar(_, _, _, I1, "Accessibilità e usabilità nella progettazione multimediale", _), 
    calendar(_, _, _, I2, "Linguaggi di markup", _), 
    period(I1,_,"Accessibilità e usabilità nella progettazione multimediale"), period(_,I2, "Linguaggi di markup"), I1 > I2.
-
 
 %% 7. Le lezioni dei vari insegnamenti devono rispettare la propedeuticità
 :- calendar(_, _, _, I1, S1, _), calendar(_, _, _, I2, S2, _), propaedeutic(S1, S2), I1 > I2.
@@ -43,8 +43,8 @@
 % Interpretazione 2: La durata di un corso non deve superare le 6 settimane (da inizio alla fine)
 :- week_length(X, S), subject(S, _, _), X > 6.
 
-%% 2. La prima lezione degli insegnamenti “Crossmedia: articolazione delle scritture multimediali” e “Introduzione al social media management” 
-%% devono essere collocate nella seconda settimana full-time
+%% 2. La prima lezione degli insegnamenti “Crossmedia: articolazione delle scritture multimediali” e “Introduzione al 
+%% social media management” devono essere collocate nella seconda settimana full-time
 :- calendar(W, _, _, _, "Crossmedia: articolazione delle scritture multimediali", _), W != 16.
 :- calendar(W, _, _, _, "Introduzione al social media management", _), W != 16.
 

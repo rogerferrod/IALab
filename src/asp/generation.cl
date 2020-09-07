@@ -26,10 +26,10 @@ isFullDay(1..5). % giorni feriali (lun-ven) da 8 ore
 %test3(W, X) :- X = #count{I : calendar(W, D, _, I, _, _)}, week(W), day(D), not isFullDay(D).
 %#show test3/2.
 
-% I giorni feriali (lun-ven) delle settimane full hanno 8 ore
+%% I giorni feriali (lun-ven) delle settimane full hanno 8 ore
 :- 8 != #count{I : calendar(W, D, _, I, _, _)}, isFullWeek(W), isFullDay(D).
 
-% I venerdì delle settimane "normali" hanno 8 ore
+%% I venerdì delle settimane "normali" hanno 8 ore
 :- 8 != #count{I : calendar(W, 5, _, I, _, _)}, week(W), not isFullWeek(W).
 %test4(W, D, X) :- X = #count{I : calendar(W, D, _, I, _, _)}, week(W), day(D).
 %#show test4/3.
