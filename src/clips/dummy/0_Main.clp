@@ -72,6 +72,10 @@
 	(status (step 0) (currently running))
         (statistics (num_fire_ok 0) (num_fire_ko 0) (num_guess_ok 0) (num_guess_ko 0) (num_safe 0) (num_sink 0))
 	(first-pass-to-env)
-	(moves (fires 5) (guesses 20) )
+	(moves (fires 5) (guesses 20))
+  (air-carriers-info 1 4) ; TODO magari da spostare
+  (air-cruisers-info 2 3)
+  (air-destroyers-info 3 2)
+  (air-submarines-info 4 1)
 )
 
