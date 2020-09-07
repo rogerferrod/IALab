@@ -21,13 +21,16 @@
 	(focus PLANNING)
 )
 
+
 ; TODO serve la salience?
 (defrule execute (declare (salience 10))
-	(status (step ?s)(currently running))
-	(plan (action-sequence $?p&:(> (length$ ?p) 0)))
-	?f <- (first$ $?p)
-	(action (id ?f) (type ?t) (x ?x) (y ?y))
+	(status (step ?s) (currently running))
+	?p <- (plan (action-sequence $?as&:(> (length$ ?as) 0)))
+	?first <- (first$ $?as)
+	?tail <- (rest$ $?as)
+	(action (id ?first) (type ?t) (x ?x) (y ?y))
 =>
+	(modify ?p (action-sequence ?tail ))
 	(assert (exec (step ?s) (action ?t) (x ?x) (y ?y)))
 	(pop-focus)
 )
