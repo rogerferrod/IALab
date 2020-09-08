@@ -56,3 +56,8 @@ $RECYCLE.BIN/
 # Outputs folders across all the repo ------------------------------------------
 src/asp/output
 src/tools/timetable_maker/output
+
+# JAVA ----------------
+src/uncertainty/.idea/*
+src/uncertainty/target/*
+src/uncertainty/*.iml

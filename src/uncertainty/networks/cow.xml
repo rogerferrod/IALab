@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="US-ASCII"?>
+
+<!--
+  Bayesian network in XMLBIF v0.3 (BayesNet Interchange Format)
+  Produced by SamIam http://reasoning.cs.ucla.edu/samiam
+  Output created 8-set-2020 18.42.39
+-->
+
+<BIF VERSION="0.3">
+<NETWORK>
+  <NAME>bayesiannetwork</NAME>
+
+  <VARIABLE TYPE="nature">
+    <NAME>Blood</NAME>
+    <OUTCOME>P</OUTCOME>
+    <OUTCOME>N</OUTCOME>
+    <PROPERTY>position = (62, -291)</PROPERTY>
+  </VARIABLE>
+
+  <VARIABLE TYPE="nature">
+    <NAME>Progesterone</NAME>
+    <OUTCOME>true</OUTCOME>
+    <OUTCOME>false</OUTCOME>
+    <PROPERTY>position = (152, -153)</PROPERTY>
+  </VARIABLE>
+
+  <VARIABLE TYPE="nature">
+    <NAME>Pregnancy</NAME>
+    <OUTCOME>true</OUTCOME>
+    <OUTCOME>false</OUTCOME>
+    <PROPERTY>position = (259, -48)</PROPERTY>
+  </VARIABLE>
+
+  <VARIABLE TYPE="nature">
+    <NAME>Scan</NAME>
+    <OUTCOME>P</OUTCOME>
+    <OUTCOME>N</OUTCOME>
+    <PROPERTY>position = (418, -206)</PROPERTY>
+  </VARIABLE>
+
+  <VARIABLE TYPE="nature">
+    <NAME>Urine</NAME>
+    <OUTCOME>P</OUTCOME>
+    <OUTCOME>N</OUTCOME>
+    <PROPERTY>position = (243, -283)</PROPERTY>
+  </VARIABLE>
+
+  <DEFINITION>
+    <FOR>Blood</FOR>
+    <GIVEN>Progesterone</GIVEN>
+    <TABLE>0.7 0.3 0.1 0.9 </TABLE>
+  </DEFINITION>
+
+  <DEFINITION>
+    <FOR>Progesterone</FOR>
+    <GIVEN>Pregnancy</GIVEN>
+    <TABLE>0.9 0.1 0.01 0.99 </TABLE>
+  </DEFINITION>
+
+  <DEFINITION>
+    <FOR>Pregnancy</FOR>
+    <TABLE>0.87 0.13 </TABLE>
+  </DEFINITION>
+
+  <DEFINITION>
+    <FOR>Scan</FOR>
+    <GIVEN>Pregnancy</GIVEN>
+    <TABLE>0.9 0.1 0.01 0.99 </TABLE>
+  </DEFINITION>
+
+  <DEFINITION>
+    <FOR>Urine</FOR>
+    <GIVEN>Progesterone</GIVEN>
+    <TABLE>0.8 0.2 0.1 0.9 </TABLE>
+  </DEFINITION>
+
+</NETWORK>
+</BIF>

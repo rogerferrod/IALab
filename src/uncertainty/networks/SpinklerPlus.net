@@ -1,0 +1,112 @@
+net
+{
+	jenginegenerator6060830225489488864L = "edu.ucla.belief.inference.JoinTreeSettings@1c022927";
+	node_size = (130.0 55.0);
+	huginenginegenerator3061656038650325130L = "edu.ucla.belief.inference.JoinTreeSettings@3560e7c6";
+}
+
+node sprinkler
+{
+	states = ("on" "off" );
+	position = (102 -158);
+	diagnosistype = "AUXILIARY";
+	ismapvariable = "true";
+	label = "sprinkler";
+	DSLxEXTRA_DEFINITIONxDIAGNOSIS_TYPE = "AUXILIARY";
+	excludepolicy = "include whole CPT";
+}
+node rain
+{
+	states = ("heavy" "light" "no" );
+	position = (339 -157);
+	diagnosistype = "AUXILIARY";
+	ismapvariable = "false";
+	label = "rain";
+	DSLxEXTRA_DEFINITIONxDIAGNOSIS_TYPE = "AUXILIARY";
+	excludepolicy = "include whole CPT";
+}
+node Grass
+{
+	states = ("yes" "no" );
+	position = (123 -281);
+	diagnosistype = "AUXILIARY";
+	ismapvariable = "false";
+	label = "Grass wet";
+	DSLxEXTRA_DEFINITIONxDIAGNOSIS_TYPE = "AUXILIARY";
+	excludepolicy = "include whole CPT";
+}
+node cloudy
+{
+	states = ("yes" "no" );
+	position = (370 -34);
+	diagnosistype = "AUXILIARY";
+	ismapvariable = "true";
+	label = "cloudy";
+	DSLxEXTRA_DEFINITIONxDIAGNOSIS_TYPE = "AUXILIARY";
+	excludepolicy = "include whole CPT";
+}
+node Season
+{
+	states = ("spring" "summer" "fall" "winter" );
+	position = (64 -30);
+	diagnosistype = "AUXILIARY";
+	ismapvariable = "true";
+	label = "Season";
+	DSLxEXTRA_DEFINITIONxDIAGNOSIS_TYPE = "AUXILIARY";
+	excludepolicy = "include whole CPT";
+}
+node road
+{
+	states = ("yes" "no" );
+	position = (319 -287);
+	diagnosistype = "AUXILIARY";
+	ismapvariable = "false";
+	label = "road wet";
+	DSLxEXTRA_DEFINITIONxDIAGNOSIS_TYPE = "AUXILIARY";
+	excludepolicy = "include whole CPT";
+}
+potential ( sprinkler | Season cloudy )
+{
+	data = (((	0.01	0.99	)
+		(	0.1	0.9	))
+		((	0.2	0.8	)
+		(	0.7	0.30000000000000004	))
+		((	0.001	0.999	)
+		(	0.01	0.99	))
+		((	0.0	1.0	)
+		(	0.0	1.0	)));
+}
+potential ( rain | Season cloudy )
+{
+	data = (((	0.2	0.4	0.4	)
+		(	0.0	0.1	0.9	))
+		((	0.6	0.15	0.25	)
+		(	0.01	0.04	0.95	))
+		((	0.3	0.5	0.2	)
+		(	0.001	0.19899999999999995	0.8	))
+		((	0.01	0.79	0.2	)
+		(	0.0	0.01	0.99	)));
+}
+potential ( Grass | sprinkler rain )
+{
+	data = (((	1.0	0.0	)
+		(	0.99	0.010000000000000009	)
+		(	0.95	0.050000000000000044	))
+		((	0.999	0.0010000000000000009	)
+		(	0.8	0.2	)
+		(	0.01	0.99	)));
+}
+potential ( cloudy | )
+{
+	data = (	0.4	0.6	);
+}
+potential ( Season | )
+{
+	data = (	0.25	0.25	0.25	0.25	);
+}
+potential ( road | rain )
+{
+	data = ((	1.0	0.0	)
+		(	0.9	0.1	)
+		(	0.01	0.99	));
+}
