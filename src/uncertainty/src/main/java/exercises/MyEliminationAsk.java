@@ -24,12 +24,12 @@ public class MyEliminationAsk extends EliminationAsk {
     @Override
     public CategoricalDistribution eliminationAsk(final RandomVariable[] X, final AssignmentProposition[] e,
                                                   final BayesianNetwork bn) {
-        Set<RandomVariable> hidden = new HashSet<RandomVariable>();
-        List<RandomVariable> VARS = new ArrayList<RandomVariable>();
+        Set<RandomVariable> hidden = new HashSet<>();
+        List<RandomVariable> VARS = new ArrayList<>();
         calculateVariables(X, e, bn, hidden, VARS);
 
         // factors <- []
-        List<Factor> factors = new ArrayList<Factor>();
+        List<Factor> factors = new ArrayList<>();
         // for each var in ORDER(bn.VARS) do
         for (int oidx = 0; oidx < order(bn, VARS).size(); oidx++) {
             RandomVariable var = order(bn, VARS).get(oidx);

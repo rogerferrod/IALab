@@ -1,8 +1,4 @@
-package exercises;/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+package exercises;
 
 import aima.core.probability.CategoricalDistribution;
 import aima.core.probability.RandomVariable;
@@ -13,45 +9,43 @@ import aima.core.probability.proposition.AssignmentProposition;
 import bnparser.BifReader;
 
 import java.util.HashMap;
-import java.util.List;
 
 /**
  * @author torta
+ * @author Roger Ferrod
+ * @author Pio Raffaele Fia
+ * @author Lorenzo Tabasso
+ * <p>
+ * Il programma deve:
+ * 1) creare la BN dell’esercizio su ArtificialInsemination
+ * 2) inferire la distribuzione P(Pregnancy, Progesterone| blood) con il metodo per eliminazione di variabili
  */
 public class CQ {
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String[] args) {
-        HashMap<String, RandomVariable> rvsmap = new HashMap<>();
+        HashMap<String, RandomVariable> vaNamesMap = new HashMap<>();
 
         BayesianNetwork bn = BifReader.readBIF("./networks/cow.xml");
-        List<RandomVariable> rvs = bn.getVariablesInTopologicalOrder();
-        for (RandomVariable rv : rvs) {
-            System.out.println(rv.getName());
-            rvsmap.put(rv.getName(), rv);
+        for (RandomVariable va : bn.getVariablesInTopologicalOrder()) {
+            vaNamesMap.put(va.getName(), va);
         }
 
-        RandomVariable[] qrv = new RandomVariable[2];
-        qrv[0] = rvsmap.get("Pregnancy");
-        qrv[1] = rvsmap.get("Progesterone");
-        AssignmentProposition[] ap = new AssignmentProposition[1];
-        ap[0] = new AssignmentProposition(rvsmap.get("Blood"), "P");
+        RandomVariable[] queryVariables = {vaNamesMap.get("Pregnancy"), vaNamesMap.get("Progesterone")};
+        AssignmentProposition[] evidences = {new AssignmentProposition(vaNamesMap.get("Blood"), "P")};
 
-        BayesInference bi = new EliminationAsk();
+        BayesInference inference = new EliminationAsk();
 
-        CategoricalDistribution cd = bi.ask(qrv, ap, bn);
+        long start = System.currentTimeMillis();
+        CategoricalDistribution distribution = inference.ask(queryVariables, evidences, bn);
+        long finish = System.currentTimeMillis();
+        long timeElapsed = finish - start;
 
-        System.out.print("<");
-        for (int i = 0; i < cd.getValues().length; i++) {
-            System.out.print(cd.getValues()[i]);
-            if (i < (cd.getValues().length - 1)) {
-                System.out.print(", ");
-            } else {
-                System.out.println(">");
-            }
+        System.out.print("P(Pregnancy,Progesterone|Blood=P) = < ");
+        double[] values = distribution.getValues();
+        for (int i = 0; i < values.length; i++) {
+            System.out.print(distribution.getValues()[i] + " ");
         }
-
+        System.out.println(">");
+        System.out.println("Time elapsed " + timeElapsed + " milliseconds");
     }
 }
