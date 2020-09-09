@@ -59,3 +59,7 @@ src/tools/timetable_maker/output
 
 # Michellaneous output (like java's .class) across all the repo ----------------
 src/clips/java/*.class
+# JAVA ----------------
+src/uncertainty/.idea/*
+src/uncertainty/target/*
+src/uncertainty/*.iml

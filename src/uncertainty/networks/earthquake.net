@@ -1,0 +1,70 @@
+net
+{
+	node_size = (130 55);
+}
+
+node Burglary
+{
+	states = ("True" "False" );
+	position = (0 0);
+	ismapvariable = "false";
+	diagnosistype = "AUXILIARY";
+	excludepolicy = "include whole CPT";
+}
+node Alarm
+{
+	states = ("True" "False" );
+	position = (267 -66);
+	ismapvariable = "false";
+	diagnosistype = "AUXILIARY";
+	excludepolicy = "include whole CPT";
+}
+node Earthquake
+{
+	states = ("True" "False" );
+	position = (44 -166);
+	ismapvariable = "false";
+	diagnosistype = "AUXILIARY";
+	excludepolicy = "include whole CPT";
+}
+node JohnCalls
+{
+	states = ("True" "False" );
+	position = (450 0);
+	ismapvariable = "false";
+	diagnosistype = "AUXILIARY";
+	excludepolicy = "include whole CPT";
+}
+node MaryCalls
+{
+	states = ("True" "False" );
+	position = (441 -172);
+	ismapvariable = "false";
+	diagnosistype = "AUXILIARY";
+	excludepolicy = "include whole CPT";
+}
+potential ( Burglary | )
+{
+	data = (	0.01	0.99	);
+}
+potential ( Alarm | Burglary Earthquake )
+{
+	data = (((	0.95	0.05	)
+		(	0.94	0.06	))
+		((	0.29	0.71	)
+		(	0.001	0.999	)));
+}
+potential ( Earthquake | )
+{
+	data = (	0.02	0.98	);
+}
+potential ( JohnCalls | Alarm )
+{
+	data = ((	0.9	0.1	)
+		(	0.05	0.95	));
+}
+potential ( MaryCalls | Alarm )
+{
+	data = ((	0.7	0.3	)
+		(	0.01	0.99	));
+}

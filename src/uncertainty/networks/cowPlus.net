@@ -1,0 +1,130 @@
+net
+{
+	propagationenginegenerator1791944048146838126L = "edu.ucla.belief.approx.BeliefPropagationSettings@14853ea6";
+	recoveryenginegenerator6944530267470113528l = "edu.ucla.util.SettingsImpl@161649ba";
+	jenginegenerator6060830225489488864L = "edu.ucla.belief.inference.JoinTreeSettings@47cf015b";
+	node_size = (130.0 55.0);
+}
+
+node Progesterone
+{
+	states = ("true" "false" );
+	position = (152 -153);
+	diagnosistype = "AUXILIARY";
+	ismapvariable = "false";
+	ID = "variable0";
+	label = "Progesterone";
+	DSLxEXTRA_DEFINITIONxDIAGNOSIS_TYPE = "AUXILIARY";
+	excludepolicy = "include whole CPT";
+}
+node Scan
+{
+	states = ("P" "N" );
+	position = (418 -206);
+	diagnosistype = "AUXILIARY";
+	ismapvariable = "false";
+	ID = "variable0";
+	label = "Scan";
+	DSLxEXTRA_DEFINITIONxDIAGNOSIS_TYPE = "AUXILIARY";
+	excludepolicy = "include whole CPT";
+}
+node Pregnancy
+{
+	states = ("true" "false" );
+	position = (259 -48);
+	diagnosistype = "AUXILIARY";
+	ismapvariable = "false";
+	ID = "variable0";
+	label = "Pregnancy";
+	DSLxEXTRA_DEFINITIONxDIAGNOSIS_TYPE = "AUXILIARY";
+	excludepolicy = "include whole CPT";
+}
+node variable0
+{
+	states = ("true" "false" );
+	position = (358 -456);
+	diagnosistype = "AUXILIARY";
+	DSLxSUBMODEL = "Root Submodel";
+	ismapvariable = "false";
+	ID = "variable0";
+	label = "Bl_OR_Ur_OR_Sc";
+	DSLxEXTRA_DEFINITIONxDIAGNOSIS_TYPE = "AUXILIARY";
+	excludepolicy = "include whole CPT";
+}
+node Urine
+{
+	states = ("P" "N" );
+	position = (243 -283);
+	diagnosistype = "AUXILIARY";
+	ismapvariable = "false";
+	ID = "variable0";
+	label = "Urine";
+	DSLxEXTRA_DEFINITIONxDIAGNOSIS_TYPE = "AUXILIARY";
+	excludepolicy = "include whole CPT";
+}
+node Blood
+{
+	states = ("P" "N" );
+	position = (62 -291);
+	diagnosistype = "AUXILIARY";
+	DSLxSUBMODEL = "Root Submodel";
+	ismapvariable = "false";
+	ID = "variable0";
+	label = "Blood";
+	DSLxEXTRA_DEFINITIONxDIAGNOSIS_TYPE = "AUXILIARY";
+	excludepolicy = "include whole CPT";
+}
+node variable1
+{
+	states = ("T_and_T" "T_and_F" "F_and_T" "F_and_F" );
+	position = (635 -80);
+	diagnosistype = "AUXILIARY";
+	DSLxSUBMODEL = "Root Submodel";
+	ismapvariable = "false";
+	ID = "variable1";
+	label = "Pre_JOIN_Pro";
+	DSLxEXTRA_DEFINITIONxDIAGNOSIS_TYPE = "AUXILIARY";
+	excludepolicy = "include whole CPT";
+}
+potential ( Progesterone | Pregnancy )
+{
+	data = ((	0.9	0.1	)
+		(	0.01	0.99	));
+}
+potential ( Scan | Pregnancy )
+{
+	data = ((	0.9	0.1	)
+		(	0.01	0.99	));
+}
+potential ( Pregnancy | )
+{
+	data = (	0.87	0.13	);
+}
+potential ( variable0 | Blood Urine Scan )
+{
+	data = ((((	1.0	0.0	)
+		(	1.0	0.0	))
+		((	1.0	0.0	)
+		(	1.0	0.0	)))
+		(((	1.0	0.0	)
+		(	1.0	0.0	))
+		((	1.0	0.0	)
+		(	0.0	1.0	))));
+}
+potential ( Urine | Progesterone )
+{
+	data = ((	0.8	0.2	)
+		(	0.1	0.9	));
+}
+potential ( Blood | Progesterone )
+{
+	data = ((	0.7	0.3	)
+		(	0.1	0.9	));
+}
+potential ( variable1 | Pregnancy Progesterone )
+{
+	data = (((	1.0	0.0	0.0	0.0	)
+		(	0.0	1.0	0.0	0.0	))
+		((	0.0	0.0	1.0	0.0	)
+		(	0.0	0.0	0.0	1.0	)));
+}
