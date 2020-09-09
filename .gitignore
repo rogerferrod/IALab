@@ -56,3 +56,6 @@ $RECYCLE.BIN/
 # Outputs folders across all the repo ------------------------------------------
 src/asp/output
 src/tools/timetable_maker/output
+
+# Michellaneous output (like java's .class) across all the repo ----------------
+src/clips/java/*.class
