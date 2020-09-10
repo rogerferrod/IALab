@@ -43,6 +43,19 @@ expands(node(S,ActionForS), [_|OtherActions], ChildrenTail):-
 
 % heuristic(+State, -Heuristic)
 heuristic(pos(Xs,Ys), H):-
+    distance(l1),
+    goal(pos(X,Y)),
+    H is abs(Xs-X)+abs(Ys-Y).
+heuristic(pos(Xs,Ys), H):-
+    distance(l2),
+    goal(pos(X,Y)),
+    H is sqrt((Xs-X)^2+abs(Ys-Y)^2).
+heuristic(pos(Xs,Ys), H):-
+    distance(linf),
+    goal(pos(X,Y)),
+    H is max((Xs-X),(Ys-Y)).
+heuristic(pos(Xs,Ys), H):-
+    %default
     goal(pos(X,Y)),
     H is abs(Xs-X)+abs(Ys-Y).
 
