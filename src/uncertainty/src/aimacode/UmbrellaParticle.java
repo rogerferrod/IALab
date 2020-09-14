@@ -1,10 +1,9 @@
-/*
+package aimacode;/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
 
-import aima.core.probability.CategoricalDistribution;
 import aima.core.probability.RandomVariable;
 import aima.core.probability.bayes.DynamicBayesianNetwork;
 import aima.core.probability.bayes.FiniteNode;
@@ -14,14 +13,9 @@ import aima.core.probability.bayes.impl.DynamicBayesNet;
 import aima.core.probability.bayes.impl.FullCPTNode;
 import aima.core.probability.domain.BooleanDomain;
 import aima.core.probability.example.*;
-import aima.core.probability.hmm.HiddenMarkovModel;
-import aima.core.probability.hmm.exact.HMMForwardBackward;
 import aima.core.probability.proposition.AssignmentProposition;
-import aima.core.probability.util.ProbabilityTable;
 import aima.core.probability.util.RandVar;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;

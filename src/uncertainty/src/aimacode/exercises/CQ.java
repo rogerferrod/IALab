@@ -1,4 +1,4 @@
-package exercises;
+package aimacode.exercises;
 
 import aima.core.probability.CategoricalDistribution;
 import aima.core.probability.RandomVariable;
@@ -6,7 +6,7 @@ import aima.core.probability.bayes.BayesInference;
 import aima.core.probability.bayes.BayesianNetwork;
 import aima.core.probability.bayes.exact.EliminationAsk;
 import aima.core.probability.proposition.AssignmentProposition;
-import bnparser.BifReader;
+import aimacode.bnparser.BifReader;
 
 import java.util.HashMap;
 

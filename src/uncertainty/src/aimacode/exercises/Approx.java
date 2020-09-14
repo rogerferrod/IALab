@@ -1,4 +1,4 @@
-package exercises;/*
+package aimacode.exercises;/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -11,7 +11,7 @@ import aima.core.probability.bayes.BayesianNetwork;
 import aima.core.probability.bayes.approx.LikelihoodWeighting;
 import aima.core.probability.bayes.approx.RejectionSampling;
 import aima.core.probability.proposition.AssignmentProposition;
-import bnparser.BifReader;
+import aimacode.bnparser.BifReader;
 
 import java.util.HashMap;
 import java.util.List;

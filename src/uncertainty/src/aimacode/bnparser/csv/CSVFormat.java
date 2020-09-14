@@ -21,7 +21,7 @@
  * and trademarks visit:
  * http://www.heatonresearch.com/copyright
  */
-package bnparser.csv;
+package aimacode.bnparser.csv;
 
 import java.io.Serializable;
 import java.text.DecimalFormatSymbols;

@@ -21,7 +21,7 @@
  * and trademarks visit:
  * http://www.heatonresearch.com/copyright
  */
-package bnparser.bif;
+package aimacode.bnparser.bif;
 
 /**
  * The section of the BIF file that we are currently in.

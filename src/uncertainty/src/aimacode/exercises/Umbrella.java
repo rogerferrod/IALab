@@ -3,11 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package exercises;
+package aimacode.exercises;
 
 import aima.core.probability.CategoricalDistribution;
 import aima.core.probability.example.*;
-import aima.core.probability.hmm.HiddenMarkovModel;
 import aima.core.probability.hmm.exact.HMMForwardBackward;
 import aima.core.probability.proposition.AssignmentProposition;
 import aima.core.probability.util.ProbabilityTable;

@@ -1,4 +1,4 @@
-package exercises;
+package aimacode.exercises;
 
 import java.util.ArrayList;
 import java.util.HashSet;

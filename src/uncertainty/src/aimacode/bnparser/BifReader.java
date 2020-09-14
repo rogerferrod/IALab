@@ -1,4 +1,4 @@
-package bnparser;
+package aimacode.bnparser;
 /*
  * Encog(tm) Core v3.4 - Java Version
  * http://www.heatonresearch.com/encog/

@@ -1,4 +1,4 @@
-package exercises;
+package aimacode.exercises;
 
 import aima.core.probability.*;
 import aima.core.probability.bayes.exact.EliminationAsk;
@@ -58,7 +58,7 @@ public class Chain {
         BayesInference[] methods = new BayesInference[]{
                 new EnumerationAsk(),
                 new EliminationAsk(),
-                new exercises.MyEliminationAsk()};
+                new MyEliminationAsk()};
 
         for (BayesInference inference : methods) {
             System.out.println("\n\nSimple query with " + inference.getClass());

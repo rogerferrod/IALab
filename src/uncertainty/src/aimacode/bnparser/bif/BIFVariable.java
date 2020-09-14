@@ -21,7 +21,7 @@
  * and trademarks visit:
  * http://www.heatonresearch.com/copyright
  */
-package bnparser.bif;
+package aimacode.bnparser.bif;
 
 import java.util.ArrayList;
 import java.util.List;

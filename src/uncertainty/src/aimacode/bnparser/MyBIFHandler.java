@@ -1,4 +1,4 @@
-package bnparser;
+package aimacode.bnparser;
 /*
  * Encog(tm) Core v3.4 - Java Version
  * http://www.heatonresearch.com/encog/
@@ -24,14 +24,15 @@ package bnparser;
  */
 
 
+import aimacode.MyCPTNode;
+import aimacode.bnparser.bif.BIFDefinition;
+import aimacode.bnparser.bif.BIFVariable;
+import aimacode.bnparser.bif.FileSection;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import bnparser.bif.BIFDefinition;
-import bnparser.bif.BIFVariable;
-import bnparser.bif.FileSection;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
@@ -40,7 +41,6 @@ import aima.core.probability.RandomVariable;
 import aima.core.probability.bayes.BayesianNetwork;
 import aima.core.probability.bayes.Node;
 import aima.core.probability.bayes.impl.BayesNet;
-import aima.core.probability.bayes.impl.FullCPTNode;
 import aima.core.probability.domain.ArbitraryTokenDomain;
 import aima.core.probability.domain.BooleanDomain;
 import aima.core.probability.domain.FiniteIntegerDomain;
@@ -282,7 +282,8 @@ public class MyBIFHandler extends DefaultHandler {
         List<RandomVariable> tmpList = new ArrayList<RandomVariable>(rvs.values());
         for (BIFDefinition d : this.bifDefinitions) {
             if (d.getGivenDefinitions().size() == 0) {
-                Node node = new FullCPTNode(this.rvs.get(d.getForDefinition()), d.getTable());
+                //Node node = new FullCPTNode(this.rvs.get(d.getForDefinition()), d.getTable());
+                Node node = new MyCPTNode(this.rvs.get(d.getForDefinition()), d.getTable());
 //				String a = "<";
 //				for (int i = 0; i < d.getTable().length; i++) {
 //					a = a + " " + d.getTable()[i];
@@ -315,7 +316,8 @@ public class MyBIFHandler extends DefaultHandler {
                 }
             }
             if (check) {
-                nds.put(next, new FullCPTNode(next, bDefinition.getTable(), parents.toArray(new Node[parents.size()])));
+                //nds.put(next, new FullCPTNode(next, bDefinition.getTable(), parents.toArray(new Node[parents.size()])));
+                nds.put(next, new MyCPTNode(next, bDefinition.getTable(), parents.toArray(new Node[parents.size()])));
 //				String a = "<";
 //				for (int i = 0; i < bDefinition.getTable().length; i++) {
 //					a = a + " " + bDefinition.getTable()[i];
@@ -328,7 +330,8 @@ public class MyBIFHandler extends DefaultHandler {
 
         }
 
-        this.network = new BayesNet(rootNodes.toArray(new FullCPTNode[rootNodes.size()]));
+        //this.network = new BayesNet(rootNodes.toArray(new FullCPTNode[rootNodes.size()]));
+        this.network = new BayesNet(rootNodes.toArray(new MyCPTNode[rootNodes.size()]));
     }
 
     private BIFDefinition searchBIFDef(String rvName) {
