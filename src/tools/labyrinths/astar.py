@@ -52,7 +52,7 @@ def generate_maze(input, input_maze, output):
     history = []
     with open(input) as f:
         for line in f:
-            se = re.search(r"\[pq\([\d]+,node\(pos\([\d]+,[\d]+\),(\[[\w|,]*\])\)\)", line)
+            se = re.search(r"\[pq\([\d]+.?[\d]+,node\(pos\([\d]+,[\d]+\),(\[[\w|,]*\])\)\)", line)
             if se is not None:
                 l = se.groups()[0][1:-1]
                 actions = l.split(',')

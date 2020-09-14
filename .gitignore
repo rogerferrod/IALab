@@ -63,3 +63,5 @@ src/clips/java/*.class
 src/uncertainty/.idea/*
 src/uncertainty/target/*
 src/uncertainty/*.iml
+src/tools/labyrinths/.idea/*
+src/tools/labyrinths/output/*
