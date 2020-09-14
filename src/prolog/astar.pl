@@ -54,10 +54,6 @@ heuristic(pos(Xs,Ys), H):-
     distance(linf),
     goal(pos(X,Y)),
     H is max((Xs-X),(Ys-Y)).
-heuristic(pos(Xs,Ys), H):-
-    %default
-    goal(pos(X,Y)),
-    H is abs(Xs-X)+abs(Ys-Y).
 
 % computeCost(+Children, +Open, +Closed, -NewOpen, -NewClosed)
 computeCost([], Open, Closed, Open, Closed).  % Children = [node(S,Actions)]
