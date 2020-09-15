@@ -19,7 +19,7 @@
 
 
 (deftemplate boat-ver
-        (slot name)
+    (slot name)
 	(multislot xs)
 	(slot y)
 	(slot size)

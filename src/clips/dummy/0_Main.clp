@@ -75,6 +75,10 @@
   (multislot ordered)
 )  
 
+(deftemplate sorted-heat
+	(multislot values (type SYMBOL))
+)
+
 (deffacts initial-facts
 	(maxduration 100)
 	(status (step 0) (currently running))
@@ -88,5 +92,6 @@
     (submarines 4 1)
     (ordered air-carrier cruiser destroyer submarine)
   )
+  (sorted-heat (values (create$)))
 )
 
