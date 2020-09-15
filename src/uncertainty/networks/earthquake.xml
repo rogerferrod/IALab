@@ -3,12 +3,10 @@
 <!--
   Bayesian network in XMLBIF v0.3 (BayesNet Interchange Format)
   Produced by SamIam http://reasoning.cs.ucla.edu/samiam
-  Output created 14-mag-2019 13.57.59
+  Output created 14-set-2020 21.06.43
 -->
 
-<BIF VERSION="0.3"  xmlns="http://www.cs.ubc.ca/labs/lci/fopi/ve/XMLBIFv0_3"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.cs.ubc.ca/labs/lci/fopi/ve/XMLBIFv0_3 http://www.cs.ubc.ca/labs/lci/fopi/ve/XMLBIFv0_3/XMLBIFv0_3.xsd">
+<BIF VERSION="0.3">
 <NETWORK>
   <NAME>bayesiannetwork</NAME>
 
@@ -17,6 +15,13 @@
     <OUTCOME>True</OUTCOME>
     <OUTCOME>False</OUTCOME>
     <PROPERTY>position = (0, 0)</PROPERTY>
+  </VARIABLE>
+
+  <VARIABLE TYPE="nature">
+    <NAME>MaryCalls</NAME>
+    <OUTCOME>True</OUTCOME>
+    <OUTCOME>False</OUTCOME>
+    <PROPERTY>position = (441, -172)</PROPERTY>
   </VARIABLE>
 
   <VARIABLE TYPE="nature">
@@ -40,16 +45,15 @@
     <PROPERTY>position = (450, 0)</PROPERTY>
   </VARIABLE>
 
-  <VARIABLE TYPE="nature">
-    <NAME>MaryCalls</NAME>
-    <OUTCOME>True</OUTCOME>
-    <OUTCOME>False</OUTCOME>
-    <PROPERTY>position = (441, -172)</PROPERTY>
-  </VARIABLE>
-
   <DEFINITION>
     <FOR>Burglary</FOR>
     <TABLE>0.01 0.99 </TABLE>
+  </DEFINITION>
+
+  <DEFINITION>
+    <FOR>MaryCalls</FOR>
+    <GIVEN>Alarm</GIVEN>
+    <TABLE>0.7 0.3 0.01 0.99 </TABLE>
   </DEFINITION>
 
   <DEFINITION>
@@ -68,12 +72,6 @@
     <FOR>JohnCalls</FOR>
     <GIVEN>Alarm</GIVEN>
     <TABLE>0.9 0.1 0.05 0.95 </TABLE>
-  </DEFINITION>
-
-  <DEFINITION>
-    <FOR>MaryCalls</FOR>
-    <GIVEN>Alarm</GIVEN>
-    <TABLE>0.7 0.3 0.01 0.99 </TABLE>
   </DEFINITION>
 
 </NETWORK>
