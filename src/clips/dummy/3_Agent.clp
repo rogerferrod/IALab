@@ -8,6 +8,9 @@
 	;(import PLANNING ?ALL) 
 	(export ?ALL)
 )
+;; ******************************
+;; TEMPLATES
+;; ******************************
 
 (deftemplate heat-map
 	(slot x)
@@ -15,6 +18,11 @@
 	(slot h)
 	(slot computed)
 )
+
+
+;; ******************************
+;; RULES
+;; ******************************
 
 (defrule compute-heat-map ; Computa la Heatmap
 	(k-per-row (row ?row) (num ?rvalue))
@@ -37,9 +45,16 @@
 	?f <- (heat-map (x ?row) (y ?col) (h ?h) (computed FALSE)) ; per evitare loop
 	?heat <- (sorted-heat (values $?list))
 =>
-	(modify ?heat (values (insert$ $?list 1 ?h)))
+	(modify ?heat (values ?list ?h))
 	(modify ?f (computed TRUE))
 )
+
+
+
+
+
+
+
 
 
 ; (defrule go-on-deliberate (declare (salience 30))
