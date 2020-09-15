@@ -67,15 +67,26 @@
 	(focus ENV)
 )
 
+(deftemplate board
+	(multislot air-carriers)  ;tipo nave, #navi, #celle occupate
+	(multislot cruisers)
+	(multislot destroyers)
+	(multislot submarines)
+  (multislot ordered)
+)  
+
 (deffacts initial-facts
 	(maxduration 100)
 	(status (step 0) (currently running))
-        (statistics (num_fire_ok 0) (num_fire_ko 0) (num_guess_ok 0) (num_guess_ko 0) (num_safe 0) (num_sink 0))
+  (statistics (num_fire_ok 0) (num_fire_ko 0) (num_guess_ok 0) (num_guess_ko 0) (num_safe 0) (num_sink 0))
 	(first-pass-to-env)
 	(moves (fires 5) (guesses 20))
-  (air-carriers-info 1 4) ; TODO magari da spostare
-  (cruisers-info 2 3)
-  (destroyers-info 3 2)
-  (submarines-info 4 1)
+  (board
+    (air-carriers 1 4)
+    (cruisers 2 3)
+    (destroyers 3 2)
+    (submarines 4 1)
+    (ordered air-carrier cruiser destroyer submarine)
+  )
 )
 
