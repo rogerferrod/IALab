@@ -19,6 +19,32 @@
 	(slot computed)
 )
 
+;; ******************************
+;; FUNCTIONS
+;; ******************************
+
+(deffunction median ($?values)
+	(bind ?sorted (sort > ?values)) 
+	(bind ?length (length$ ?sorted))
+	(if (<> (mod ?length 2) 0) then ; check if length is odd
+		(bind ?median (nth$ (div (+ ?length 1) 2) ?sorted))
+	else ; length is even
+		(bind ?median (/ (+ (nth$ (div ?length 2) ?sorted) (nth$ (+ (div ?length 2) 1) ?sorted)) 2))
+	)
+)
+
+(deffunction median-no-zero ($?values)
+	(bind ?sorted (sort > (delete-member$ ?values 0))) 
+	(bind ?length (length$ ?sorted))
+	(if (<> (mod ?length 2) 0) then ; check if length is odd
+		(bind ?median (nth$ (div (+ ?length 1) 2) ?sorted))
+	else ; length is even
+		(bind ?median (/ (+ (nth$ (div ?length 2) ?sorted) (nth$ (+ (div ?length 2) 1) ?sorted)) 2))
+	)
+)
+
+
+
 
 ;; ******************************
 ;; RULES
@@ -46,9 +72,18 @@
 	?heat <- (sorted-heat (values $?list))
 =>
 	(modify ?heat (values ?list ?h))
-	(modify ?f (computed TRUE))
+	(modify ?f (computed TRUE)) ; per evitare loop
 )
 
+
+(defrule medianX
+	(sorted-heat (values $?list))
+=>
+	
+	(printout t "Values: " (sort > ?list) crlf)
+	(printout t "Median computed: " (median-no-zero ?list) crlf)
+	
+)
 
 
 
