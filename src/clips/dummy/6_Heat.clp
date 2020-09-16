@@ -65,8 +65,10 @@
 	?f <- (board)
 =>
 	(modify ?f (median (median-aux ?list)))
+	;(focus AGENT) ; TODO: verificare che sia corretto
 )
 
+; TODO: verificare che sia corretto
 (defrule make-fires (declare (salience -10))
  	(status (step ?s) (currently running))
 	(board (median ?h))
