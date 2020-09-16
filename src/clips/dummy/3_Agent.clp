@@ -23,7 +23,6 @@
 	(board (median ?h))
 	(heat-map (x ?x) (y ?y) (h ?h) (computed TRUE))
 =>
-	(printout t "sono qui " ?x " " ?y crlf)
 	(assert (exec (step ?s) (action fire) (x ?x) (y ?y)))
 	(pop-focus)
 )
