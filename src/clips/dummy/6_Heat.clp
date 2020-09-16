@@ -19,6 +19,11 @@
 	(slot computed)
 )
 
+(deftemplate intention-fire
+	(slot x)
+	(slot y)
+)
+
 ;; ******************************
 ;; FUNCTIONS
 ;; ******************************
@@ -67,6 +72,12 @@
 	?f <- (board)
 =>
 	(modify ?f (median (median-aux ?list)))
-	;(focus AGENT) ; TODO: verificare che sia corretto
 )
 
+(defrule make-fires (declare (salience -10)) ; ultima regola prima di eseguire pop-focus (implicito)
+	(moves (fires ?f&:(> ?f 0))) ; controlla che ci siano ancora fires disponibili
+	(board (median ?h))
+	(heat-map (x ?x) (y ?y) (h ?h) (computed TRUE))
+=>
+	(assert (intention-fire (x ?x) (y ?y)))
+)

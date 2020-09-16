@@ -17,15 +17,17 @@
   (focus HEAT)
 )
 
-(defrule make-fires (declare (salience -10))
- 	(status (step ?s) (currently running))
-	(moves (fires ?f&:(> ?f 0))) ; controlla che ci siano ancora fires disponibili
-	(board (median ?h))
-	(heat-map (x ?x) (y ?y) (h ?h) (computed TRUE))
+(defrule execute-fire
+	(status (step ?s) (currently running))
+	?f <- (intention-fire (x ?x) (y ?y))
 =>
 	(assert (exec (step ?s) (action fire) (x ?x) (y ?y)))
+	(retract ?f)
+	(printout t "Fire on " ?x " " ?y crlf)
 	(pop-focus)
 )
+
+
 ; (defrule go-on-deliberate (declare (salience 30))
 ; 	(status (step ?s)(currently running))
 ; =>
