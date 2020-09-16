@@ -1,30 +1,25 @@
 package aimacode;
 
-import aima.core.probability.CategoricalDistribution;
-import aima.core.probability.Factor;
 import aima.core.probability.RandomVariable;
-import aima.core.probability.bayes.*;
-import aima.core.probability.bayes.exact.EliminationAsk;
+import aima.core.probability.bayes.BayesianNetwork;
+import aima.core.probability.bayes.FiniteNode;
+import aima.core.probability.bayes.Node;
 import aima.core.probability.bayes.impl.BayesNet;
 import aima.core.probability.domain.Domain;
 import aima.core.probability.proposition.AssignmentProposition;
 import aima.core.probability.util.ProbUtil;
-import aima.core.probability.util.RandVar;
-import aimacode.bnparser.BifReader;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class Prunning {
+public class EfficientPruning {
 
-    private final RandomVariable[] queryVariables;
     private final AssignmentProposition[] evidences;
-    private List<RandomVariable> queryVariablesList;
-    private List<RandomVariable> evidenceVariablesList;
+    private final List<RandomVariable> queryVariablesList;
+    private final List<RandomVariable> evidenceVariablesList;
     private BayesianNetwork bn;
 
-    public Prunning(RandomVariable[] queryVariables, AssignmentProposition[] evidences, BayesianNetwork bn) {
-        this.queryVariables = queryVariables;
+    public EfficientPruning(RandomVariable[] queryVariables, AssignmentProposition[] evidences, BayesianNetwork bn) {
         this.evidences = evidences;
         this.bn = bn;
         this.queryVariablesList = new ArrayList<>(Arrays.asList(queryVariables));
@@ -51,7 +46,10 @@ public class Prunning {
         return ancestors;
     }
 
-    private void updateNetwork(List<RandomVariable> variables, boolean modifyCPT, boolean removeEdges) {
+    public void updateNetwork(List<RandomVariable> variables, boolean modifyCPT, boolean removeEdges) {
+        if (variables.size() == bn.getVariablesInTopologicalOrder().size()) {
+            return;
+        }
         List<Node> roots = new ArrayList<>();
         List<RandomVariable> originalVariables = bn.getVariablesInTopologicalOrder();
         List<Node> newNodes = new ArrayList<>();
@@ -117,12 +115,8 @@ public class Prunning {
                 }
 
                 Node[] parentArray = new Node[newParents.size()];
-                //FiniteNode newNode = new MyCPTNode(var, cpt, newParents.toArray(new Node[newParents.size()]))
                 FiniteNode newNode = new MyCPTNode(var, cpt, newParents.toArray(parentArray));
                 newNodes.add(newNode);
-                /*if (node.isRoot()) {
-                    roots.add(newNode);
-                }*/
                 if (newParents.size() == 0) {
                     roots.add(newNode);
                 }
@@ -133,7 +127,7 @@ public class Prunning {
         bn = new BayesNet(roots.toArray(rootNodes));
     }
 
-    private List<RandomVariable> theorem1() {
+    public List<RandomVariable> theorem1() {
         Set<RandomVariable> ancestors = new HashSet<>();
 
         for (RandomVariable var : queryVariablesList) {
@@ -144,15 +138,12 @@ public class Prunning {
         }
 
         List<RandomVariable> nodes = bn.getVariablesInTopologicalOrder();
-        List<RandomVariable> filtered = nodes.stream()
+        return nodes.stream()
                 .filter(x -> ancestors.contains(x) || queryVariablesList.contains(x) || evidenceVariablesList.contains(x))
                 .collect(Collectors.toList()); //TODO sicuro di mantenere query?
-
-        //bn = netFromVariables(filtered, false, false);
-        return filtered;
     }
 
-    private List<RandomVariable> theorem2() {
+    public List<RandomVariable> theorem2() {
         MoralGraph moralGraph = new MoralGraph(bn);
         for (RandomVariable e : evidenceVariablesList) {
             moralGraph.removeVertex(e);
@@ -170,66 +161,18 @@ public class Prunning {
             }
         }
 
-        //bn = netFromVariables(filtered, true, false);
         return filtered;
     }
 
-    private List<RandomVariable> pruningEdges() {
-        List<RandomVariable> filtered = bn.getVariablesInTopologicalOrder().stream()
+    public List<RandomVariable> pruningEdges() {
+        return bn.getVariablesInTopologicalOrder().stream()
                 .filter(x -> !evidenceVariablesList.contains(x)).collect(Collectors.toList());
-
-        //bn = netFromVariables(filtered, false, true);
-        return filtered;
     }
 
-    public void pruningNetwork() { //TODO not working
+    public void pruning() {
         Set<RandomVariable> filtered = new HashSet<>(theorem1());
-        filtered.addAll(theorem2());
-        filtered.addAll(pruningEdges());
-        updateNetwork(new ArrayList<>(filtered), true, true);
-    }
-
-    public static void main(String[] args) {
-        HashMap<String, RandomVariable> vaNamesMap = new HashMap<>();
-
-        /*
-        BayesianNetwork bn = BifReader.readBIF("./networks/cow.xml");
-        for (RandomVariable va : bn.getVariablesInTopologicalOrder()) {
-            vaNamesMap.put(va.getName(), va);
-        }
-        RandomVariable[] queryVariables = {vaNamesMap.get("Pregnancy"), vaNamesMap.get("Progesterone")};
-        AssignmentProposition[] evidences = {new AssignmentProposition(vaNamesMap.get("Blood"), "P")};
-         */
-
-        BayesianNetwork bn = BifReader.readBIF("./networks/earthquake.xml");
-        for (RandomVariable va : bn.getVariablesInTopologicalOrder()) {
-            vaNamesMap.put(va.getName(), va);
-        }
-        RandomVariable[] queryVariables = {vaNamesMap.get("JohnCalls")};
-        AssignmentProposition[] evidences = {new AssignmentProposition(vaNamesMap.get("Alarm"), "True")};
-
-        Prunning prunning = new Prunning(queryVariables, evidences, bn);
-        prunning.updateNetwork(prunning.theorem1(), false, false);
-        prunning.updateNetwork(prunning.theorem2(), true, false);
-        prunning.updateNetwork(prunning.pruningEdges(), false, true);
-
-        //prunning.pruningNetwork();
-
-        bn = prunning.getNetwork();
-
-        BayesInference inference = new EliminationAsk();
-
-        long start = System.currentTimeMillis();
-        CategoricalDistribution distribution = inference.ask(queryVariables, evidences, bn);
-        long finish = System.currentTimeMillis();
-        long timeElapsed = finish - start;
-
-        System.out.print("P(Pregnancy,Progesterone|Blood=P) = < ");
-        double[] values = distribution.getValues();
-        for (int i = 0; i < values.length; i++) {
-            System.out.print(distribution.getValues()[i] + " ");
-        }
-        System.out.println(">");
-        System.out.println("Time elapsed " + timeElapsed + " milliseconds");
+        filtered.addAll(new HashSet<>(theorem2()));
+        filtered.addAll(new HashSet<>(pruningEdges()));
+        updateNetwork(new ArrayList<>(filtered), true, true); //TODO rifare
     }
 }
