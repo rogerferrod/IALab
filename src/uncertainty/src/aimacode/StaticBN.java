@@ -18,7 +18,12 @@ public class StaticBN {
     public static void main(String[] args) {
         HashMap<String, RandomVariable> vaNamesMap = new HashMap<>();
 
-        args = new String[3];
+        args = new String[4];
+
+        args[3] = "topological";
+        //args[3] = "mindegree";
+        //args[3] = "minfill";
+
         /*args[0] = "./networks/cow.xml";
         args[1] = "Pregnancy,Progesterone";
         args[2] = "Blood=P";*/
@@ -64,10 +69,9 @@ public class StaticBN {
             vaNamesMap.put(va.getName(), va);
         }
 
-        RandomVariable[] queryVariables = queryInput.stream().map(x -> vaNamesMap.get(x)).toArray(RandomVariable[]::new);
+        RandomVariable[] queryVariables = queryInput.stream().map(vaNamesMap::get).toArray(RandomVariable[]::new);
         AssignmentProposition[] evidences = assignements.stream()
                 .map(x -> new AssignmentProposition(vaNamesMap.get(x[0]), x[1])).toArray(AssignmentProposition[]::new);
-
 
         SimplePruning simplePruning = new SimplePruning(queryVariables, evidences, bn);
         simplePruning.updateNetwork(simplePruning.theorem1(), false, false);
@@ -76,7 +80,18 @@ public class StaticBN {
 
         bn = simplePruning.getNetwork();
 
-        BayesInference inference = new EliminationAsk();
+        BayesInference inference = null;
+        switch (args[3]) {
+            case "topological":
+                inference = new EliminationAsk();
+                break;
+            case "mindegree":
+                inference = new EliminationMinDegree();
+                break;
+            case "minfill":
+                inference = new EliminationMinFill();
+                break;
+        }
 
         long start = System.currentTimeMillis();
         CategoricalDistribution distribution = inference.ask(queryVariables, evidences, bn);
@@ -90,25 +105,5 @@ public class StaticBN {
         }
         System.out.println(">");
         System.out.println("Time elapsed " + timeElapsed + " milliseconds");
-
-        //********************************************************************/
-        /*
-        EfficientPruning pruning = new EfficientPruning(queryVariables, evidences, bn);
-        pruning.pruning();
-        bn = simplePruning.getNetwork();
-
-        start = System.currentTimeMillis();
-        distribution = inference.ask(queryVariables, evidences, bn);
-        finish = System.currentTimeMillis();
-        timeElapsed = finish - start;
-
-        System.out.print("P(" + args[1] + "|" + args[2] + ") = < ");
-        values = distribution.getValues();
-        for (int i = 0; i < values.length; i++) {
-            System.out.print(distribution.getValues()[i] + " ");
-        }
-        System.out.println(">");
-        System.out.println("Time elapsed " + timeElapsed + " milliseconds");
-         */
     }
 }
