@@ -65,5 +65,6 @@
 	?f <- (board)
 =>
 	(modify ?f (median (median-aux ?list)))
+	;(focus AGENT) ; TODO: verificare che sia corretto
 )
 
