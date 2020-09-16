@@ -73,9 +73,10 @@
 	(multislot destroyers)
 	(multislot submarines)
   (multislot ordered)
+  (slot median)
 )  
 
-(deftemplate sorted-heat
+(deftemplate heatset
 	(multislot values (type SYMBOL))
 )
 
@@ -84,6 +85,7 @@
 	(status (step 0) (currently running))
   (statistics (num_fire_ok 0) (num_fire_ko 0) (num_guess_ok 0) (num_guess_ko 0) (num_safe 0) (num_sink 0))
 	(first-pass-to-env)
+  (first-pass-to-heat)
 	(moves (fires 5) (guesses 20))
   (board
     (air-carriers 1 4)
@@ -92,6 +94,6 @@
     (submarines 4 1)
     (ordered air-carrier cruiser destroyer submarine)
   )
-  (sorted-heat (values (create$)))
+  (heatset (values (create$)))
 )
 

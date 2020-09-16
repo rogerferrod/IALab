@@ -2,95 +2,20 @@
 ;  --- Definizione del modulo e dei template ---
 ;  ---------------------------------------------
 (defmodule AGENT 
-	(import MAIN ?ALL) 
-	(import ENV ?ALL) 
+	(import MAIN ?ALL)
+	(import ENV ?ALL)
+	(import HEAT ?ALL)
 	;(import DELIBERATE ?ALL) 
 	;(import PLANNING ?ALL) 
 	(export ?ALL)
 )
-;; ******************************
-;; TEMPLATES
-;; ******************************
 
-(deftemplate heat-map
-	(slot x)
-	(slot y)
-	(slot h)
-	(slot computed)
-)
-
-;; ******************************
-;; FUNCTIONS
-;; ******************************
-
-(deffunction median ($?values)
-	(bind ?sorted (sort > ?values)) 
-	(bind ?length (length$ ?sorted))
-	(if (<> (mod ?length 2) 0) then ; check if length is odd
-		(bind ?median (nth$ (div (+ ?length 1) 2) ?sorted))
-	else ; length is even
-		(bind ?median (/ (+ (nth$ (div ?length 2) ?sorted) (nth$ (+ (div ?length 2) 1) ?sorted)) 2))
-	)
-)
-
-(deffunction median-no-zero ($?values)
-	(bind ?sorted (sort > (delete-member$ ?values 0))) 
-	(bind ?length (length$ ?sorted))
-	(if (<> (mod ?length 2) 0) then ; check if length is odd
-		(bind ?median (nth$ (div (+ ?length 1) 2) ?sorted))
-	else ; length is even
-		(bind ?median (/ (+ (nth$ (div ?length 2) ?sorted) (nth$ (+ (div ?length 2) 1) ?sorted)) 2))
-	)
-)
-
-
-
-
-;; ******************************
-;; RULES
-;; ******************************
-
-(defrule compute-heat-map ; Computa la Heatmap
-	(k-per-row (row ?row) (num ?rvalue))
-	(k-per-col (col ?col) (num ?cvalue))
+(defrule go-on-heat-first (declare (salience 30))
+  ?f <- (first-pass-to-heat)
 =>
-	(assert (heat-map (x ?row) (y ?col) (h (+ ?rvalue ?cvalue)) (computed FALSE)))
+  (retract ?f)
+  (focus HEAT)
 )
-
-(defrule heat-dropout ; Computa la Heatmap e fa il drop degli 0 per le righe
-	(or 
-		(k-per-row (row ?row) (num 0))
-		(k-per-col (col ?col) (num 0))
-	)
-	?f <- (heat-map (x ?row) (y ?col) (h ?h) (computed FALSE))
-=>
-	(modify ?f (h 0))
-)
-
-(defrule collect-heat
-	?f <- (heat-map (x ?row) (y ?col) (h ?h) (computed FALSE)) ; per evitare loop
-	?heat <- (sorted-heat (values $?list))
-=>
-	(modify ?heat (values ?list ?h))
-	(modify ?f (computed TRUE)) ; per evitare loop
-)
-
-
-(defrule medianX
-	(sorted-heat (values $?list))
-=>
-	
-	(printout t "Values: " (sort > ?list) crlf)
-	(printout t "Median computed: " (median-no-zero ?list) crlf)
-	
-)
-
-
-
-
-
-
-
 
 ; (defrule go-on-deliberate (declare (salience 30))
 ; 	(status (step ?s)(currently running))

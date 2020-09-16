@@ -10,7 +10,7 @@
 
 
 (deftemplate boat-hor
-        (slot name)
+    (slot name)
 	(slot x)
 	(multislot ys)
 	(slot size)
