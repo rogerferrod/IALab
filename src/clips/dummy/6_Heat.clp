@@ -21,7 +21,7 @@
 ;; FUNCTIONS
 ;; ******************************
 
-(deffunction median-aux ($?values) ; compute the median value of a  numeric multislot
+(deffunction median-aux ($?values) ; compute the median value of a numeric multislot
 	(bind ?sorted (sort > ?values)) 
 	(bind ?length (length$ ?sorted))
 	(if (<> (mod ?length 2) 0) then ; check if length is odd
@@ -67,12 +67,3 @@
 	(modify ?f (median (median-aux ?list)))
 )
 
-(defrule make-fires (declare (salience -10))
- 	(status (step ?s) (currently running))
-	(board (median ?h))
-	(heat-map (x ?x) (y ?y) (h ?h) (computed TRUE))
-=>
-	(printout t "sono qui " ?x " " ?y crlf)
-	(assert (exec (step ?s) (action fire) (x ?x) (y ?y)))
-	(pop-focus)
-)
