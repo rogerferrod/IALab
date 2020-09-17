@@ -1,5 +1,5 @@
 ;; *******************************
-;; 
+;; FUNCTIONS
 ;; *******************************
 
 
@@ -32,7 +32,7 @@
 	(if (check-boundary ?nx ?ny) ; x-1, y -> nord neighbor
 	 then 
 		(assert(k-cell (x ?nx) (y ?ny) (content water)))
-		(assert (modify-heat ?nx ?ny 0)
+		(assert (modify-heat ?nx ?ny 0))
 	)
 	(bind ?nx (- ?x 1))
 	(bind ?ny (+ ?y 1))
@@ -63,7 +63,7 @@
 		(assert (modify-heat ?nx ?ny 0))
 	)
 	(bind ?nx (+ ?x 1))
-	(bind ?ny ?y))
+	(bind ?ny ?y)
 	(if (check-boundary ?nx ?ny) ; x+1, y -> sud neighbor 
 	 then 
 		(assert (modify-heat ?nx ?ny 100))
@@ -93,7 +93,7 @@
 	(if (check-boundary ?nx ?ny) ; x-1, y -> nord neighbor
 	 then 
 		(assert(k-cell (x ?nx) (y ?ny) (content water)))
-		(assert (modify-heat ?nx ?ny 0)
+		(assert (modify-heat ?nx ?ny 0))
 	)
 	(bind ?nx (- ?x 1))
 	(bind ?ny (+ ?y 1))
@@ -123,7 +123,7 @@
 		(assert (modify-heat ?nx ?ny 0))
 	)
 	(bind ?nx (+ ?x 1))
-	(bind ?ny ?y))
+	(bind ?ny ?y)
 	(if (check-boundary ?nx ?ny) ; x+1, y -> sud neighbor 
 	 then 
 		(assert(k-cell (x ?nx) (y ?ny) (content water)))
@@ -154,7 +154,7 @@
 	(if (check-boundary ?nx ?ny) ; x-1, y -> nord neighbor
 	 then 
 		(assert(k-cell (x ?nx) (y ?ny) (content water)))
-		(assert (modify-heat ?nx ?ny 0)
+		(assert (modify-heat ?nx ?ny 0))
 	)
 	(bind ?nx (- ?x 1))
 	(bind ?ny (+ ?y 1))
@@ -184,7 +184,7 @@
 		(assert (modify-heat ?nx ?ny 0))
 	)
 	(bind ?nx (+ ?x 1))
-	(bind ?ny ?y))
+	(bind ?ny ?y)
 	(if (check-boundary ?nx ?ny) ; x+1, y -> sud neighbor 
 	 then 
 		(assert(k-cell (x ?nx) (y ?ny) (content water)))
@@ -201,7 +201,7 @@
 
 
 (defrule discover-neighborhood-bottom
-	(k-cell (x ?x) (y ?y) (content bottom))
+	(k-cell (x ?x) (y ?y) (content bot))
 	?m <- (heat-map (x ?x) (y ?y))
 =>
     ;(printout t "CURRENT MODULE: " (get-current-module))
@@ -247,7 +247,7 @@
 		(assert (modify-heat ?nx ?ny 0))
 	)
 	(bind ?nx (+ ?x 1))
-	(bind ?ny ?y))
+	(bind ?ny ?y)
 	(if (check-boundary ?nx ?ny) ; x+1, y -> sud neighbor 
 	 then 
 		(assert (k-cell (x ?nx) (y ?ny) (content water)))
@@ -278,7 +278,7 @@
 	(if (check-boundary ?nx ?ny) ; x-1, y -> nord neighbor
 	 then 
 		(assert(k-cell (x ?nx) (y ?ny) (content water)))
-		(assert (modify-heat ?nx ?ny 0)
+		(assert (modify-heat ?nx ?ny 0))
 	)
 	(bind ?nx (- ?x 1))
 	(bind ?ny (+ ?y 1))
@@ -309,7 +309,7 @@
 		(assert (modify-heat ?nx ?ny 0))
 	)
 	(bind ?nx (+ ?x 1))
-	(bind ?ny ?y))
+	(bind ?ny ?y)
 	(if (check-boundary ?nx ?ny) ; x+1, y -> sud neighbor 
 	 then 
 		(assert(k-cell (x ?nx) (y ?ny) (content water)))

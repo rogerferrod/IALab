@@ -5,19 +5,24 @@
 	(import MAIN ?ALL)
 	(import ENV ?ALL)
 	(import HEAT ?ALL)
-	;(import DELIBERATE ?ALL) 
-	;(import PLANNING ?ALL) 
+	(import DELIBERATE ?ALL) 
+	(import PLANNING ?ALL) 
 	(export ?ALL)
 )
 
-(defrule go-on-heat-first (declare (salience 30))
+;; --------------------------------------
+;; RULES
+;; --------------------------------------
+
+(defrule go-on-heat-first (declare (salience 40))
   ?f <- (first-pass-to-heat)
 =>
   (retract ?f)
+  (assert (explorer-phase))
   (focus HEAT)
 )
 
-(defrule execute-fire
+(defrule execute-fire (declare (salience 30))
 	(status (step ?s) (currently running))
 	?f <- (intention-fire (x ?x) (y ?y))
 =>
@@ -27,7 +32,7 @@
 	(pop-focus)
 )
 
-(defrule check-fire-water ; workaround rule, controlla se la fire è ko, allora la cella contiene acqua
+(defrule check-fire-water (declare (salience 30)) ; workaround rule, controlla se la fire è ko, allora la cella contiene acqua
 	?f <- (check-fire ?x ?y)
 	(not (k-cell (x ?x) (y ?y)))
 	?m <- (heat-map (x ?x) (y ?y))
@@ -37,7 +42,7 @@
 	(modify ?m (h 0))
 )
 
-(defrule check-fire-ship
+(defrule check-fire-ship (declare (salience 30))
 	?f <- (check-fire ?x ?y)
 	(k-cell (x ?x) (y ?y) (content ?c&~water))
 	?m <- (heat-map (x ?x) (y ?y))
@@ -46,7 +51,7 @@
 	(modify ?m (h 100))
 )
 
-(defrule apply-modify-heat
+(defrule apply-modify-heat (declare (salience 30))
 	?f <- (modify-heat ?x ?y ?h)
 	?m <- (heat-map (x ?x) (y ?y))
 =>
@@ -54,21 +59,30 @@
 	(retract ?f)
 )
 
-(defrule go-on-deliberate
+;
+; AGENT - DELIB - AGENT - PLANNING
+;
+
+(defrule go-on-planning (declare (salience 20))
+	(status (step ?s)(currently running))
+	(or
+		(intention-sink)
+		; ...
+	)
+=>
+	(printout t crlf crlf)
+    (printout t "vado a planning  step" ?s crlf)
+	(focus PLANNING)
+)
+
+
+(defrule go-on-deliberate (declare (salience 10))
 	(status (step ?s)(currently running))
 =>
 	(printout t crlf crlf)
     (printout t "vado a deliberate  step" ?s crlf)
 	(focus DELIBERATE) 
 )
-
-; (defrule go-on-planning (declare (salience 20))
-; 	(status (step ?s)(currently running))
-; =>
-; 	(printout t crlf crlf)
-;     (printout t "vado a planning  step" ?s crlf)
-; 	(focus PLANNING)
-; )
 
 
 ; ; TODO serve la salience?

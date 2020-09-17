@@ -19,11 +19,6 @@
 	(slot computed)
 )
 
-(deftemplate intention-fire
-	(slot x)
-	(slot y)
-)
-
 ;; ******************************
 ;; FUNCTIONS
 ;; ******************************
@@ -50,7 +45,7 @@
 	(assert (heat-map (x ?row) (y ?col) (h (+ ?rvalue ?cvalue)) (computed FALSE)))
 )
 
-(defrule compute-heat-map-known-boat
+(defrule compute-heat-map-known-boat ; Computa la Heatmap per le celle conosciute già dall'inizio del gioco
 	(k-cell (x ?x) (y ?y) (content ?c&~water))
 =>
 	(assert (heat-map (x ?x) (y ?y) (h 100) (computed TRUE))) ; importante che sia TRUE per non alterare la mediana (collect-heat)
@@ -79,19 +74,10 @@
 	(modify ?f (computed TRUE)) ; per evitare loop
 )
 
-(defrule compute-median
+(defrule compute-median ; ultima regola prima di eseguire pop-focus (implicito)
 	(heatset (values $?list))
 	?f <- (board)
 =>
 	(modify ?f (median (median-aux ?list)))
-)
-
-(defrule make-fires (declare (salience -10)) ; ultima regola prima di eseguire pop-focus (implicito)
-	(moves (fires ?f&:(> ?f 0))) ; controlla che ci siano ancora fires disponibili
-	(board (median ?h))
-	(heat-map (x ?x) (y ?y) (h ?h) (computed TRUE))
-	(not (k-cell (x ?x) (y ?y)))
-=>
-	(assert (intention-fire (x ?x) (y ?y)))
 )
 
