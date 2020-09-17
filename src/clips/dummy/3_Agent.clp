@@ -74,8 +74,24 @@
 	(focus PLANNING)
 )
 
+(defrule execute (declare (salience 10)) ; TODO: valutare se togliere salience
+	(status (step ?s) (currently running))
+	(plan-stack (plans $?stack))
+	?lastplan <- (first$ $?stack)  ; TODO: capire se serve il bind oppure se funziona.
+	;(bind ?lastplan (first$ $?stack))
+	;?p <- (plan ((id ?lastplan) (counter ?i&:(< ?i (length$ ?actions))) (action-sequence $?actions)))
+	;?p <- (plan ((id ?lastplan) (counter ?i&:(< ?i 19)) (action-sequence $?actions)))
+	;(bind ?first (nth$ ?i ?actions))
+	;(action (id ?first) (type ?t) (x ?x) (y ?y))
+=>
+	;(modify ?p (counter (+ ?i 1)))
+	;(assert (exec (step ?s) (action ?t) (x ?x) (y ?y)))
+	;(printout t "Exec " ?t " on " ?x " " ?y crlf)
+	;(pop-focus)
+	(printout t "Exec " ?lastplan crlf)
+)
 
-(defrule go-on-deliberate (declare (salience 10))
+(defrule go-on-deliberate (declare (salience 5))
 	(status (step ?s)(currently running))
 =>
 	(printout t crlf crlf)
@@ -83,24 +99,8 @@
 	(focus DELIBERATE) 
 )
 
-
-; ; TODO serve la salience?
-; (defrule execute (declare (salience 10))
-; 	(status (step ?s) (currently running))
-; 	?p <- (plan (action-sequence $?as&:(> (length$ ?as) 0)))
-; 	?first <- (first$ $?as)
-; 	?tail <- (rest$ $?as)
-; 	(action (id ?first) (type ?t) (x ?x) (y ?y))
-; =>
-; 	(modify ?p (action-sequence ?tail ))
-; 	(assert (exec (step ?s) (action ?t) (x ?x) (y ?y)))
-; 	(printout t "Exec " ?t " on " ?x " " ?y crlf)
-; 	(pop-focus)
-; )
-
 ; (defrule print-what-i-know-since-the-beginning
 ; 	(k-cell (x ?x) (y ?y) (content ?t))
 ; =>
 ; 	(printout t "I know that cell [" ?x ", " ?y "] contains " ?t "." crlf)
 ; )
-

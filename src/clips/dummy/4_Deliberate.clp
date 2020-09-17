@@ -31,11 +31,11 @@
 	(pop-focus)
 )
 
-; (defrule demo
-; =>
-; 	(assert(intention-sink(x-stern 6) (y-stern 4) (orientation ver) (type air-carrier)))
-; 	(pop-focus)
-; )
+(defrule demo
+=>
+	(assert(intention-sink(x-stern 6) (y-stern 4) (orientation ver) (type air-carrier)))
+	(pop-focus)
+)
 
 ; (deftemplate intention-abort
 ; 	(slot x-stern)
