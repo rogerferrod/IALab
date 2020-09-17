@@ -50,6 +50,18 @@
 	(assert (heat-map (x ?row) (y ?col) (h (+ ?rvalue ?cvalue)) (computed FALSE)))
 )
 
+(defrule compute-heat-map-known-boat
+	(k-cell (x ?x) (y ?y) (content ?c&~water))
+=>
+	(assert (heat-map (x ?x) (y ?y) (h 100) (computed TRUE))) ; importante che sia TRUE per non alterare la mediana (collect-heat)
+)
+
+(defrule compute-heat-map-known-water
+	(k-cell (x ?x) (y ?y) (content water))
+=>
+	(assert (heat-map (x ?x) (y ?y) (h 0) (computed TRUE))) ; importante che sia TRUE per non alterare la mediana (collect-heat)
+)
+
 (defrule heat-dropout ; effettua il "drop" delle righe e colonne, impostando il valore della cella a 0 
 	(or	(k-per-row (row ?row) (num 0))
 		(k-per-col (col ?col) (num 0)))
@@ -78,6 +90,7 @@
 	(moves (fires ?f&:(> ?f 0))) ; controlla che ci siano ancora fires disponibili
 	(board (median ?h))
 	(heat-map (x ?x) (y ?y) (h ?h) (computed TRUE))
+	(not (k-cell (x ?x) (y ?y)))
 =>
 	(assert (intention-fire (x ?x) (y ?y)))
 )
