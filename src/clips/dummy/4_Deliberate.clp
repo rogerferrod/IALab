@@ -22,14 +22,12 @@
 ;; ******************************
 
 (defrule fire-at-first (declare (salience 40)) ; TODO valutare se togliere salience
-	?p <- (explorer-phase)
   	(moves (fires ?f&:(> ?f 0))) ; controlla che ci siano ancora fires disponibili
 	(board (median ?h))
 	(heat-map (x ?x) (y ?y) (h ?h) (computed TRUE))
 	(not (k-cell (x ?x) (y ?y)))
 =>
 	(assert (intention-fire (x ?x) (y ?y)))
-  	(retract ?p)
 	(pop-focus)
 )
 

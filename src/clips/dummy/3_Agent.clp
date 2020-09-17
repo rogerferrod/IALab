@@ -18,7 +18,6 @@
   ?f <- (first-pass-to-heat)
 =>
   (retract ?f)
-  (assert (explorer-phase))
   (focus HEAT)
 )
 
