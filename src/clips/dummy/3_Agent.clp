@@ -136,7 +136,6 @@
 
 
 
-
 ; (defrule go-on-deliberate (declare (salience 30))
 ; 	(status (step ?s)(currently running))
 ; =>
