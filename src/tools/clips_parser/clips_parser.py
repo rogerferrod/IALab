@@ -4,7 +4,7 @@ from matplotlib.patches import Rectangle
 import re
 
 
-input_file = "test_output.txt"
+input_file = "input/test_output-Copy1.txt"
 
 heatmap = np.zeros(shape=(10,10))  # initializing the matrix
 
@@ -37,7 +37,6 @@ with open(input_file,"r") as file:
     heatmap[cells_100] = np.max(heatmap) + 1
     
     #print(heatmap)  # DEBUG
-    
 
     def highlight_cell(y, x, ax=None, **kwargs):
     rect = plt.Rectangle((x-.5, y-.5), 1,1, fill=False, **kwargs)
@@ -47,14 +46,21 @@ with open(input_file,"r") as file:
 
 
 def annotate_cell(text, x, y):
-    # TODO: controllare qui https://matplotlib.org/3.1.1/gallery/images_contours_and_fields/image_annotated_heatmap.html
     t = ""
     if text == "water":
         t = "w"
-    elif text == "sub":
-        t = "s"
-    else:
+    elif text == "top":
         t = "t"
+    elif text == "mid":
+        t = "t"
+    elif text == "bot":
+        t = "b"
+    elif text == "left":
+        t = "l"
+    elif text == "right":
+        t = "r"
+    else:
+        t = "s"  # sub
     plt.text(x, y, t, ha="center", va="center", color="r")
 
 
@@ -72,6 +78,7 @@ def annotate_heatmap():
         annotate_cell(content, y, x)
 
 
+fig = plt.figure(figsize=(8,8))
 plt.imshow(heatmap)
 plt.xlabel("Y")
 plt.ylabel("X")

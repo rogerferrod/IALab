@@ -53,15 +53,23 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
-# Outputs folders across all the repo ------------------------------------------
+# Michellaneous output (like java's .class) across all the repo ----------------
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# ASP
 src/asp/output
 src/tools/timetable_maker/output
 
-# Michellaneous output (like java's .class) across all the repo ----------------
+# TOOLS
+src/tools/labyrinths/.idea/*
+src/tools/labyrinths/output/*
+src/tools/clips_parser/input/*
+
+# JAVA
 src/clips/java/*.class
-# JAVA ----------------
 src/uncertainty/.idea/*
 src/uncertainty/target/*
 src/uncertainty/*.iml
-src/tools/labyrinths/.idea/*
-src/tools/labyrinths/output/*
+
