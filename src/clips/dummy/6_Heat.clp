@@ -94,3 +94,4 @@
 =>
 	(assert (intention-fire (x ?x) (y ?y)))
 )
+
