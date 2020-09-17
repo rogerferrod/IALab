@@ -24,7 +24,6 @@
 	(assert (exec (step ?s) (action fire) (x ?x) (y ?y)))
 	(assert (check-fire ?x ?y))
 	(retract ?f)
-	(printout t "Fire on " ?x " " ?y crlf)
 	(pop-focus)
 )
 
@@ -47,85 +46,6 @@
 	(modify ?m (h 100))
 )
 
-
-(deffunction check-boundary (?x ?y)
-	(if (or (< ?x 0) 
-			(< ?y 0) 
-			(> ?x 9) 
-			(> ?y 9))
-	then (bind ?return FALSE)
-	else (bind ?return TRUE))
-)
-
-(defrule discover-neighborhood-top
-	(k-cell (x ?x) (y ?y) (content top))
-	?m <- (heat-map (x ?x) (y ?y))
-=>
-	(bind ?nx (- ?x 1))
-	(bind ?ny (- ?y 1))
-	(if (check-boundary ?nx ?ny) ; x-1, y-1 -> nord-ovest neighbor
-	 then 
-	 	;(printout t "rule " ?x " " ?y crlf)
-		(assert (k-cell (x ?nx) (y ?ny) (content water)))
-		(assert (modify-heat ?nx ?ny 0))
-	)
-	(bind ?nx (- ?x 1))
-	(bind ?ny ?y)
-	(if (check-boundary ?nx ?ny) ; x-1, y -> nord neighbor
-	 then 
-	 	;(printout t "rule " ?x " " ?y crlf)
-		(assert(k-cell (x ?nx) (y ?ny) (content water)))
-		(assert (modify-heat ?nx ?ny 0)
-	)
-	(bind ?nx (- ?x 1))
-	(bind ?ny (+ ?y 1))
-	(if (check-boundary ?nx ?ny) ; x-1, y+1 -> nord-est neighbor 
-	 then 
-	 	;(printout t "rule " ?x " " ?y crlf)
-		(assert (k-cell (x ?nx) (y ?ny) (content water)))
-		(assert (modify-heat ?nx ?ny 0))
-	)
-	(bind ?nx ?x)
-	(bind ?ny (- ?y 1))
-	(if (check-boundary ?nx ?ny) ; x, y-1 -> ovest neighbor 
-	 then 
-	 	;(printout t "rule " ?x " " ?y crlf)
-		(assert(k-cell (x ?nx) (y ?ny) (content water)))
-		(assert (modify-heat ?nx ?ny 0))
-	)
-	(bind ?nx ?x)
-	(bind ?ny (+ ?y 1))
-	(if (check-boundary ?nx ?ny) ; x, y+1 -> est neighbor 
-	 then 
-	 	;(printout t "rule " ?x " " ?y crlf)
-		(assert(k-cell (x ?nx) (y ?ny) (content water)))
-		(assert (modify-heat ?nx ?ny 0))
-	)
-	(bind ?nx (+ ?x 1))
-	(bind ?ny (- ?y 1))
-	(if (check-boundary ?nx ?ny) ; x+1, y-1 -> sud-ovest neighbor 
-	 then 
-	 	;(printout t "rule " ?x " " ?y crlf)
-		(assert(k-cell (x ?nx) (y ?ny) (content water)))
-		(assert (modify-heat ?nx ?ny 0))
-	)
-	(bind ?nx (+ ?x 1))
-	(bind ?ny ?y))
-	(if (check-boundary ?nx ?ny) ; x+1, y -> sud neighbor 
-	 then 
-	 	;(printout t "rule " ?x " " ?y crlf)
-		(assert (modify-heat ?nx ?ny 100))
-	)
-	(bind ?nx (+ ?x 1))
-	(bind ?ny (+ ?y 1))
-	(if (check-boundary ?nx ?ny) ; x+1, y+1 -> sud-est neighbor 
-	 then 
-	 	;(printout t "rule " ?x " " ?y crlf)
-		(assert(k-cell (x ?nx) (y ?ny) (content water)))
-		(assert (modify-heat ?nx ?ny 0))
-	)
-)
-
 (defrule apply-modify-heat
 	?f <- (modify-heat ?x ?y ?h)
 	?m <- (heat-map (x ?x) (y ?y))
@@ -134,15 +54,13 @@
 	(retract ?f)
 )
 
-
-
-; (defrule go-on-deliberate (declare (salience 30))
-; 	(status (step ?s)(currently running))
-; =>
-; 	(printout t crlf crlf)
-;     (printout t "vado a deliberate  step" ?s crlf)
-; 	(focus DELIBERATE) 
-; )
+(defrule go-on-deliberate
+	(status (step ?s)(currently running))
+=>
+	(printout t crlf crlf)
+    (printout t "vado a deliberate  step" ?s crlf)
+	(focus DELIBERATE) 
+)
 
 ; (defrule go-on-planning (declare (salience 20))
 ; 	(status (step ?s)(currently running))

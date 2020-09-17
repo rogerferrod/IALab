@@ -80,6 +80,10 @@
 	(multislot values (type SYMBOL))
 )
 
+(deftemplate plan-stack
+  (multislot plans (type SYMBOL))
+)
+
 (deffacts initial-facts
 	(maxduration 100)
 	(status (step 0) (currently running))
@@ -95,5 +99,6 @@
     (ordered air-carrier cruiser destroyer submarine)
   )
   (heatset (values (create$)))
+  (plan-stack (plans (create$)))
 )
 
