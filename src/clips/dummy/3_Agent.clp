@@ -103,10 +103,10 @@
 	(if (eq ?t water)
 		then 
 			(assert (b-cell (x ?x) (y ?y)))
-			;(printout t "Assert water " ?x " " ?y crlf)
+			; (printout t "Assert water " ?x " " ?y crlf)
 		else 
 			(assert (exec (step ?s) (action ?t) (x ?x) (y ?y)))
-			;(printout t "Exec " ?t " on " ?x " " ?y crlf)
+			; (printout t "Exec " ?t " on " ?x " " ?y crlf)
 			(pop-focus)
 	)
 )

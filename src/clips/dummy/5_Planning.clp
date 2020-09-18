@@ -1,18 +1,6 @@
 (defmodule PLANNING (import MAIN ?ALL)	(import ENV ?ALL) (import DELIBERATE ?ALL) (export ?ALL))
 
-;; *******************************
-;; FUNCTIONS
-;; *******************************
 
-
-(deffunction check-in-boundary (?x ?y)
-	(if (or (< ?x 0) 
-			(< ?y 0) 
-			(> ?x 9) 
-			(> ?y 9))
-	then (bind ?return FALSE)
-	else (bind ?return TRUE))
-)
 
 ;; *******************************
 ;; TEMPLATES
@@ -32,107 +20,84 @@
 	(multislot action-sequence (type SYMBOL))
 )
 
+;; *******************************
+;; FUNCTIONS
+;; *******************************
+
+
+(deffunction check-in-boundary (?x ?y)
+	(if (or (< ?x 0) 
+			(< ?y 0) 
+			(> ?x 9) 
+			(> ?y 9))
+	then (bind ?return FALSE)
+	else (bind ?return TRUE))
+)
+
+(deffunction generate-ship-vert-guess (?x-start ?y-start ?size)
+    (bind ?id-sequence (create$)) 
+    (loop-for-count (?i 0 (- ?size 1)) 
+        (bind ?x (- ?x-start ?i))
+        (bind ?id (gensym*))
+        (assert (action (id ?id) (x ?x) (y ?y-start) (type guess))) ; no need to assign gensym* to id slot since is default-dynamic
+        (bind ?id-sequence (create$ ?id-sequence ?id))
+    )
+    (return ?id-sequence)
+)  
+
+(deffunction generate-ship-vert-water (?x-start ?y-start ?size)
+    (bind ?id-sequence (create$)) 
+    (bind ?water-start )
+    ; loop for water on ship sides 
+    (loop-for-count (?i -1 ?size) ; ?i == -1 is for the row under the stern, ?i == size is for the row on top of the bow
+        (bind ?x (- ?x-start ?i))
+        
+        ; left side <-|o|-
+        (bind ?id (gensym*))
+        (assert (action (id ?id) (x ?x) (y (- ?y-start 1)) (type water)))
+        (bind ?id-sequence (create$ ?id-sequence ?id))
+        
+        ; right side -|o|->
+        (bind ?id (gensym*))
+        (assert (action (id ?id) (x ?x) (y (+ ?y-start 1)) (type water)))        
+        (bind ?id-sequence (create$ ?id-sequence ?id))
+    )
+    ; add water on top of the bow
+    (bind ?id (gensym*))
+    (assert (action (id ?id) (x (- ?x-start ?size)) (y ?y-start) (type water)))
+    (bind ?id-sequence (create$ ?id-sequence ?id))
+
+    ; add water under the stern
+    (bind ?id (gensym*))
+    (assert (action (id ?id) (x (+ ?x-start 1)) (y ?y-start) (type water)))
+    (bind ?id-sequence (create$ ?id-sequence ?id))
+
+    (return ?id-sequence)
+)  
 
 ;; *******************************
 ;; RULES
 ;; *******************************
 
-; si potrebbe rendere più generica
 (defrule plan-air-carriers-ver
 	(status (step ?s)(currently running))
-    ?f <- (intention-sink (x-stern ?x) (y-stern ?y) (orientation ver) (type air-carrier))
-    ;(air-carriers-info ?n ?size)
+    ?f <- (intention-sink (x-stern ?x-stern) (y-stern ?y-stern) (orientation ver) (type air-carrier))
+    (board (air-carriers ?n ?size))
     ?ps <- (plan-stack (plans $?list))
 =>
     (printout t "Plan Air-CarrierVer" crlf)
     (bind ?plan_id (gensym*))
-    (bind ?id1 (gensym*))
-    (bind ?id2 (gensym*))
-    (bind ?id3 (gensym*))
-    (bind ?id4 (gensym*))
-    (bind ?id5 (gensym*))
-    (bind ?id6 (gensym*))
-    (bind ?id7 (gensym*))
-    (bind ?id8 (gensym*))
-    (bind ?id9 (gensym*))
-    (bind ?id10 (gensym*))
-    (bind ?id11 (gensym*))
-    (bind ?id12 (gensym*))
-    (bind ?id13 (gensym*))
-    (bind ?id14 (gensym*))
-    (bind ?id15 (gensym*))
-    (bind ?id16 (gensym*))
-    (bind ?id17 (gensym*))
-    (bind ?id18 (gensym*))
-
-	(assert (action (id ?id1) (x ?x) (y ?y) (type guess)))
-    (assert (action (id ?id2) (x (- ?x 1)) (y ?y) (type guess)))
-    (assert (action (id ?id3) (x (- ?x 2)) (y ?y) (type guess)))
-    (assert (action (id ?id4) (x (- ?x 3)) (y ?y) (type guess)))
-
-    (bind ?nx ?x)
-	(bind ?ny (- ?y 1))
-    (assert (action (id ?id5) (x ?nx) (y ?ny) (type water)))
-    (bind ?nx (- ?x 1))
-	(bind ?ny (- ?y 1))
-    (assert (action (id ?id6) (x ?nx) (y ?ny) (type water)))
-    (bind ?nx (- ?x 2))
-	(bind ?ny (- ?y 1))
-    (assert (action (id ?id7) (x ?nx) (y ?ny) (type water)))
-    (bind ?nx (- ?x 3))
-	(bind ?ny (- ?y 1))
-    (assert (action (id ?id8) (x ?nx) (y ?ny) (type water)))
-    (bind ?nx (- ?x 4))
-	(bind ?ny (- ?y 1))
-    (assert (action (id ?id9) (x ?nx) (y ?ny) (type water)))
-    (bind ?nx (- ?x 4))
-	(bind ?ny ?y)
-    (assert (action (id ?id10) (x ?nx) (y ?ny) (type water)))
-    (bind ?nx (- ?x 4))
-	(bind ?ny (+ ?y 1))
-    (assert (action (id ?id11) (x ?nx) (y ?ny) (type water)))
-    (bind ?nx (- ?x 3))
-	(bind ?ny (+ ?y 1))
-    (assert (action (id ?id12) (x ?nx) (y ?ny) (type water)))
-    (bind ?nx (- ?x 2))
-	(bind ?ny (+ ?y 1))
-    (assert (action (id ?id13) (x ?nx) (y ?ny) (type water)))
-    (bind ?nx (- ?x 1))
-	(bind ?ny (+ ?y 1))
-    (assert (action (id ?id14) (x ?nx) (y ?ny) (type water)))
-    (bind ?nx ?x)
-	(bind ?ny (+ ?y 1))
-    (assert (action (id ?id15) (x ?nx) (y ?ny) (type water)))
-    (bind ?nx (+ ?x 1))
-	(bind ?ny (+ ?y 1))
-    (assert (action (id ?id16) (x ?nx) (y ?ny) (type water)))
-    (bind ?nx (+ ?x 1))
-	(bind ?ny ?y)
-    (assert (action (id ?id17) (x ?nx) (y ?ny) (type water)))
-    (bind ?nx (+ ?x 1))
-	(bind ?ny (- ?y 1))
-    (assert (action (id ?id18) (x ?nx) (y ?ny) (type water)))
     
-    (assert (plan (id ?plan_id ) (ship air-carrier) (counter 1) (action-sequence (create$ ?id1 ?id2 ?id3 ?id4 ?id5 ?id6 ?id7 ?id8 ?id9 ?id10 ?id11 ?id12 ?id13 ?id14 ?id15 ?id16 ?id17 ?id18))))
-    (modify ?ps (plans ?plan_id ?list) (lastplan ?plan_id))
-    (retract ?f)
+    (bind ?guess_id_seq (generate-ship-vert-guess ?x-stern ?y-stern ?size)) ;assert guess actions
+    (bind ?water_id_seq (generate-ship-vert-water ?x-stern ?y-stern ?size)) ;assert water actions
+    
+    (assert (plan (id ?plan_id ) (ship air-carrier) (counter 1) (action-sequence (create$ ?guess_id_seq ?water_id_seq)))) ; create a new plan
+    (modify ?ps (lastplan ?plan_id) (plans ?plan_id ?list)) ; push new plan on the on stack
+    (retract ?f); remove the intention
 	(assert (to-check-ship-neighborhood))
 )
 
-; (defrule check-ship-neighborhood
-;     (to-check-ship-neighborhood)  
-;     ?a <- (action (id ?id) (x ?x) (y ?y) (type water))
-;     ?p <- (plan (id ?plan_id) (action-sequence ?actions))
-;     (or
-;         (not (check-in-boundary ?x ?y))
-;         (not (k-cell (x ?x) (y ?y) (content water))) ; TODO da togliere?
-;     )
-; =>
-;     (retract ?a)
-;     (modify ?p (action-sequence (delete-member$ ?actions ?id)))
-; )
-
-(defrule check-ship-neighborhood
+(defrule check-ship-neighborhood ;; check if generated water actions from intention-sink is invalid, if so retract
     (to-check-ship-neighborhood)  
     ?a <- (action (id ?id) (x ?x) (y ?y) (type water))
     ?p <- (plan (id ?plan_id) (action-sequence ?actions))
@@ -147,15 +112,5 @@
     ?f <- (to-check-ship-neighborhood)  
 =>
     (retract ?f)
-    ;(assert (to-exec))
     (pop-focus) ;si potrebbe anche togliere
 )
-
-; ; (foreach <list-variable> <multifield-expression> <expression>*)
-
-; ; CLIPS> (foreach ?field (create$ abc def ghi) 
-; ;             (printout t "--> " ?field " " ?field-index " <--" crlf))
-; ; --> abc 1 <-- 
-; ; --> def 2 <-- 
-; ; --> ghi 3 <-- 
-; ; CLIPS>
