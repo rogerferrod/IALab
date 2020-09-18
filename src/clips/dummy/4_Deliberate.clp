@@ -35,8 +35,11 @@
 	?f <- (only-one-demo)
 	(status (step ?s) (currently running))
 =>
-	(assert(intention-sink(x-stern 6) (y-stern 4) (orientation ver) (type air-carrier)))
+	;(assert(intention-sink(x-stern 6) (y-stern 4) (orientation ver) (type air-carrier)))
 	;(assert(intention-sink(x-stern 6) (y-stern 2) (orientation ver) (type cruiser)))
+	;(assert(intention-sink(x-stern 6) (y-stern 0) (orientation ver) (type destroyer)))
+	;(assert(intention-sink(x-stern 9) (y-stern 0) (orientation ver) (type submarine)))
+	(assert(intention-sink(x-stern 9) (y-stern 4) (orientation ver) (type destroyer)))
 	(retract ?f)
 	(pop-focus)
 )

@@ -165,8 +165,8 @@
 (defrule check-ship-neighborhood ;; check if generated water actions from intention-sink is invalid, if so retract
     (to-check-ship-neighborhood)  
     ?a <- (action (id ?id) (x ?x) (y ?y) (type water))
-    ?p <- (plan (id ?plan_id) (action-sequence ?actions))
-    (not (check-in-boundary ?x ?y))
+    ?p <- (plan (id ?plan_id) (action-sequence $?actions))
+    (test (not (check-in-boundary ?x ?y)))
 =>
     (retract ?a)
     (modify ?p (action-sequence (delete-member$ ?actions ?id)))
