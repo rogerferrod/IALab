@@ -68,10 +68,14 @@
 )
 
 (deftemplate board
-	(multislot air-carriers)  ;tipo nave, #navi, #celle occupate
-	(multislot cruisers)
-	(multislot destroyers)
-	(multislot submarines)
+	(slot air-carrier)  ;tipo nave, #navi, #celle occupate
+	(slot cruiser)
+	(slot destroyer)
+	(slot submarine)
+  (slot n-air-carriers)  ;tipo nave, #navi, #celle occupate
+	(slot n-cruisers)
+	(slot n-destroyers)
+	(slot n-submarines)
   (multislot ordered)
   (slot median)
 )  
@@ -93,10 +97,14 @@
   (first-pass-to-heat)
 	(moves (fires 5) (guesses 20))
   (board
-    (air-carriers 1 4)
-    (cruisers 2 3)
-    (destroyers 3 2)
-    (submarines 4 1)
+    (air-carrier 4)
+    (cruiser 3)
+    (destroyer 2)
+    (submarine 1)
+    (n-air-carriers 1)
+    (n-cruisers 2)
+    (n-destroyers 3)
+    (n-submarines 4)
     (ordered air-carrier cruiser destroyer submarine)
   )
   (heatset (values (create$)))

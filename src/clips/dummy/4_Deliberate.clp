@@ -36,6 +36,7 @@
 	(status (step ?s) (currently running))
 =>
 	(assert(intention-sink(x-stern 6) (y-stern 4) (orientation ver) (type air-carrier)))
+	;(assert(intention-sink(x-stern 6) (y-stern 2) (orientation ver) (type cruiser)))
 	(retract ?f)
 	(pop-focus)
 )
