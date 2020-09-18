@@ -32,8 +32,11 @@
 )
 
 (defrule demo
+	?f <- (only-one-demo)
+	(status (step ?s) (currently running))
 =>
 	(assert(intention-sink(x-stern 6) (y-stern 4) (orientation ver) (type air-carrier)))
+	(retract ?f)
 	(pop-focus)
 )
 

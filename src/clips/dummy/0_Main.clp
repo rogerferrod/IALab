@@ -38,7 +38,7 @@
 
  =>
 
-    (printout t crlf crlf)
+    ;(printout t crlf crlf)
     (printout t "vado ad agent  step" ?s crlf)
     (focus AGENT)
 )
@@ -54,7 +54,7 @@
 =>
 
   ; (printout t crlf crlf)
-  ; (printout t "vado ad ENV  step" ?s)
+  (printout t "vado ad ENV  step" ?s crlf)
   (focus ENV)
 
 )
@@ -82,6 +82,7 @@
 
 (deftemplate plan-stack
   (multislot plans (type SYMBOL))
+  (slot lastplan)
 )
 
 (deffacts initial-facts
@@ -100,5 +101,6 @@
   )
   (heatset (values (create$)))
   (plan-stack (plans (create$)))
+  (only-one-demo) ; TODO: temporaneo
 )
 

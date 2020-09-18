@@ -31,7 +31,7 @@
 	else ; length is even
 		(bind ?median (integer (/ (+ (nth$ (div ?length 2) ?sorted) (nth$ (+ (div ?length 2) 1) ?sorted)) 2)))
 	)
-)
+) 
 
 
 ;; ******************************

@@ -10,6 +10,15 @@
 	(export ?ALL)
 )
 
+;;
+;;
+;;
+
+(deftemplate b-cell ;; belief cell, "noi crediamo che qui ci sia dell'acqua"
+	(slot x)
+	(slot y)
+)
+
 ;; --------------------------------------
 ;; RULES
 ;; --------------------------------------
@@ -69,32 +78,42 @@
 		; ...
 	)
 =>
-	(printout t crlf crlf)
+	;(printout t crlf crlf)
     (printout t "vado a planning  step" ?s crlf)
 	(focus PLANNING)
 )
 
-(defrule execute (declare (salience 10)) ; TODO: valutare se togliere salience
+
+(defrule explode-actions (declare (salience 10)) ; TODO: valutare se togliere salience
 	(status (step ?s) (currently running))
-	(plan-stack (plans $?stack))
-	?lastplan <- (first$ $?stack)  ; TODO: capire se serve il bind oppure se funziona.
-	;(bind ?lastplan (first$ $?stack))
-	;?p <- (plan ((id ?lastplan) (counter ?i&:(< ?i (length$ ?actions))) (action-sequence $?actions)))
-	;?p <- (plan ((id ?lastplan) (counter ?i&:(< ?i 19)) (action-sequence $?actions)))
-	;(bind ?first (nth$ ?i ?actions))
-	;(action (id ?first) (type ?t) (x ?x) (y ?y))
+	(plan-stack (lastplan ?plan))
+	?p <- (plan (id ?plan) (counter ?i) (action-sequence $?actions))
+	(test (<= ?i (length$ ?actions)))
 =>
-	;(modify ?p (counter (+ ?i 1)))
-	;(assert (exec (step ?s) (action ?t) (x ?x) (y ?y)))
-	;(printout t "Exec " ?t " on " ?x " " ?y crlf)
-	;(pop-focus)
-	(printout t "Exec " ?lastplan crlf)
+	(assert (action-to-exec(nth$ ?i $?actions)))
+	(modify ?p (counter (+ ?i 1)))
+)
+
+(defrule execute-action (declare (salience 10))
+	(status (step ?s) (currently running))
+	?f <- (action-to-exec ?id)
+	(action (id ?id) (type ?t) (x ?x) (y ?y))
+=>
+	(retract ?f)
+	(if (eq ?t water)
+		then 
+			(assert (b-cell (x ?x) (y ?y)))
+			;(printout t "Assert water " ?x " " ?y crlf)
+		else 
+			(assert (exec (step ?s) (action ?t) (x ?x) (y ?y)))
+			;(printout t "Exec " ?t " on " ?x " " ?y crlf)
+			(pop-focus)
+	)
 )
 
 (defrule go-on-deliberate (declare (salience 5))
 	(status (step ?s)(currently running))
 =>
-	(printout t crlf crlf)
     (printout t "vado a deliberate  step" ?s crlf)
 	(focus DELIBERATE) 
 )
