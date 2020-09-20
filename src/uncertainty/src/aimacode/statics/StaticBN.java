@@ -1,4 +1,4 @@
-package aimacode;
+package aimacode.statics;
 
 import aima.core.probability.CategoricalDistribution;
 import aima.core.probability.RandomVariable;
@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 
 public class StaticBN {
     public static void main(String[] args) {
-        HashMap<String, RandomVariable> vaNamesMap = new HashMap<>();
+        HashMap<String, RandomVariable> vaNamesMap = new HashMap<>(); // name : va
 
         args = new String[4];
 

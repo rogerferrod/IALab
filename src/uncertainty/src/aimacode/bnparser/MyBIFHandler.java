@@ -24,7 +24,7 @@ package aimacode.bnparser;
  */
 
 
-import aimacode.MyCPTNode;
+import aimacode.statics.MyCPTNode;
 import aimacode.bnparser.bif.BIFDefinition;
 import aimacode.bnparser.bif.BIFVariable;
 import aimacode.bnparser.bif.FileSection;

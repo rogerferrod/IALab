@@ -1,8 +1,4 @@
-package aimacode;/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+package aimacode.dynamic;
 
 import aima.core.probability.RandomVariable;
 import aima.core.probability.bayes.DynamicBayesianNetwork;
@@ -43,7 +39,7 @@ public class UmbrellaParticle {
                 aps[i][0] = new AssignmentProposition(ExampleRV.UMBREALLA_t_RV, 
                         Integer.parseInt(args[i+1])==0 ? Boolean.FALSE : Boolean.TRUE);
             }
-        }        
+        }
     
         System.out.println("Rete Umbrella con stato Rain");
         ParticleFiltering pf = new ParticleFiltering(n,

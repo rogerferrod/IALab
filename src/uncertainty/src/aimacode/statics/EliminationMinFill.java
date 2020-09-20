@@ -1,4 +1,4 @@
-package aimacode;
+package aimacode.statics;
 
 import aima.core.probability.RandomVariable;
 import aima.core.probability.bayes.BayesianNetwork;

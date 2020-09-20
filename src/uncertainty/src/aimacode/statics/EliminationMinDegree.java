@@ -1,4 +1,4 @@
-package aimacode;
+package aimacode.statics;
 
 import java.util.ArrayList;
 import java.util.Collection;
