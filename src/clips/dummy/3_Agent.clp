@@ -71,6 +71,14 @@
 ; AGENT - DELIB - AGENT - PLANNING
 ;
 
+(defrule solve (declare (salience 20))
+	(status (step ?s)(currently running))
+	?f <- (intention-solve)
+=>
+	(assert (exec (step ?s) (action solve)))
+	(pop-focus)
+)
+
 (defrule go-on-planning (declare (salience 20))
 	(status (step ?s)(currently running))
 	(or

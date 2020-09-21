@@ -6,6 +6,7 @@
 (load 5_Planning.clp)
 (load 3_Agent.clp)
 (load 7_Neighborhood_fire.clp)
+(load 8_Convolution.clp)
 (reset)
 ;(watch focus)
 (set-break game-over)
