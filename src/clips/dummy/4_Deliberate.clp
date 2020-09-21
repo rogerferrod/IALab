@@ -80,7 +80,7 @@
 	(bind ?id1 (gensym*))
 	;(bind ?id2 (gensym*))
 	; TODO fare un loop su ogni possibile cella....
-	(assert (convolution-area (id ?id1) (type ?ship-type) (size ?ship-size) (x 0) (y 0) (orientation ver) (computed FALSE) (conv-id ?id1)))
+	(assert (convolution-area (id ?id1) (type ?ship-type) (size ?ship-size) (x 0) (y 0) (orientation ver) (computed FALSE)))
 	(printout t "Assert convolution-area in 0 0" crlf)
 	;(assert (convolution-area (id ?id2) (type ?ship-type) (size ?ship-size) (x 0) (y 0) (orientation hor) (computed FALSE)))
 	;(modify ?i (ship-index (+ ?s 1))) ; TODO da mettere quando si asserisce intention-sink

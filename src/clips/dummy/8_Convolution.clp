@@ -11,7 +11,7 @@
 ; )
 
 (defrule check-conv-cell
-    ?f <- (conv-cell (id ?id) (x ?x) (y ?y) (id-conv ?conv))
+    ?f <- (conv-cell (id ?id) (x ?x) (y ?y) (conv-id ?conv))
     ?c <- (convolution-area (id ?conv) (area $?area))
     (test (not (check-in-boundary ?x ?y)))
 =>

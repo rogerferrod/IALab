@@ -47,14 +47,16 @@
 
 (defrule compute-heat-map-known-boat ; Computa la Heatmap per le celle conosciute già dall'inizio del gioco
 	(k-cell (x ?x) (y ?y) (content ?c&~water))
+	?f <- (heat-map (x ?x) (y ?y) (computed FALSE))
 =>
-	(assert (heat-map (x ?x) (y ?y) (h 100) (computed TRUE))) ; importante che sia TRUE per non alterare la mediana (collect-heat)
+	(modify ?f (h 100) (computed TRUE)) ; importante che sia TRUE per non alterare la mediana (collect-heat)
 )
 
 (defrule compute-heat-map-known-water
 	(k-cell (x ?x) (y ?y) (content water))
+	?f <- (heat-map (x ?x) (y ?y) (computed FALSE))
 =>
-	(assert (heat-map (x ?x) (y ?y) (h 0) (computed TRUE))) ; importante che sia TRUE per non alterare la mediana (collect-heat)
+	(modify ?f (h 100) (computed TRUE)) ; importante che sia TRUE per non alterare la mediana (collect-heat)
 )
 
 (defrule heat-dropout ; effettua il "drop" delle righe e colonne, impostando il valore della cella a 0 
