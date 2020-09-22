@@ -42,8 +42,7 @@ public class UmbrellaParticle {
         }
     
         System.out.println("Rete Umbrella con stato Rain");
-        ParticleFiltering pf = new ParticleFiltering(n,
-                DynamicBayesNetExampleFactory.getUmbrellaWorldNetwork());
+        ParticleFiltering pf = new ParticleFiltering(n, DynamicBayesNetExampleFactory.getUmbrellaWorldNetwork());
 
         for (int i=0; i<m; i++) {
             AssignmentProposition[][] S = pf.particleFiltering(aps[i]);
@@ -52,8 +51,7 @@ public class UmbrellaParticle {
         }
 
         System.out.println("Rete Umbrella con stato Rain, Wind");        
-        pf = new ParticleFiltering(n,
-                UmbrellaParticle.getRainWindNet());
+        pf = new ParticleFiltering(n, UmbrellaParticle.getRainWindNet());
 
         for (int i=0; i<m; i++) {
             AssignmentProposition[][] S = pf.particleFiltering(aps[i]);

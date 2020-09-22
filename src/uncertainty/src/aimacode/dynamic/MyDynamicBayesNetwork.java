@@ -3,8 +3,10 @@ package aimacode.dynamic;
 import aima.core.probability.RandomVariable;
 import aima.core.probability.bayes.BayesianNetwork;
 import aima.core.probability.bayes.FiniteNode;
+import aima.core.probability.bayes.Node;
 import aima.core.probability.bayes.impl.BayesNet;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -31,8 +33,8 @@ public class MyDynamicBayesNetwork {
         return priorNodes;
     }
 
-    public FiniteNode[] gettNodes() {
-        return tNodes;
+    public RandomVariable[] getVariables() {
+        return Arrays.stream(tNodes).map(Node::getRandomVariable).toArray(RandomVariable[]::new);
     }
 
     public HashMap<String, RandomVariable> getVaNamesMap() {
