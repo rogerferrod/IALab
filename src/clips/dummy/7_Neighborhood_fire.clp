@@ -16,7 +16,7 @@
 ;; RULES
 ;; *******************************
 
-(defrule discover-neighborhood-top
+(defrule discover-neighborhood-top (declare (salience 30))
 	(k-cell (x ?x) (y ?y) (content top))
 	?m <- (heat-map (x ?x) (y ?y))
 =>
@@ -67,6 +67,7 @@
 	(if (check-boundary ?nx ?ny) ; x+1, y -> sud neighbor 
 	 then 
 		(assert (modify-heat ?nx ?ny 100))
+		(assert (b-cell (x ?nx) (y ?ny) (content boat)))
 	)
 	(bind ?nx (+ ?x 1))
 	(bind ?ny (+ ?y 1))
@@ -114,6 +115,7 @@
 	(if (check-boundary ?nx ?ny) ; x, y+1 -> est neighbor 
 	 then 
 		(assert (modify-heat ?nx ?ny 100))
+		(assert (b-cell (x ?nx) (y ?ny) (content boat)))
 	)
 	(bind ?nx (+ ?x 1))
 	(bind ?ny (- ?y 1))
@@ -168,6 +170,7 @@
 	(if (check-boundary ?nx ?ny) ; x, y-1 -> ovest neighbor 
 	 then 
 		(assert (modify-heat ?nx ?ny 100))
+		(assert (b-cell (x ?nx) (y ?ny) (content boat)))
 	)
 	(bind ?nx ?x)
 	(bind ?ny (+ ?y 1))
@@ -217,6 +220,7 @@
 	(if (check-boundary ?nx ?ny) ; x-1, y -> nord neighbor
 	 then 
 		(assert (modify-heat ?nx ?ny 100)) ; siamo sicuri che c'è una pezzo di nave ma non sappiamo quale
+		(assert (b-cell (x ?nx) (y ?ny) (content boat)))
 	)
 	(bind ?nx (- ?x 1))
 	(bind ?ny (+ ?y 1))

@@ -14,11 +14,6 @@
 ;;
 ;;
 
-(deftemplate b-cell ;; belief cell
-	(slot x)
-	(slot y)
-	(slot content (allowed-values water boat))
-)
 
 ;; --------------------------------------
 ;; RULES
@@ -121,12 +116,12 @@
 	)
 )
 
-; (defrule go-on-deliberate (declare (salience 5))
-; 	(status (step ?s)(currently running))
-; =>
-;     (printout t "vado a deliberate  step" ?s crlf)
-; 	(focus DELIBERATE) 
-; )
+(defrule go-on-deliberate (declare (salience 5))
+	(status (step ?s)(currently running))
+=>
+    (printout t "vado a deliberate  step" ?s crlf)
+	(focus DELIBERATE) 
+)
 
 ; (defrule print-what-i-know-since-the-beginning
 ; 	(k-cell (x ?x) (y ?y) (content ?t))

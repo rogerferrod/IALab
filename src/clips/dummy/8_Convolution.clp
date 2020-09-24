@@ -24,8 +24,8 @@
         (test (not (check-in-boundary ?x ?y))) ; deletes the cells that exceed the boundary
         (k-cell (x ?x) (y ?y) (content water))
         (b-cell (x ?x) (y ?y))
-        (k-per-col (col ?y) (num ?num&:(> ?v ?num)))  ; not(v <= col) -> (v > col) --------> TODO: usare update-k-per-col
-        (k-per-row (row ?x) (num ?num&:(< ?num 1))) ; not(row >= 1) -> (row < 1) ----------> TODO: usare update-k-per-col
+        (updated-k-per-col (col ?y) (num ?num&:(> ?v ?num)))  ; not(v <= col) -> (v > col)
+        (updated-k-per-row (row ?x) (num ?num&:(< ?num 1))) ; not(row >= 1) -> (row < 1)
         ; TODO: controllare sovrapposizioni compatibili di k-cell (bottom, top, middle...)
     )
 =>
@@ -51,11 +51,11 @@
         (if (eq ?orientation ver) then ; vertical orientation
             (bind ?nx (- ?x ?i)) ; move along row 
             (assert (conv-cell (id ?id) (area-id ?conv-id) (x ?nx) (y ?y))) ; TODO: aggiungere il content (bot, middle, top), vedi TODO check-conv-cell
-            (printout t "Assert conv-cell in " ?nx " " ?y crlf)
+            ;(printout t "Assert conv-cell in " ?nx " " ?y crlf)
         else ; horizontal orientation
             (bind ?ny (- ?y ?i)) ; move along columns
             (assert (conv-cell (id ?id) (area-id ?conv-id) (x ?x) (y ?ny)))
-            (printout t "Assert conv-cell in " ?x " " ?ny crlf)
+            ;(printout t "Assert conv-cell in " ?x " " ?ny crlf)
         )
 
         (bind ?id-list (create$ ?id-list ?id))
