@@ -26,11 +26,12 @@
 	(slot score)
 	(multislot area) ; id dei fatti corrispondenti alle celle dell'area
 	(slot computed)
+	(slot visited) ; counter of cells already visited during convolution
 )
 
 (deftemplate conv-cell
 	(slot id)
-	(slot conv-id)
+	(slot area-id)
 	(slot x)
 	(slot y)
 )
@@ -40,7 +41,7 @@
 ;; RULES
 ;; ******************************
 
-(defrule fire-at-first (declare (salience 40)) ; TODO valutare se togliere salience
+(defrule fire-at-first (declare (salience 40)) ; TODO: valutare se togliere salience
   	(moves (fires ?f&:(> ?f 0))) ; controlla che ci siano ancora fires disponibili
 	(board (median ?h))
 	(heat-map (x ?x) (y ?y) (h ?h) (computed TRUE))
@@ -78,11 +79,18 @@
 	(bind ?ship-type (nth$ ?s ?list))
 	(bind ?ship-size (fact-slot-value ?b ?ship-type)) ; retrieve ship size from ship type
 	(bind ?id1 (gensym*))
-	;(bind ?id2 (gensym*))
-	; TODO fare un loop su ogni possibile cella....
-	(assert (convolution-area (id ?id1) (type ?ship-type) (size ?ship-size) (x 0) (y 0) (orientation ver) (computed FALSE)))
-	(printout t "Assert convolution-area in 0 0" crlf)
-	;(assert (convolution-area (id ?id2) (type ?ship-type) (size ?ship-size) (x 0) (y 0) (orientation hor) (computed FALSE)))
+	(bind ?id2 (gensym*))
+	(bind ?limit 9)  ; limite per le x e le y, (0,9) e (9,9)
+	(assert (convolution-area (id ?id1) (type ?ship-type) (size ?ship-size) (x 0) (y 0) (orientation ver) (computed FALSE) (visited 0)))
+	;(assert (convolution-area (id ?id2) (type ?ship-type) (size ?ship-size) (x 6) (y 4) (orientation ver) (computed FALSE) (visited 0))) ; Posizione originale
+	(assert (convolution-area (id ?id2) (type ?ship-type) (size ?ship-size) (x 6) (y 8) (orientation ver) (computed FALSE) (visited 0)))
+	; (loop-for-count (?i 0 ?limit)
+	; 	(loop-for-count (?j 0 ?limit)
+	; 		(assert (convolution-area (id ?id1) (type ?ship-type) (size ?ship-size) (x ?i) (y ?j) (orientation ver) (computed FALSE)))
+	; 		(assert (convolution-area (id ?id2) (type ?ship-type) (size ?ship-size) (x ?i) (y ?j) (orientation hor) (computed FALSE)))
+	; 	)
+	; ) 
+	
 	;(modify ?i (ship-index (+ ?s 1))) ; TODO da mettere quando si asserisce intention-sink
 	(retract ?f) ; TODO temporaneo
 )

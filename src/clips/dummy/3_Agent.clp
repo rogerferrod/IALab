@@ -14,9 +14,10 @@
 ;;
 ;;
 
-(deftemplate b-cell ;; belief cell, "noi crediamo che qui ci sia dell'acqua"
+(deftemplate b-cell ;; belief cell
 	(slot x)
 	(slot y)
+	(slot content (allowed-values water boat))
 )
 
 ;; --------------------------------------
@@ -110,21 +111,22 @@
 	(retract ?f)
 	(if (eq ?t water)
 		then 
-			(assert (b-cell (x ?x) (y ?y)))
+			(assert (b-cell (x ?x) (y ?y) (content water)))
 			(printout t "Assert water " ?x " " ?y crlf)
 		else 
 			(assert (exec (step ?s) (action ?t) (x ?x) (y ?y)))
+			(assert (b-cell (x ?x) (y ?y) (content boat)))
 			(printout t "Exec " ?t " on " ?x " " ?y crlf)
 			(pop-focus)
 	)
 )
 
-(defrule go-on-deliberate (declare (salience 5))
-	(status (step ?s)(currently running))
-=>
-    (printout t "vado a deliberate  step" ?s crlf)
-	(focus DELIBERATE) 
-)
+; (defrule go-on-deliberate (declare (salience 5))
+; 	(status (step ?s)(currently running))
+; =>
+;     (printout t "vado a deliberate  step" ?s crlf)
+; 	(focus DELIBERATE) 
+; )
 
 ; (defrule print-what-i-know-since-the-beginning
 ; 	(k-cell (x ?x) (y ?y) (content ?t))

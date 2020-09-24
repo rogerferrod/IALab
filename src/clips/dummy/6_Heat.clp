@@ -19,6 +19,16 @@
 	(slot computed)
 )
 
+(deftemplate updated-k-per-col
+	(slot col)
+	(slot num)
+)
+
+(deftemplate updated-k-per-row
+	(slot row)
+	(slot num)
+)
+
 ;; ******************************
 ;; FUNCTIONS
 ;; ******************************
@@ -43,6 +53,8 @@
 	(k-per-col (col ?col) (num ?cvalue))
 =>
 	(assert (heat-map (x ?row) (y ?col) (h (+ ?rvalue ?cvalue)) (computed FALSE)))
+	(assert (updated-k-per-col (col ?col) (num ?cvalue)))
+	(assert (updated-k-per-row (row ?row) (num ?rvalue)))
 )
 
 (defrule compute-heat-map-known-boat ; Computa la Heatmap per le celle conosciute già dall'inizio del gioco
