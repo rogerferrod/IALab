@@ -24,7 +24,7 @@ package aimacode.bnparser;
  */
 
 
-import aimacode.statics.MyCPTNode;
+import aimacode.statics.CPTNode;
 import aimacode.bnparser.bif.BIFDefinition;
 import aimacode.bnparser.bif.BIFVariable;
 import aimacode.bnparser.bif.FileSection;
@@ -283,7 +283,7 @@ public class MyBIFHandler extends DefaultHandler {
         for (BIFDefinition d : this.bifDefinitions) {
             if (d.getGivenDefinitions().size() == 0) {
                 //Node node = new FullCPTNode(this.rvs.get(d.getForDefinition()), d.getTable());
-                Node node = new MyCPTNode(this.rvs.get(d.getForDefinition()), d.getTable());
+                Node node = new CPTNode(this.rvs.get(d.getForDefinition()), d.getTable());
 //				String a = "<";
 //				for (int i = 0; i < d.getTable().length; i++) {
 //					a = a + " " + d.getTable()[i];
@@ -317,7 +317,7 @@ public class MyBIFHandler extends DefaultHandler {
             }
             if (check) {
                 //nds.put(next, new FullCPTNode(next, bDefinition.getTable(), parents.toArray(new Node[parents.size()])));
-                nds.put(next, new MyCPTNode(next, bDefinition.getTable(), parents.toArray(new Node[parents.size()])));
+                nds.put(next, new CPTNode(next, bDefinition.getTable(), parents.toArray(new Node[parents.size()])));
 //				String a = "<";
 //				for (int i = 0; i < bDefinition.getTable().length; i++) {
 //					a = a + " " + bDefinition.getTable()[i];
@@ -331,7 +331,7 @@ public class MyBIFHandler extends DefaultHandler {
         }
 
         //this.network = new BayesNet(rootNodes.toArray(new FullCPTNode[rootNodes.size()]));
-        this.network = new BayesNet(rootNodes.toArray(new MyCPTNode[rootNodes.size()]));
+        this.network = new BayesNet(rootNodes.toArray(new CPTNode[rootNodes.size()]));
     }
 
     private BIFDefinition searchBIFDef(String rvName) {

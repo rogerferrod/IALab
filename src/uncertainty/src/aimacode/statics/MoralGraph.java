@@ -1,17 +1,20 @@
 package aimacode.statics;
 
-import java.util.*;
-
 import aima.core.probability.RandomVariable;
 import aima.core.probability.bayes.BayesianNetwork;
 import aima.core.probability.bayes.Node;
 
+import java.util.*;
 
+/**
+ * Implementazione del grafo morale, derivabile dalla rete bayesiana
+ * eliminando la direzionalità e accoppiando tutti i padri
+ */
 public class MoralGraph {
-    private HashMap<RandomVariable, Set<RandomVariable>> adjacencyList;
+    private final HashMap<RandomVariable, Set<RandomVariable>> adjacencySet;
 
     public MoralGraph(BayesianNetwork bn) {
-        this.adjacencyList = new HashMap<>();
+        this.adjacencySet = new HashMap<>();
         List<RandomVariable> vars = bn.getVariablesInTopologicalOrder();
         for (RandomVariable var : vars) {
             addVertex(var);
@@ -26,62 +29,45 @@ public class MoralGraph {
     }
 
     public int size() {
-        return this.adjacencyList.keySet().size();
+        return this.adjacencySet.keySet().size();
     }
 
     public void addVertex(RandomVariable v) {
-        if (!this.adjacencyList.containsKey(v)) {
-            this.adjacencyList.put(v, new HashSet<>());
+        if (!this.adjacencySet.containsKey(v)) {
+            this.adjacencySet.put(v, new HashSet<>());
         }
     }
 
     public void removeVertex(RandomVariable v) {
-        if (this.adjacencyList.containsKey(v)) {
-            this.adjacencyList.remove(v);
+        if (this.adjacencySet.containsKey(v)) {
+            this.adjacencySet.remove(v);
             for (RandomVariable u : this.getAllVertices()) {
-                this.adjacencyList.get(u).remove(v);
+                this.adjacencySet.get(u).remove(v);
             }
         }
     }
 
     public void addEdge(RandomVariable v, RandomVariable u) {
-        if (this.adjacencyList.containsKey(v) && this.adjacencyList.containsKey(u)) {
-            this.adjacencyList.get(v).add(u);
-            this.adjacencyList.get(u).add(v);
+        if (this.adjacencySet.containsKey(v) && this.adjacencySet.containsKey(u)) {
+            this.adjacencySet.get(v).add(u);
+            this.adjacencySet.get(u).add(v);
         }
     }
 
     public void removeEdge(RandomVariable v, RandomVariable u) {
-        if (this.adjacencyList.containsKey(v) && this.adjacencyList.containsKey(u)) {
-            this.adjacencyList.get(v).remove(u);
-            this.adjacencyList.get(u).remove(v);
+        if (this.adjacencySet.containsKey(v) && this.adjacencySet.containsKey(u)) {
+            this.adjacencySet.get(v).remove(u);
+            this.adjacencySet.get(u).remove(v);
         }
     }
 
-    public boolean isAdjacent(RandomVariable v, RandomVariable u) {
-        return this.adjacencyList.get(v).contains(u);
-    }
-
-    public Iterable<RandomVariable> getNeighbors(RandomVariable v) {
-        return this.adjacencyList.get(v);
-    }
-
-    public int getNeighborsNumber(RandomVariable v) {
-        return this.adjacencyList.get(v).size();
-    }
-
-    public List<RandomVariable> getNeighborsList(RandomVariable v) {
-        return new ArrayList<RandomVariable>(this.adjacencyList.get(v));
-    }
-
     public Iterable<RandomVariable> getAllVertices() {
-        return this.adjacencyList.keySet();
+        return this.adjacencySet.keySet();
     }
 
-    public boolean contains(RandomVariable rv) {
-        return this.adjacencyList.containsKey(rv);
-    }
-
+    /**
+     * Depth First Seach per cercare ogni possibile percorso tra 2 nodi
+     */
     public List<List<RandomVariable>> getAllPaths(RandomVariable s, RandomVariable d) {
         Map<RandomVariable, Boolean> isVisited = new HashMap<>();
         List<RandomVariable> local = new ArrayList<>();
@@ -94,7 +80,7 @@ public class MoralGraph {
     private void getAllPathsAUX(RandomVariable u, RandomVariable d,
                                 Map<RandomVariable, Boolean> isVisited, List<RandomVariable> local, List<List<RandomVariable>> paths) {
 
-        if (!adjacencyList.containsKey(u) || !adjacencyList.containsKey(d)) {
+        if (!adjacencySet.containsKey(u) || !adjacencySet.containsKey(d)) {
             return;
         }
 
@@ -105,7 +91,7 @@ public class MoralGraph {
 
         isVisited.put(u, true);
 
-        for (RandomVariable var : adjacencyList.get(u)) {
+        for (RandomVariable var : adjacencySet.get(u)) {
             if (!isVisited.containsKey(var) || !isVisited.get(var)) {
                 local.add(var);
                 getAllPathsAUX(var, d, isVisited, local, paths);

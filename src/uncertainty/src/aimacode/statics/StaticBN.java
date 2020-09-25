@@ -7,33 +7,30 @@ import aima.core.probability.bayes.BayesianNetwork;
 import aima.core.probability.proposition.AssignmentProposition;
 import aimacode.bnparser.BifReader;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class StaticBN {
     public static void main(String[] args) {
-        HashMap<String, RandomVariable> vaNamesMap = new HashMap<>(); // name : va
+        HashMap<String, RandomVariable> vaNames = new HashMap<>(); // name : va
 
         args = new String[4];
 
-        //args[3] = "topological";
-        args[3] = "mindegree";
-        //args[3] = "minfill";
+        //args[3] = EliminationAskBN.TOPOLOGICAL;
+        args[3] = EliminationAskStatic.MIN_DEGREE;
+        //args[3] = EliminationAskBN.MIN_FILL;
 
         /*args[0] = "./networks/cow.xml";
         args[1] = "Pregnancy,Progesterone";
         args[2] = "Blood=P";*/
 
-        /*args[0] = "./networks/cow.xml";
+        args[0] = "./networks/cow.xml";
         args[1] = "Pregnancy,Progesterone";
-        args[2] = "Blood=P,Urine=P";*/
+        args[2] = "Blood=P,Urine=P";
 
-        args[0] = "./networks/earthquake.xml";
+        /*args[0] = "./networks/earthquake.xml";
         args[1] = "JohnCalls";
-        args[2] = "Alarm=True";
+        args[2] = "Alarm=True";*/
 
         /*args[0] = "./networks/survey.xml";
         args[1] = "S";
@@ -65,21 +62,21 @@ public class StaticBN {
 
         BayesianNetwork bn = BifReader.readBIF(args[0]);
         for (RandomVariable va : bn.getVariablesInTopologicalOrder()) {
-            vaNamesMap.put(va.getName(), va);
+            vaNames.put(va.getName(), va);
         }
 
-        RandomVariable[] queryVariables = queryInput.stream().map(vaNamesMap::get).toArray(RandomVariable[]::new);
+        RandomVariable[] queryVariables = queryInput.stream().map(vaNames::get).toArray(RandomVariable[]::new);
         AssignmentProposition[] evidences = assignements.stream()
-                .map(x -> new AssignmentProposition(vaNamesMap.get(x[0]), x[1])).toArray(AssignmentProposition[]::new);
+                .map(x -> new AssignmentProposition(vaNames.get(x[0]), x[1])).toArray(AssignmentProposition[]::new);
 
-        SimplePruning simplePruning = new SimplePruning(queryVariables, evidences, bn);
-        simplePruning.updateNetwork(simplePruning.theorem1(), false, false);
-        simplePruning.updateNetwork(simplePruning.theorem2(), true, false);
-        simplePruning.updateNetwork(simplePruning.pruningEdges(), false, true);
+        NetworkPruning pruning = new NetworkPruning(bn, queryVariables, evidences);
+        pruning.updateNetwork(pruning.theorem1(), false, false);
+        pruning.updateNetwork(pruning.theorem2(), true, false);
+        pruning.updateNetwork(pruning.pruningEdges(), false, true);
 
-        bn = simplePruning.getNetwork();
+        bn = pruning.getNetwork();
 
-        BayesInference inference = new EliminationAskBN(args[3]);
+        BayesInference inference = new EliminationAskStatic(args[3]);
 
         long start = System.currentTimeMillis();
         CategoricalDistribution distribution = inference.ask(queryVariables, evidences, bn);

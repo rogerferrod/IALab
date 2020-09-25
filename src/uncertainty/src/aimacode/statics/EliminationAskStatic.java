@@ -9,17 +9,23 @@ import aima.core.probability.bayes.impl.BayesNet;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class EliminationAskBN extends EliminationAsk {
+/**
+ * Estensione della Variable Elimination con, in aggiunta, l'implementazione di diversi ordinamenti
+ */
+public class EliminationAskStatic extends EliminationAsk {
+    final public static String TOPOLOGICAL = "topological";
+    final public static String MIN_DEGREE = "mindegree";
+    final public static String MIN_FILL = "minfill";
 
     final private String ordering;
 
-    public EliminationAskBN(String ordering) {
+    public EliminationAskStatic(String ordering) {
         this.ordering = ordering;
     }
 
     @Override
     protected List<RandomVariable> order(BayesianNetwork bn, Collection<RandomVariable> vars) {
-        if (ordering.equals("topological")) {
+        if (ordering.equals(TOPOLOGICAL)) {
             List<RandomVariable> order = new ArrayList<>(vars);
             Collections.reverse(order);
             return order;
@@ -29,11 +35,11 @@ public class EliminationAskBN extends EliminationAsk {
         List<RandomVariable> variables = network.getVariablesInTopologicalOrder();
         List<RandomVariable> ordered = new ArrayList<>();
         Set<Node> nodes = variables.stream().map(bn::getNode).collect(Collectors.toSet());
-        int size = variables.size();
         InteractionGraph interGraph = new InteractionGraph(nodes);
+        int size = variables.size();
 
         switch (ordering) {
-            case "mindegree":
+            case MIN_DEGREE:
                 for (int i = 0; i < size; i++) {
                     RandomVariable var = interGraph.findMinDegreeVariable();
                     interGraph.updateEdges(var);
@@ -41,7 +47,7 @@ public class EliminationAskBN extends EliminationAsk {
                     ordered.add(var);
                 }
                 break;
-            case "minfill":
+            case MIN_FILL:
                 for (int i = 0; i < size; i++) {
                     RandomVariable var = interGraph.findMinFillVariable();
                     interGraph.updateEdges(var);

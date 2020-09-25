@@ -13,26 +13,25 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Default implementation of the FiniteNode interface that uses a fully
- * specified Conditional Probability Table to represent the Node's conditional
- * distribution.
+ * Aggiungiamo, all'implementazione canonica di FullCPTNode, i campi
+ * distribution e parents, con i relativi metodi getter
  *
  * @author Ciaran O'Reilly
  * @author Roger Ferrod
  * @author Pio Raffaele Fina
  * @author Lorenzo Tabasso
  */
-public class MyCPTNode extends AbstractNode implements FiniteNode {
-    private ConditionalProbabilityTable cpt = null;
+public class CPTNode extends AbstractNode implements FiniteNode {
+    private final ConditionalProbabilityTable cpt;
     private double[] distribution;
-    private List<Node> parents;
+    private final List<Node> parents;
 
-    public MyCPTNode(RandomVariable var, double[] distribution) {
+    public CPTNode(RandomVariable var, double[] distribution) {
         this(var, distribution, (Node[]) null);
         this.distribution = distribution;
     }
 
-    public MyCPTNode(RandomVariable var, double[] values, Node... parents) {
+    public CPTNode(RandomVariable var, double[] values, Node... parents) {
         super(var, parents);
         this.distribution = values;
         this.parents = parents != null ? Arrays.asList(parents) : new ArrayList<>();

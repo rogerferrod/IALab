@@ -1,49 +1,51 @@
 package aimacode.dynamic;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Map;
-
 import aima.core.probability.CategoricalDistribution;
 import aima.core.probability.RandomVariable;
 import aima.core.probability.bayes.BayesianNetwork;
+import aima.core.probability.bayes.FiniteNode;
 import aima.core.probability.bayes.exact.EliminationAsk;
 import aima.core.probability.proposition.AssignmentProposition;
 import aima.core.probability.util.ProbabilityTable;
 
+import java.util.*;
+
+
 public class RollupFiltering {
     private final Map<Integer, AssignmentProposition[]> evidenceOverTime; //t : evidences(t)
-    private final Map<Integer, ArrayList<RandomVariable>> variablesOverTime; //t : va(t)
+    private final List<RandomVariable> priorVariables;
     private final BayesianNetwork network;
     private final RandomVariable[] queryVariables;
     private final Map<RandomVariable, RandomVariable> X1_to_X0;
     private final String ordering;
+    private final boolean verbose;
 
-    public RollupFiltering(Map<Integer, AssignmentProposition[]> evidences,
-                           Map<Integer, ArrayList<RandomVariable>> timeStepToRv,
-                           BayesianNetwork b, RandomVariable[] qRV,
-                           Map<RandomVariable, RandomVariable> x_1Tox_0,
-                           String ordering) {
+    public RollupFiltering(MyDynamicBayesNetwork dbn,
+                           RandomVariable[] query,
+                           Map<Integer, AssignmentProposition[]> evidencesOverTime,
+                           List<RandomVariable> priorVariables,
+                           String ordering,
+                           boolean verbose) {
 
-        this.evidenceOverTime = evidences;
-        this.variablesOverTime = timeStepToRv;
-        this.network = b;
-        this.queryVariables = qRV;
-        this.X1_to_X0 = x_1Tox_0;
+        this.network = dbn.getStaticBN();
+        this.queryVariables = query;
+        this.evidenceOverTime = evidencesOverTime;
+        this.priorVariables = priorVariables;
+        this.X1_to_X0 = dbn.getX1_to_X0();
         this.ordering = ordering;
+        this.verbose = verbose;
     }
 
     public CategoricalDistribution rollup() {
-        // t = 1 (slice 0 - 1)
+        // slice 0 - 1
         ProbabilityTable previousTable = (ProbabilityTable) new EliminationAsk().ask(queryVariables, evidenceOverTime.get(1), network);
+        System.out.println("Time 1 [slice 0-1]: " + previousTable + "\n");
 
-        // slices
-        for (int i = 1; i < evidenceOverTime.size(); i++) {
-            System.out.println("\nslice " + (i - 1) + "-" + i);
-            previousTable = (ProbabilityTable) new EliminationAskDBN(ordering).ask(queryVariables,
-                    evidenceOverTime.get(i), network,
-                    previousTable, X1_to_X0, variablesOverTime);
-            System.out.println("Distribution at step " + i + ": " + previousTable);
+        // altre slices
+        for (int i = 2; i < evidenceOverTime.size(); i++) {
+            previousTable = (ProbabilityTable) new EliminationAskDynamic(ordering, verbose)
+                    .ask(queryVariables, evidenceOverTime.get(i), network, priorVariables, X1_to_X0, previousTable);
+            System.out.println("Time " + i + " [slice " + (i - 1) + "-" + i + "]: " + previousTable + "\n");
         }
 
         return previousTable;

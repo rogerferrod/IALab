@@ -1,10 +1,15 @@
 package aimacode.statics;
 
-import java.util.*;
-
 import aima.core.probability.RandomVariable;
 import aima.core.probability.bayes.Node;
 
+import java.util.*;
+
+/**
+ * Implementazione di un grafo di interazione
+ * Non potendo modificare a proprio piacere la rete bayesiana,
+ * simuliamo l'eliminazione di nodo tramite l'insieme "deleted".
+ */
 public class InteractionGraph {
 
     private final Map<RandomVariable, Set<RandomVariable>> adj;
@@ -19,8 +24,8 @@ public class InteractionGraph {
     }
 
     public RandomVariable findMinDegreeVariable() {
+        int minNeighbours = Integer.MAX_VALUE;
         RandomVariable actualMin = null;
-        int minNumber = Integer.MAX_VALUE;
 
         for (RandomVariable var : adj.keySet()) {
             if (deleted.contains(var)) {
@@ -28,8 +33,8 @@ public class InteractionGraph {
             }
 
             int neighbours = getNeighbours(var).size();
-            if (neighbours < minNumber) {
-                minNumber = neighbours;
+            if (neighbours < minNeighbours) {
+                minNeighbours = neighbours;
                 actualMin = var;
             }
         }
@@ -38,8 +43,8 @@ public class InteractionGraph {
     }
 
     public RandomVariable findMinFillVariable() {
+        int minEdges = Integer.MAX_VALUE;
         RandomVariable actualMin = null;
-        int minNumber = Integer.MAX_VALUE;
 
         for (RandomVariable var : adj.keySet()) {
             if (deleted.contains(var)) {
@@ -47,8 +52,8 @@ public class InteractionGraph {
             }
 
             int edges = countUpdatedEdges(var);
-            if (edges < minNumber) {
-                minNumber = edges;
+            if (edges < minEdges) {
+                minEdges = edges;
                 actualMin = var;
             }
         }
@@ -60,44 +65,44 @@ public class InteractionGraph {
         deleted.add(var);
     }
 
-
     public void updateEdges(RandomVariable var) {
-        for (RandomVariable n1 : adj.get(var)) {
-            if (deleted.contains(n1)) {
+        for (RandomVariable r1 : adj.get(var)) {
+            if (deleted.contains(r1)) {
                 continue;
             }
 
-            for (RandomVariable n2 : adj.get(var)) {
-                if (deleted.contains(n2)) {
+            for (RandomVariable r2 : adj.get(var)) {
+                if (deleted.contains(r2)) {
                     continue;
                 }
 
-                // se già presente verrà ignorato dal set
-                adj.computeIfAbsent(n1, k -> new HashSet<>());
-                adj.get(n1).add(n2);
+                // non occorre verificare la presenza di duplicati in quando
+                // il grafo è modellato con insiemi anzichè liste di adiacenza
+                adj.computeIfAbsent(r1, k -> new HashSet<>());
+                adj.get(r1).add(r2);
 
-                adj.computeIfAbsent(n2, k -> new HashSet<>());
-                adj.get(n2).add(n1);
+                adj.computeIfAbsent(r2, k -> new HashSet<>());
+                adj.get(r2).add(r1);
             }
         }
     }
 
     private int countUpdatedEdges(RandomVariable var) {
         int counter = 0;
-        for (RandomVariable n1 : adj.get(var)) {
-            if (deleted.contains(n1)) {
+        for (RandomVariable r1 : adj.get(var)) {
+            if (deleted.contains(r1)) {
                 continue;
             }
 
-            for (RandomVariable n2 : adj.get(var)) {
-                if (deleted.contains(n2)) {
+            for (RandomVariable r2 : adj.get(var)) {
+                if (deleted.contains(r2)) {
                     continue;
                 }
 
-                if (adj.get(n1) != null && !adj.get(n1).contains(n2)) {
+                if (adj.get(r1) != null && !adj.get(r1).contains(r2)) {
                     counter++;
                 }
-                if (adj.get(n2) != null && !adj.get(n2).contains(n1)) {
+                if (adj.get(r2) != null && !adj.get(r2).contains(r1)) {
                     counter++;
                 }
             }

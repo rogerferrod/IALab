@@ -1,8 +1,5 @@
 package aimacode.dynamic;
 
-import java.util.*;
-import java.util.stream.Collectors;
-
 import aima.core.probability.CategoricalDistribution;
 import aima.core.probability.Factor;
 import aima.core.probability.RandomVariable;
@@ -14,65 +11,96 @@ import aima.core.probability.proposition.AssignmentProposition;
 import aima.core.probability.util.ProbabilityTable;
 import aimacode.statics.InteractionGraph;
 
-public class EliminationAskDBN {
+import java.util.*;
+import java.util.stream.Collectors;
+
+public class EliminationAskDynamic {
+    final public static String TOPOLOGICAL = "topological";
+    final public static String MIN_DEGREE = "mindegree";
+    final public static String MIN_FILL = "minfill";
+
     private static final ProbabilityTable _identity = new ProbabilityTable(new double[]{1.0});
     private final String ordering;
+    private final boolean verbose;
 
-    public EliminationAskDBN(String ordering) {
+    public EliminationAskDynamic(String ordering, boolean verbose) {
         this.ordering = ordering;
+        this.verbose = verbose;
     }
+
+    public CategoricalDistribution ask(final RandomVariable[] X,
+                                       final AssignmentProposition[] observedEvidence,
+                                       final BayesianNetwork bn,
+                                       List<RandomVariable> priorVariables,
+                                       Map<RandomVariable, RandomVariable> X1_to_X0,
+                                       ProbabilityTable oldFactor) {
+        return this.eliminationAsk(X, observedEvidence, bn, priorVariables, X1_to_X0, oldFactor);
+    }
+
 
     public CategoricalDistribution eliminationAsk(final RandomVariable[] X,
                                                   final AssignmentProposition[] e,
                                                   final BayesianNetwork bn,
-                                                  ProbabilityTable oldTable,
+                                                  List<RandomVariable> priorVariables,
                                                   Map<RandomVariable, RandomVariable> X1_to_X0,
-                                                  Map<Integer, ArrayList<RandomVariable>> variablesOverTime) {
+                                                  ProbabilityTable oldFactor) {
 
         Set<RandomVariable> hidden = new HashSet<>();
         List<RandomVariable> vars = new ArrayList<>();
-        calculateVariables(X, e, bn, hidden, vars); //update hidden and vars
+        calculateVariables(X, e, bn, hidden, vars); // aggiorna hidden e vars
 
-        List<Factor> factors = new ArrayList<>();
-        ArrayList<RandomVariable> newVariables = new ArrayList<>();
-        for (RandomVariable rv : oldTable.getArgumentVariables()) {
-            newVariables.add(X1_to_X0.get(rv)); // X1 -> X0
+        ArrayList<RandomVariable> previousVar = new ArrayList<>();
+        for (RandomVariable var : oldFactor.getArgumentVariables()) {
+            previousVar.add(X1_to_X0.get(var)); // copia VA precedenti (t=0)
         }
-        ProbabilityTable tempTable = new ProbabilityTable(oldTable.getValues(), newVariables.toArray(new RandomVariable[newVariables.size()]));
-        System.out.println("\toldTable= " + tempTable + " " + tempTable.getArgumentVariables());
 
+        ProbabilityTable tempTable = new ProbabilityTable(oldFactor.getValues(), previousVar.toArray(new RandomVariable[previousVar.size()]));
+        if (verbose)
+            System.out.println("\toldTable" + tempTable.getArgumentVariables() + " = " + tempTable);
+
+        // factors <- [old_factor]
+        List<Factor> factors = new ArrayList<>();
         factors.add(0, tempTable);
 
-        for (RandomVariable var : vars) { // foreach variable
-            if (!variablesOverTime.get(0).contains(var)) {
+        for (RandomVariable var : order(bn, vars)) {
+            if (!priorVariables.contains(var)) { // se t != 0 (già in factors)
+                // factors <- [MAKE-FACTOR(var, e) | factors]
                 factors.add(0, makeFactor(var, e, bn));
             }
         }
 
-        System.out.println("\toldFactor=" + factors);
+        if (verbose)
+            System.out.println("\toldFactor=" + factors);
 
-        for (int i : variablesOverTime.keySet()) {
-            for (RandomVariable var : variablesOverTime.get(i)) {
-                if (i == 0 || (i == 1 && hidden.contains(var))) {
-                    System.out.println("\tsumOut(" + var + ")");
-                    List<Factor> toSumOut = factors.stream()
-                            .filter(x -> x.contains(var)).collect(Collectors.toList());
-                    factors.removeAll(toSumOut);
-                    factors.addAll(sumOut(var, toSumOut, bn));
-                }
+        /*for (RandomVariable var : priorVariables) { // TODO mancano eventuali hidden(t) che non sono in prior
+            if (verbose)
+                System.out.println("\tsumOut(" + var + ")");
 
-            }
+            List<Factor> toSumOut = factors.stream().filter(x -> x.contains(var)).collect(Collectors.toList());
+            factors.removeAll(toSumOut);
+            factors.addAll(sumOut(var, toSumOut, bn));
+        }*/
+
+        for (RandomVariable var : hidden) {
+            if (verbose)
+                System.out.println("\tsumOut(" + var + ")");
+
+            List<Factor> toSumOut = factors.stream().filter(x -> x.contains(var)).collect(Collectors.toList());
+            factors.removeAll(toSumOut);
+            factors.addAll(sumOut(var, toSumOut, bn));
         }
 
         Factor product = pointwiseProduct(factors);
-        System.out.println("\tnewFactor=" + factors);
         ProbabilityTable newTable = ((ProbabilityTable) product.pointwiseProductPOS(_identity, X)).normalize();
-        System.out.println("\tnewTable= " + newTable + " " + newTable.getArgumentVariables());
+        if (verbose) {
+            System.out.println("\tnewFactor=" + factors);
+            System.out.println("\tnewTable" + newTable.getArgumentVariables() + " = " + newTable);
+        }
         return newTable;
     }
 
     protected List<RandomVariable> order(BayesianNetwork bn, Collection<RandomVariable> vars) {
-        if (ordering.equals("topological")) {
+        if (ordering.equals(TOPOLOGICAL)) {
             List<RandomVariable> order = new ArrayList<>(vars);
             Collections.reverse(order);
             return order;
@@ -82,11 +110,11 @@ public class EliminationAskDBN {
         List<RandomVariable> variables = network.getVariablesInTopologicalOrder();
         List<RandomVariable> ordered = new ArrayList<>();
         Set<Node> nodes = variables.stream().map(bn::getNode).collect(Collectors.toSet());
-        int size = variables.size();
         InteractionGraph interGraph = new InteractionGraph(nodes);
+        int size = variables.size();
 
         switch (ordering) {
-            case "mindegree":
+            case MIN_DEGREE:
                 for (int i = 0; i < size; i++) {
                     RandomVariable var = interGraph.findMinDegreeVariable();
                     interGraph.updateEdges(var);
@@ -94,7 +122,7 @@ public class EliminationAskDBN {
                     ordered.add(var);
                 }
                 break;
-            case "minfill":
+            case MIN_FILL:
                 for (int i = 0; i < size; i++) {
                     RandomVariable var = interGraph.findMinFillVariable();
                     interGraph.updateEdges(var);
@@ -106,14 +134,6 @@ public class EliminationAskDBN {
         return ordered;
     }
 
-    public CategoricalDistribution ask(final RandomVariable[] X,
-                                       final AssignmentProposition[] observedEvidence,
-                                       final BayesianNetwork bn,
-                                       ProbabilityTable oldFact, Map<RandomVariable, RandomVariable> x_1Tox_0,
-                                       Map<Integer, ArrayList<RandomVariable>> timeStepToRv) {
-        return this.eliminationAsk(X, observedEvidence, bn, oldFact, x_1Tox_0, timeStepToRv);
-    }
-
     /*
      *
      * Original Code
@@ -121,8 +141,10 @@ public class EliminationAskDBN {
      */
 
     protected void calculateVariables(final RandomVariable[] X,
-                                      final AssignmentProposition[] e, final BayesianNetwork bn,
-                                      Set<RandomVariable> hidden, Collection<RandomVariable> bnVARS) {
+                                      final AssignmentProposition[] e,
+                                      final BayesianNetwork bn,
+                                      Set<RandomVariable> hidden,
+                                      Collection<RandomVariable> bnVARS) {
 
         bnVARS.addAll(bn.getVariablesInTopologicalOrder());
         hidden.addAll(bnVARS);
