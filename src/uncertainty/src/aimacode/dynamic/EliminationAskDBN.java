@@ -72,13 +72,13 @@ public class EliminationAskDBN {
     }
 
     protected List<RandomVariable> order(BayesianNetwork bn, Collection<RandomVariable> vars) {
-        BayesNet network = (BayesNet) bn;
         if (ordering.equals("topological")) {
             List<RandomVariable> order = new ArrayList<>(vars);
             Collections.reverse(order);
             return order;
         }
 
+        BayesNet network = (BayesNet) bn;
         List<RandomVariable> variables = network.getVariablesInTopologicalOrder();
         List<RandomVariable> ordered = new ArrayList<>();
         Set<Node> nodes = variables.stream().map(bn::getNode).collect(Collectors.toSet());
@@ -106,11 +106,6 @@ public class EliminationAskDBN {
         return ordered;
     }
 
-    /*
-     *
-     * Original Code
-     *
-     */
     public CategoricalDistribution ask(final RandomVariable[] X,
                                        final AssignmentProposition[] observedEvidence,
                                        final BayesianNetwork bn,
@@ -118,6 +113,12 @@ public class EliminationAskDBN {
                                        Map<Integer, ArrayList<RandomVariable>> timeStepToRv) {
         return this.eliminationAsk(X, observedEvidence, bn, oldFact, x_1Tox_0, timeStepToRv);
     }
+
+    /*
+     *
+     * Original Code
+     *
+     */
 
     protected void calculateVariables(final RandomVariable[] X,
                                       final AssignmentProposition[] e, final BayesianNetwork bn,

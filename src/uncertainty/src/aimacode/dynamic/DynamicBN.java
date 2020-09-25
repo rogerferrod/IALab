@@ -14,8 +14,8 @@ public class DynamicBN {
 
         args = new String[1];
         //args[0] = "topological";
-        //args[0] = "mindegree";
-        args[0] = "minfill";
+        args[0] = "mindegree";
+        //args[0] = "minfill";
 
         NetworkFactory factory = new NetworkFactory();
         //MyDynamicBayesNetwork dbn = factory.umbrellaNetwork();

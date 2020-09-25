@@ -10,8 +10,6 @@ import aima.core.probability.bayes.BayesianNetwork;
 import aima.core.probability.bayes.exact.EliminationAsk;
 import aima.core.probability.proposition.AssignmentProposition;
 import aima.core.probability.util.ProbabilityTable;
-import aimacode.statics.EliminationMinDegree;
-import aimacode.statics.EliminationMinFill;
 
 public class RollupFiltering {
     private final Map<Integer, AssignmentProposition[]> evidenceOverTime; //t : evidences(t)

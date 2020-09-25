@@ -4,7 +4,6 @@ import aima.core.probability.CategoricalDistribution;
 import aima.core.probability.RandomVariable;
 import aima.core.probability.bayes.BayesInference;
 import aima.core.probability.bayes.BayesianNetwork;
-import aima.core.probability.bayes.exact.EliminationAsk;
 import aima.core.probability.proposition.AssignmentProposition;
 import aimacode.bnparser.BifReader;
 
@@ -20,8 +19,8 @@ public class StaticBN {
 
         args = new String[4];
 
-        args[3] = "topological";
-        //args[3] = "mindegree";
+        //args[3] = "topological";
+        args[3] = "mindegree";
         //args[3] = "minfill";
 
         /*args[0] = "./networks/cow.xml";
@@ -80,18 +79,7 @@ public class StaticBN {
 
         bn = simplePruning.getNetwork();
 
-        BayesInference inference = null;
-        switch (args[3]) {
-            case "topological":
-                inference = new EliminationAsk();
-                break;
-            case "mindegree":
-                inference = new EliminationMinDegree();
-                break;
-            case "minfill":
-                inference = new EliminationMinFill();
-                break;
-        }
+        BayesInference inference = new EliminationAskBN(args[3]);
 
         long start = System.currentTimeMillis();
         CategoricalDistribution distribution = inference.ask(queryVariables, evidences, bn);
