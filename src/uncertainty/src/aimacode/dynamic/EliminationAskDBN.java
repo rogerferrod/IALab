@@ -9,14 +9,17 @@ import aima.core.probability.RandomVariable;
 import aima.core.probability.bayes.BayesianNetwork;
 import aima.core.probability.bayes.FiniteNode;
 import aima.core.probability.bayes.Node;
+import aima.core.probability.bayes.impl.BayesNet;
 import aima.core.probability.proposition.AssignmentProposition;
 import aima.core.probability.util.ProbabilityTable;
+import aimacode.statics.InteractionGraph;
 
 public class EliminationAskDBN {
     private static final ProbabilityTable _identity = new ProbabilityTable(new double[]{1.0});
+    private final String ordering;
 
-    public EliminationAskDBN() {
-
+    public EliminationAskDBN(String ordering) {
+        this.ordering = ordering;
     }
 
     public CategoricalDistribution eliminationAsk(final RandomVariable[] X,
@@ -68,6 +71,39 @@ public class EliminationAskDBN {
         return newTable;
     }
 
+    protected List<RandomVariable> order(BayesianNetwork bn, Collection<RandomVariable> vars) {
+        BayesNet network = (BayesNet) bn;
+        if (ordering.equals("topological")) {
+            List<RandomVariable> order = new ArrayList<>(vars);
+            Collections.reverse(order);
+            return order;
+        }
+
+        List<RandomVariable> variables = network.getVariablesInTopologicalOrder();
+        List<RandomVariable> ordered = new ArrayList<>();
+        Set<Node> nodes = variables.stream().map(bn::getNode).collect(Collectors.toSet());
+        int size = variables.size();
+        InteractionGraph interGraph = new InteractionGraph(nodes);
+
+        switch (ordering) {
+            case "mindegree":
+                for (int i = 0; i < size; i++) {
+                    RandomVariable var = interGraph.findMinDegreeVariable();
+                    interGraph.updateEdges(var);
+                    interGraph.delete(var);
+                    ordered.add(var);
+                }
+            case "minfill":
+                for (int i = 0; i < size; i++) {
+                    RandomVariable var = interGraph.findMinFillVariable();
+                    interGraph.updateEdges(var);
+                    interGraph.delete(var);
+                    ordered.add(var);
+                }
+        }
+        return ordered;
+    }
+
     /*
      *
      * Original Code
@@ -97,22 +133,6 @@ public class EliminationAskDBN {
 
         return;
     }
-
-    protected List<RandomVariable> order(BayesianNetwork bn,
-                                         Collection<RandomVariable> vars) {
-        // Note: Trivial Approach:
-        // For simplicity just return in the reverse order received,
-        // i.e. received will be the default topological order for
-        // the Bayesian Network and we want to ensure the network
-        // is iterated from bottom up to ensure when hidden variables
-        // are come across all the factors dependent on them have
-        // been seen so far.
-        List<RandomVariable> order = new ArrayList<RandomVariable>(vars);
-        Collections.reverse(order);
-
-        return order;
-    }
-
 
     private Factor makeFactor(RandomVariable var, AssignmentProposition[] e,
                               BayesianNetwork bn) {

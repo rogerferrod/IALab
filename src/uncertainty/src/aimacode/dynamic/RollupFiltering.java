@@ -10,6 +10,8 @@ import aima.core.probability.bayes.BayesianNetwork;
 import aima.core.probability.bayes.exact.EliminationAsk;
 import aima.core.probability.proposition.AssignmentProposition;
 import aima.core.probability.util.ProbabilityTable;
+import aimacode.statics.EliminationMinDegree;
+import aimacode.statics.EliminationMinFill;
 
 public class RollupFiltering {
     private final Map<Integer, AssignmentProposition[]> evidenceOverTime; //t : evidences(t)
@@ -17,26 +19,43 @@ public class RollupFiltering {
     private final BayesianNetwork network;
     private final RandomVariable[] queryVariables;
     private final Map<RandomVariable, RandomVariable> X1_to_X0;
+    private final String ordering;
 
     public RollupFiltering(Map<Integer, AssignmentProposition[]> evidences,
                            Map<Integer, ArrayList<RandomVariable>> timeStepToRv,
-                           BayesianNetwork b, RandomVariable[] qRV, Map<RandomVariable, RandomVariable> x_1Tox_0) {
+                           BayesianNetwork b, RandomVariable[] qRV,
+                           Map<RandomVariable, RandomVariable> x_1Tox_0,
+                           String ordering) {
 
         this.evidenceOverTime = evidences;
         this.variablesOverTime = timeStepToRv;
         this.network = b;
         this.queryVariables = qRV;
         this.X1_to_X0 = x_1Tox_0;
+        this.ordering = ordering;
     }
 
-    public CategoricalDistribution rollUp() {
+    public CategoricalDistribution rollup() {
+        ProbabilityTable previousTable;
+
         // t = 1 (slice 0 - 1)
-        ProbabilityTable previousTable = (ProbabilityTable) new EliminationAsk().ask(queryVariables, evidenceOverTime.get(1), network);
+        switch (ordering) {
+            case "mindegree":
+                previousTable = (ProbabilityTable) new EliminationMinDegree().ask(queryVariables, evidenceOverTime.get(1), network);
+                break;
+            case "minfill":
+                previousTable = (ProbabilityTable) new EliminationMinFill().ask(queryVariables, evidenceOverTime.get(1), network);
+                break;
+            case "topological":
+            default:
+                previousTable = (ProbabilityTable) new EliminationAsk().ask(queryVariables, evidenceOverTime.get(1), network);
+                break;
+        }
 
         // slices
         for (int i = 1; i < evidenceOverTime.size(); i++) {
             System.out.println("\nslice " + (i - 1) + "-" + i);
-            previousTable = (ProbabilityTable) new EliminationAskDBN().ask(queryVariables,
+            previousTable = (ProbabilityTable) new EliminationAskDBN(ordering).ask(queryVariables,
                     evidenceOverTime.get(i), network,
                     previousTable, X1_to_X0, variablesOverTime);
             System.out.println("Distribution at step " + i + ": " + previousTable);

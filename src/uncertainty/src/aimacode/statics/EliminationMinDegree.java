@@ -16,7 +16,6 @@ public class EliminationMinDegree extends EliminationAsk {
 
     @Override
     protected List<RandomVariable> order(BayesianNetwork bn, Collection<RandomVariable> vars) {
-
         BayesNet network = (BayesNet) bn;
         List<RandomVariable> variables = network.getVariablesInTopologicalOrder();
         List<RandomVariable> ordered = new ArrayList<>();
