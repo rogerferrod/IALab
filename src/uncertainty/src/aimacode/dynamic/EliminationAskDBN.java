@@ -93,6 +93,7 @@ public class EliminationAskDBN {
                     interGraph.delete(var);
                     ordered.add(var);
                 }
+                break;
             case "minfill":
                 for (int i = 0; i < size; i++) {
                     RandomVariable var = interGraph.findMinFillVariable();
@@ -100,6 +101,7 @@ public class EliminationAskDBN {
                     interGraph.delete(var);
                     ordered.add(var);
                 }
+                break;
         }
         return ordered;
     }

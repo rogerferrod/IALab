@@ -36,21 +36,8 @@ public class RollupFiltering {
     }
 
     public CategoricalDistribution rollup() {
-        ProbabilityTable previousTable;
-
         // t = 1 (slice 0 - 1)
-        switch (ordering) {
-            case "mindegree":
-                previousTable = (ProbabilityTable) new EliminationMinDegree().ask(queryVariables, evidenceOverTime.get(1), network);
-                break;
-            case "minfill":
-                previousTable = (ProbabilityTable) new EliminationMinFill().ask(queryVariables, evidenceOverTime.get(1), network);
-                break;
-            case "topological":
-            default:
-                previousTable = (ProbabilityTable) new EliminationAsk().ask(queryVariables, evidenceOverTime.get(1), network);
-                break;
-        }
+        ProbabilityTable previousTable = (ProbabilityTable) new EliminationAsk().ask(queryVariables, evidenceOverTime.get(1), network);
 
         // slices
         for (int i = 1; i < evidenceOverTime.size(); i++) {
