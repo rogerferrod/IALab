@@ -17,23 +17,29 @@ public class DynamicBN {
 
         NetworkFactory factory = new NetworkFactory();
         //MyDynamicBayesNetwork dbn = factory.umbrellaNetwork();
-        DynamicBayesNetwork dbn = factory.windNetwork();
+        //DynamicBayesNetwork dbn = factory.windNetwork();
+        DynamicBayesNetwork dbn = factory.twoFactors();
 
-        String[] argsEv = new String[]{"1", "0", "1", "0", "1"};
-        int m = argsEv.length;
-        ArrayList<String> evNames = new ArrayList<>(Arrays.asList("Umbrella_t"));
+        String[][] argsEv = new String[][]{{"1", "0", "1", "0", "1"}, {"0", "1", "0", "1", "0"}};
+        int m = argsEv[0].length;
+        //ArrayList<String> evNames = new ArrayList<>(Arrays.asList("Umbrella_t"));
+        ArrayList<String> evNames = new ArrayList<>(Arrays.asList("E_t", "G_t"));
 
         Map<Integer, AssignmentProposition[]> evidencesOverTime = new LinkedHashMap<>(); //t : evidences(t)
         RandomVariable[] query = Arrays.stream(dbn.getVariables())
                 .filter(x -> !evNames.contains(x.getName())).toArray(RandomVariable[]::new);
 
-        for (String varName : evNames) {
+        for (int j = 0; j < evNames.size(); j++) {
+            String varName = evNames.get(j);
             RandomVariable var = dbn.getVaNamesMap().get(varName);
             evidencesOverTime.put(0, null);
             for (int i = 1; i <= m; i++) {
                 AssignmentProposition as = new AssignmentProposition(var,
-                        Integer.parseInt(argsEv[i - 1]) == 0 ? Boolean.FALSE : Boolean.TRUE);
-                evidencesOverTime.put(i, new AssignmentProposition[]{as});
+                        Integer.parseInt(argsEv[j][i - 1]) == 0 ? Boolean.FALSE : Boolean.TRUE);
+                if (!evidencesOverTime.containsKey(i)) {
+                    evidencesOverTime.put(i, new AssignmentProposition[evNames.size()]);
+                }
+                evidencesOverTime.get(i)[j] = as;
             }
         }
 

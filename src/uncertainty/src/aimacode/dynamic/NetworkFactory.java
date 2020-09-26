@@ -61,5 +61,48 @@ public class NetworkFactory {
 
         return new DynamicBayesNetwork(new FiniteNode[]{priorRain, priorWind}, new FiniteNode[]{tRain, tWind, tUmbrella}, vaNamesMap, X1_to_X0);
     }
+
+    public DynamicBayesNetwork twoFactors() {
+        HashMap<String, RandomVariable> vaNamesMap = new HashMap<>();
+        Map<RandomVariable, RandomVariable> X1_to_X0 = new LinkedHashMap<>();
+
+        RandVar priorZVar = new RandVar("Z_0", new BooleanDomain());
+        FiniteNode priorZ = new FullCPTNode(priorZVar, new double[]{0.5, 0.5});
+        vaNamesMap.put("Z_0", priorZVar);
+
+        RandVar tZVar = new RandVar("Z_t", new BooleanDomain());
+        FiniteNode tZ = new FullCPTNode(tZVar, new double[]{0.7, 0.3, 0.3, 0.7}, priorZ);
+        vaNamesMap.put("Z_t", tZVar);
+
+        RandVar tGVar = new RandVar("G_t", new BooleanDomain());
+        FiniteNode tG = new FullCPTNode(tGVar, new double[]{0.9, 0.1, 0.2, 0.8}, tZ);
+        vaNamesMap.put("G_t", tGVar);
+
+        RandVar priorXVar = new RandVar("X_0", new BooleanDomain());
+        FiniteNode priorX = new FullCPTNode(priorXVar, new double[]{0.5, 0.5});
+        vaNamesMap.put("X_0", priorXVar);
+
+        RandVar priorYVar = new RandVar("Y_0", new BooleanDomain());
+        FiniteNode priorY = new FullCPTNode(priorYVar, new double[]{0.5, 0.5});
+        vaNamesMap.put("Y_0", priorYVar);
+
+        RandVar tXVar = new RandVar("X_t", new BooleanDomain());
+        FiniteNode tX = new FullCPTNode(tXVar, new double[]{0.6, 0.4, 0.8, 0.2, 0.4, 0.6, 0.2, 0.8}, priorX, priorY);
+        vaNamesMap.put("X_t", tXVar);
+
+        RandVar tYVar = new RandVar("Y_t", new BooleanDomain());
+        FiniteNode tY = new FullCPTNode(tYVar, new double[]{0.7, 0.3, 0.3, 0.7}, priorY);
+        vaNamesMap.put("Y_t", tYVar);
+
+        RandVar tEVar = new RandVar("E_t", new BooleanDomain());
+        FiniteNode tE = new FullCPTNode(tEVar, new double[]{0.9, 0.1, 0.2, 0.8}, tX);
+        vaNamesMap.put("E_t", tEVar);
+
+        X1_to_X0.put(tXVar, priorXVar);
+        X1_to_X0.put(tYVar, priorYVar);
+        X1_to_X0.put(tZVar, priorZVar);
+
+        return new DynamicBayesNetwork(new FiniteNode[]{priorX, priorY, priorZ}, new FiniteNode[]{tX, tY, tZ, tE, tG}, vaNamesMap, X1_to_X0);
+    }
 }
 
