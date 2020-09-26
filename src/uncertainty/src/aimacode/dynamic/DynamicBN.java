@@ -19,7 +19,7 @@ public class DynamicBN {
         //args[0] = EliminationAskDynamic.MIN_FILL;
 
         args[1] = "true";
-        args[2] = "./input/experiments.json";
+        args[2] = "./input/DBNexperiments.json";
         //args[3] = "Umbrella_00";
         //args[3] = "UmbrellaWind_00";
         args[3] = "TwoFactors_00";

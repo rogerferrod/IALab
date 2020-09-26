@@ -19,7 +19,7 @@ public class ParticleTesting {
         args = new String[3];
         args[0] = "10000";
 
-        args[1] = "./input/experiments.json";
+        args[1] = "./input/DBNexperiments.json";
         //args[2] = "Umbrella_00";
         //args[2] = "UmbrellaWind_00";
         args[2] = "TwoFactors_00";

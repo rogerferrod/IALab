@@ -1,0 +1,42 @@
+{
+  "cow_00": {
+    "network": "./networks/cow.xml",
+    "query": "Pregnancy,Progesterone",
+    "evidences": "Blood=P"
+  },
+  "cow_01": {
+    "network": "./networks/cow.xml",
+    "query": "Pregnancy,Progesterone",
+    "evidences": "Blood=P,Urine=P"
+  },
+  "earthquake_00": {
+    "network": "./networks/earthquake.xml",
+    "query": "JohnCalls",
+    "evidences": "Alarm=True"
+  },
+  "survey_00": {
+    "network": "./networks/survey.xml",
+    "query": "S",
+    "evidences": "T=Car"
+  },
+  "alarm_00": {
+    "network": "./networks/alarm.xml",
+    "query": "MINVOLSET",
+    "evidences": "VENTTUBE=LOW"
+  },
+  "munin_00": {
+    "network": "./networks/munin.xml",
+    "query": "DIFFN_DISTR",
+    "evidences": "DIFFN_M_SEV_DIST=NO"
+  },
+  "link_00": {
+    "network": "./networks/link.xml",
+    "query": "Z_2_a_f",
+    "evidences": "D0_10_d_p=A"
+  },
+  "win95pts_00": {
+    "network": "./networks/win95pts.xml",
+    "query": "PrtCbl",
+    "evidences": "TnrSpply=Low"
+  }
+}
