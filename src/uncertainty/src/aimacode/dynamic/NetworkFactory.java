@@ -37,6 +37,8 @@ public class NetworkFactory {
         FiniteNode priorRain = new FullCPTNode(priorRainVar, new double[]{0.5, 0.5});
         vaNamesMap.put("Rain_0", priorRainVar);
 
+        BayesNet priorNetwork = new BayesNet(priorRain); // importante che sia qui: non deve ancora avere figli
+
         RandVar tRainVar = new RandVar("Rain_t", new BooleanDomain());
         FiniteNode tRain = new FullCPTNode(tRainVar, new double[]{0.7, 0.3, 0.3, 0.7}, priorRain);
         vaNamesMap.put("Rain_t", tRainVar);
@@ -48,7 +50,6 @@ public class NetworkFactory {
         X1_to_X0.put(tRainVar, priorRainVar);
         X0_to_X1.put(priorRainVar, tRainVar);
 
-        BayesNet priorNetwork = new BayesNet(priorRain);
         Set<RandomVariable> E_1 = new HashSet<>();
         E_1.add(tUmbrellaVar);
         DynamicBayesNet dbn = new DynamicBayesNet(priorNetwork, X0_to_X1, E_1, priorRain);
@@ -59,6 +60,7 @@ public class NetworkFactory {
     private WrapDynamicBayesNet windNetwork() {
         HashMap<String, RandomVariable> vaNamesMap = new HashMap<>();
         Map<RandomVariable, RandomVariable> X1_to_X0 = new LinkedHashMap<>();
+        Map<RandomVariable, RandomVariable> X0_to_X1 = new LinkedHashMap<>();
 
         RandVar priorRainVar = new RandVar("Rain_0", new BooleanDomain());
         FiniteNode priorRain = new FullCPTNode(priorRainVar, new double[]{0.5, 0.5});
@@ -67,6 +69,8 @@ public class NetworkFactory {
         RandVar priorWindVar = new RandVar("Wind_0", new BooleanDomain());
         FiniteNode priorWind = new FullCPTNode(priorWindVar, new double[]{0.5, 0.5});
         vaNamesMap.put("Wind_0", priorWindVar);
+
+        BayesNet priorNetwork = new BayesNet(priorRain, priorWind);
 
         RandVar tRainVar = new RandVar("Rain_t", new BooleanDomain());
         FiniteNode tRain = new FullCPTNode(tRainVar, new double[]{0.6, 0.4, 0.8, 0.2, 0.4, 0.6, 0.2, 0.8}, priorRain, priorWind);
@@ -82,25 +86,24 @@ public class NetworkFactory {
 
         X1_to_X0.put(tRainVar, priorRainVar);
         X1_to_X0.put(tWindVar, priorWindVar);
+        X0_to_X1.put(priorRainVar, tRainVar);
+        X0_to_X1.put(priorWindVar, tWindVar);
 
-        return new WrapDynamicBayesNet(new FiniteNode[]{priorRain, priorWind}, new FiniteNode[]{tRain, tWind, tUmbrella}, vaNamesMap, X1_to_X0, null);
+        Set<RandomVariable> E_1 = new HashSet<>();
+        E_1.add(tUmbrellaVar);
+        DynamicBayesNet dbn = new DynamicBayesNet(priorNetwork, X0_to_X1, E_1, priorRain, priorWind);
+
+        return new WrapDynamicBayesNet(new FiniteNode[]{priorRain, priorWind}, new FiniteNode[]{tRain, tWind, tUmbrella}, vaNamesMap, X1_to_X0, dbn);
     }
 
     private WrapDynamicBayesNet twoFactors() {
         HashMap<String, RandomVariable> vaNamesMap = new HashMap<>();
         Map<RandomVariable, RandomVariable> X1_to_X0 = new LinkedHashMap<>();
+        Map<RandomVariable, RandomVariable> X0_to_X1 = new LinkedHashMap<>();
 
         RandVar priorZVar = new RandVar("Z_0", new BooleanDomain());
         FiniteNode priorZ = new FullCPTNode(priorZVar, new double[]{0.5, 0.5});
         vaNamesMap.put("Z_0", priorZVar);
-
-        RandVar tZVar = new RandVar("Z_t", new BooleanDomain());
-        FiniteNode tZ = new FullCPTNode(tZVar, new double[]{0.7, 0.3, 0.3, 0.7}, priorZ);
-        vaNamesMap.put("Z_t", tZVar);
-
-        RandVar tGVar = new RandVar("G_t", new BooleanDomain());
-        FiniteNode tG = new FullCPTNode(tGVar, new double[]{0.9, 0.1, 0.2, 0.8}, tZ);
-        vaNamesMap.put("G_t", tGVar);
 
         RandVar priorXVar = new RandVar("X_0", new BooleanDomain());
         FiniteNode priorX = new FullCPTNode(priorXVar, new double[]{0.5, 0.5});
@@ -109,6 +112,16 @@ public class NetworkFactory {
         RandVar priorYVar = new RandVar("Y_0", new BooleanDomain());
         FiniteNode priorY = new FullCPTNode(priorYVar, new double[]{0.5, 0.5});
         vaNamesMap.put("Y_0", priorYVar);
+
+        BayesNet priorNetwork = new BayesNet(priorX, priorY, priorZ);
+
+        RandVar tZVar = new RandVar("Z_t", new BooleanDomain());
+        FiniteNode tZ = new FullCPTNode(tZVar, new double[]{0.7, 0.3, 0.3, 0.7}, priorZ);
+        vaNamesMap.put("Z_t", tZVar);
+
+        RandVar tGVar = new RandVar("G_t", new BooleanDomain());
+        FiniteNode tG = new FullCPTNode(tGVar, new double[]{0.9, 0.1, 0.2, 0.8}, tZ);
+        vaNamesMap.put("G_t", tGVar);
 
         RandVar tXVar = new RandVar("X_t", new BooleanDomain());
         FiniteNode tX = new FullCPTNode(tXVar, new double[]{0.6, 0.4, 0.8, 0.2, 0.4, 0.6, 0.2, 0.8}, priorX, priorY);
@@ -125,8 +138,16 @@ public class NetworkFactory {
         X1_to_X0.put(tXVar, priorXVar);
         X1_to_X0.put(tYVar, priorYVar);
         X1_to_X0.put(tZVar, priorZVar);
+        X0_to_X1.put(priorXVar, tXVar);
+        X0_to_X1.put(priorYVar, tYVar);
+        X0_to_X1.put(priorZVar, tZVar);
 
-        return new WrapDynamicBayesNet(new FiniteNode[]{priorX, priorY, priorZ}, new FiniteNode[]{tX, tY, tZ, tE, tG}, vaNamesMap, X1_to_X0, null);
+        Set<RandomVariable> E_1 = new HashSet<>();
+        E_1.add(tEVar);
+        E_1.add(tGVar);
+        DynamicBayesNet dbn = new DynamicBayesNet(priorNetwork, X0_to_X1, E_1, priorX, priorY, priorZ);
+
+        return new WrapDynamicBayesNet(new FiniteNode[]{priorX, priorY, priorZ}, new FiniteNode[]{tX, tY, tZ, tE, tG}, vaNamesMap, X1_to_X0, dbn);
     }
 }
 
