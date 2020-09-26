@@ -89,9 +89,9 @@
 	(bind ?id2 (gensym*))
 	(bind ?id3 (gensym*)) ; TODO temporaneoo
 	(bind ?limit 9)  ; limite per le x e le y, (0,9) e (9,9)
-	(assert (convolution-area (id ?id1) (type ?ship-type) (size ?ship-size) (x 0) (y 0) (orientation ver) (computed FALSE) (visited 0)))
-	(assert (convolution-area (id ?id2) (type ?ship-type) (size ?ship-size) (x 6) (y 8) (orientation ver) (computed FALSE) (visited 0)))
-	(assert (convolution-area (id ?id3) (type ?ship-type) (size ?ship-size) (x 6) (y 4) (orientation ver) (computed FALSE) (visited 0))) ; Posizione originale
+	(assert (convolution-area (id ?id1) (type ?ship-type) (size ?ship-size) (x 0) (y 0) (orientation ver) (computed FALSE) (visited 0) (score 0)))
+	(assert (convolution-area (id ?id2) (type ?ship-type) (size ?ship-size) (x 6) (y 8) (orientation ver) (computed FALSE) (visited 0) (score 0)))
+	(assert (convolution-area (id ?id3) (type ?ship-type) (size ?ship-size) (x 6) (y 4) (orientation ver) (computed FALSE) (visited 0) (score 0))) ; Posizione originale
 
 	; (loop-for-count (?i 0 ?limit)
 	; 	(loop-for-count (?j 0 ?limit)

@@ -18,6 +18,7 @@
 	(slot area-id)
 	(slot x)
 	(slot y)
+    (slot computed (default FALSE))
 )
 
 (deftemplate convolution-scores
@@ -48,10 +49,13 @@
 )
 
 (defrule count-visited
-    (conv-cell (id ?id) (x ?x) (y ?y) (area-id ?conv))
-    ?c <- (convolution-area (size ?size) (visited ?v&:(< ?v ?size)))
+    ?k <- (conv-cell (id ?id) (x ?x) (y ?y) (area-id ?conv) (computed FALSE))
+    ?c <- (convolution-area (size ?size) (score ?score) (visited ?v&:(< ?v ?size)))
+    (heat-map (x ?x) (y ?y) (h ?h))
 =>
-    (modify ?c (visited (+ ?v 1)))
+    (modify ?c (visited (+ ?v 1)) (score (+ ?score ?h)))
+    (modify ?k (computed TRUE))
+    (printout t "sono in " ?x " " ?y " con " ?h crlf)
 )
 
 (defrule check-conv-cell-ver
