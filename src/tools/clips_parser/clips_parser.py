@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.patches import Rectangle
+import argparse
 import re
 
 
@@ -46,6 +47,10 @@ def annotate_heatmap():
         annotate_cell(content, y, x)
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-i", "--input", default="./input/test.txt", help="input file")
+    args = parser.parse_args()
+    input_file = args.input
 
     with open(input_file,"r") as file:
         lines = file.read()

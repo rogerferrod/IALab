@@ -1,3 +1,11 @@
+(defmodule DISCOVER
+	(import MAIN ?ALL)
+	(import ENV ?ALL)
+	(import HEAT ?ALL)
+    (import DELIBERATE ?ALL)
+	(export ?ALL)
+)
+
 ;; *******************************
 ;; FUNCTIONS
 ;; *******************************
@@ -16,7 +24,34 @@
 ;; RULES
 ;; *******************************
 
-(defrule discover-neighborhood-top (declare (salience 30))
+(defrule check-fire-water (declare (salience 30)) ; workaround rule, controlla se la fire è ko, allora la cella contiene acqua
+	?f <- (check-fire ?x ?y)
+	(not (k-cell (x ?x) (y ?y)))
+	?m <- (heat-map (x ?x) (y ?y))
+=>
+	(retract ?f)
+	(assert (k-cell (x ?x) (y ?y) (content water)))
+	(modify ?m (h 0))
+)
+
+(defrule check-fire-ship (declare (salience 30))
+	?f <- (check-fire ?x ?y)
+	(k-cell (x ?x) (y ?y) (content ?c&~water))
+	?m <- (heat-map (x ?x) (y ?y))
+=>
+	(retract ?f)
+	(modify ?m (h 100))
+)
+
+(defrule apply-modify-heat (declare (salience 30))
+	?f <- (modify-heat ?x ?y ?h)
+	?m <- (heat-map (x ?x) (y ?y))
+=>
+	(modify ?m (h ?h))
+	(retract ?f)
+)
+
+(defrule discover-neighborhood-top
 	(k-cell (x ?x) (y ?y) (content top))
 	?m <- (heat-map (x ?x) (y ?y))
 =>

@@ -95,6 +95,7 @@
   (statistics (num_fire_ok 0) (num_fire_ko 0) (num_guess_ok 0) (num_guess_ko 0) (num_safe 0) (num_sink 0))
 	(first-pass-to-env)
   (first-pass-to-heat)
+  (first-pass-to-discover)
 	(moves (fires 5) (guesses 20))
   (board
     (air-carrier 4)
