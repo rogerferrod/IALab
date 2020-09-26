@@ -17,7 +17,7 @@ public class DynamicBN {
 
         NetworkFactory factory = new NetworkFactory();
         //MyDynamicBayesNetwork dbn = factory.umbrellaNetwork();
-        MyDynamicBayesNetwork dbn = factory.windNetwork();
+        DynamicBayesNetwork dbn = factory.windNetwork();
 
         String[] argsEv = new String[]{"1", "0", "1", "0", "1"};
         int m = argsEv.length;

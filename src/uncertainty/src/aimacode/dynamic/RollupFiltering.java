@@ -18,7 +18,7 @@ public class RollupFiltering {
     private final String ordering;
     private final boolean verbose;
 
-    public RollupFiltering(MyDynamicBayesNetwork dbn,
+    public RollupFiltering(DynamicBayesNetwork dbn,
                            RandomVariable[] query,
                            Map<Integer, AssignmentProposition[]> evidencesOverTime,
                            String ordering,
@@ -34,7 +34,8 @@ public class RollupFiltering {
 
     public CategoricalDistribution rollup() {
         // slice 0 - 1
-        ProbabilityTable previousTable = (ProbabilityTable) new EliminationAsk().ask(queryVariables, evidenceOverTime.get(1), network);
+        ProbabilityTable previousTable = (ProbabilityTable) new EliminationAsk()
+                .ask(queryVariables, evidenceOverTime.get(1), network);
         System.out.println("Time 1 [slice 0-1]: " + previousTable + "\n");
 
         // altre slices
