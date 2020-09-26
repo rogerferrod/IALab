@@ -2,18 +2,36 @@ package aimacode.dynamic;
 
 import aima.core.probability.RandomVariable;
 import aima.core.probability.bayes.FiniteNode;
+import aima.core.probability.bayes.impl.BayesNet;
+import aima.core.probability.bayes.impl.DynamicBayesNet;
 import aima.core.probability.bayes.impl.FullCPTNode;
 import aima.core.probability.domain.BooleanDomain;
 import aima.core.probability.util.RandVar;
 
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 
 public class NetworkFactory {
-    public DynamicBayesNetwork umbrellaNetwork() {
+    public final static String UMBRELLA = "umbrella";
+    public final static String WIND = "wind";
+    public final static String TWOFACTORS = "twofactors";
+
+    public WrapDynamicBayesNet getNetwork(String net) {
+        switch (net) {
+            case UMBRELLA:
+                return umbrellaNetwork();
+            case WIND:
+                return windNetwork();
+            case TWOFACTORS:
+                return twoFactors();
+            default:
+                return null;
+        }
+    }
+
+    private WrapDynamicBayesNet umbrellaNetwork() {
         HashMap<String, RandomVariable> vaNamesMap = new HashMap<>();
         Map<RandomVariable, RandomVariable> X1_to_X0 = new LinkedHashMap<>();
+        Map<RandomVariable, RandomVariable> X0_to_X1 = new LinkedHashMap<>();
 
         RandVar priorRainVar = new RandVar("Rain_0", new BooleanDomain());
         FiniteNode priorRain = new FullCPTNode(priorRainVar, new double[]{0.5, 0.5});
@@ -28,11 +46,17 @@ public class NetworkFactory {
         vaNamesMap.put("Umbrella_t", tUmbrellaVar);
 
         X1_to_X0.put(tRainVar, priorRainVar);
+        X0_to_X1.put(priorRainVar, tRainVar);
 
-        return new DynamicBayesNetwork(new FiniteNode[]{priorRain}, new FiniteNode[]{tRain, tUmbrella}, vaNamesMap, X1_to_X0);
+        BayesNet priorNetwork = new BayesNet(priorRain);
+        Set<RandomVariable> E_1 = new HashSet<>();
+        E_1.add(tUmbrellaVar);
+        DynamicBayesNet dbn = new DynamicBayesNet(priorNetwork, X0_to_X1, E_1, priorRain);
+
+        return new WrapDynamicBayesNet(new FiniteNode[]{priorRain}, new FiniteNode[]{tRain, tUmbrella}, vaNamesMap, X1_to_X0, dbn);
     }
 
-    public DynamicBayesNetwork windNetwork() {
+    private WrapDynamicBayesNet windNetwork() {
         HashMap<String, RandomVariable> vaNamesMap = new HashMap<>();
         Map<RandomVariable, RandomVariable> X1_to_X0 = new LinkedHashMap<>();
 
@@ -59,10 +83,10 @@ public class NetworkFactory {
         X1_to_X0.put(tRainVar, priorRainVar);
         X1_to_X0.put(tWindVar, priorWindVar);
 
-        return new DynamicBayesNetwork(new FiniteNode[]{priorRain, priorWind}, new FiniteNode[]{tRain, tWind, tUmbrella}, vaNamesMap, X1_to_X0);
+        return new WrapDynamicBayesNet(new FiniteNode[]{priorRain, priorWind}, new FiniteNode[]{tRain, tWind, tUmbrella}, vaNamesMap, X1_to_X0, null);
     }
 
-    public DynamicBayesNetwork twoFactors() {
+    private WrapDynamicBayesNet twoFactors() {
         HashMap<String, RandomVariable> vaNamesMap = new HashMap<>();
         Map<RandomVariable, RandomVariable> X1_to_X0 = new LinkedHashMap<>();
 
@@ -102,7 +126,7 @@ public class NetworkFactory {
         X1_to_X0.put(tYVar, priorYVar);
         X1_to_X0.put(tZVar, priorZVar);
 
-        return new DynamicBayesNetwork(new FiniteNode[]{priorX, priorY, priorZ}, new FiniteNode[]{tX, tY, tZ, tE, tG}, vaNamesMap, X1_to_X0);
+        return new WrapDynamicBayesNet(new FiniteNode[]{priorX, priorY, priorZ}, new FiniteNode[]{tX, tY, tZ, tE, tG}, vaNamesMap, X1_to_X0, null);
     }
 }
 

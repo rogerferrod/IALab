@@ -3,27 +3,47 @@ package aimacode.dynamic;
 import aima.core.probability.RandomVariable;
 import aima.core.probability.proposition.AssignmentProposition;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.*;
 
-public class DynamicBN {
-    public static void main(String[] args) {
+import org.json.*;
 
-        args = new String[2];
+public class DynamicBN {
+    public static void main(String[] args) throws IOException {
+
+        args = new String[4];
         //args[0] = EliminationAskDynamic.TOPOLOGICAL;
         args[0] = EliminationAskDynamic.MIN_DEGREE;
         //args[0] = EliminationAskDynamic.MIN_FILL;
 
         args[1] = "true";
+        args[2] = "./input/experiments.json";
+        args[3] = "Umbrella_00";
+        //args[3] = "UmbrellaWind_00";
+        //args[3] = "TwoFactors_00";
+
+        String jsonData = new String(Files.readAllBytes(Paths.get(args[2])));
+        JSONObject obj = new JSONObject(jsonData);
+        JSONObject experiment = (JSONObject) obj.get(args[3]);
+        JSONObject evidencesInput = (JSONObject) experiment.get("evidences");
+
+        int m = (int) experiment.get("iterations");
+        int n = evidencesInput.length();
+        String[] argsEvNames = evidencesInput.keySet().toArray(new String[n]);
+        String[][] argsEv = new String[n][m];
+
+        for (int i = 0; i < n; i++) {
+            JSONArray arr = (JSONArray) evidencesInput.get(argsEvNames[i]);
+            for (int j = 0; j < arr.length(); j++) {
+                argsEv[i][j] = arr.getString(j);
+            }
+        }
 
         NetworkFactory factory = new NetworkFactory();
-        //MyDynamicBayesNetwork dbn = factory.umbrellaNetwork();
-        //DynamicBayesNetwork dbn = factory.windNetwork();
-        DynamicBayesNetwork dbn = factory.twoFactors();
-
-        String[][] argsEv = new String[][]{{"1", "0", "1", "0", "1"}, {"0", "1", "0", "1", "0"}};
-        int m = argsEv[0].length;
-        //ArrayList<String> evNames = new ArrayList<>(Arrays.asList("Umbrella_t"));
-        ArrayList<String> evNames = new ArrayList<>(Arrays.asList("E_t", "G_t"));
+        WrapDynamicBayesNet dbn = factory.getNetwork((String) experiment.get("network"));
+        ArrayList<String> evNames = new ArrayList<>(Arrays.asList(argsEvNames));
 
         Map<Integer, AssignmentProposition[]> evidencesOverTime = new LinkedHashMap<>(); //t : evidences(t)
         RandomVariable[] query = Arrays.stream(dbn.getVariables())
