@@ -23,6 +23,13 @@ public class EliminationAskStatic extends EliminationAsk {
         this.ordering = ordering;
     }
 
+    /**
+     * Ordina una collezione di variabili secondo l'ordinamento specificato in "ordering"
+     *
+     * @param bn   Rete Bayesiana di appartenenza
+     * @param vars Variabili da ordinare
+     * @return varibili ordinate
+     */
     @Override
     protected List<RandomVariable> order(BayesianNetwork bn, Collection<RandomVariable> vars) {
         if (ordering.equals(TOPOLOGICAL)) {
@@ -32,7 +39,8 @@ public class EliminationAskStatic extends EliminationAsk {
         }
 
         BayesNet network = (BayesNet) bn;
-        List<RandomVariable> variables = network.getVariablesInTopologicalOrder();
+        List<RandomVariable> variables = network.getVariablesInTopologicalOrder().stream()
+                .filter(vars::contains).collect(Collectors.toList());
         List<RandomVariable> ordered = new ArrayList<>();
         Set<Node> nodes = variables.stream().map(bn::getNode).collect(Collectors.toSet());
         InteractionGraph interGraph = new InteractionGraph(nodes);

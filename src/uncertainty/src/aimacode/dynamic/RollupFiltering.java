@@ -3,7 +3,6 @@ package aimacode.dynamic;
 import aima.core.probability.CategoricalDistribution;
 import aima.core.probability.RandomVariable;
 import aima.core.probability.bayes.BayesianNetwork;
-import aima.core.probability.bayes.FiniteNode;
 import aima.core.probability.bayes.exact.EliminationAsk;
 import aima.core.probability.proposition.AssignmentProposition;
 import aima.core.probability.util.ProbabilityTable;
@@ -13,7 +12,6 @@ import java.util.*;
 
 public class RollupFiltering {
     private final Map<Integer, AssignmentProposition[]> evidenceOverTime; //t : evidences(t)
-    private final List<RandomVariable> priorVariables;
     private final BayesianNetwork network;
     private final RandomVariable[] queryVariables;
     private final Map<RandomVariable, RandomVariable> X1_to_X0;
@@ -23,14 +21,12 @@ public class RollupFiltering {
     public RollupFiltering(MyDynamicBayesNetwork dbn,
                            RandomVariable[] query,
                            Map<Integer, AssignmentProposition[]> evidencesOverTime,
-                           List<RandomVariable> priorVariables,
                            String ordering,
                            boolean verbose) {
 
         this.network = dbn.getStaticBN();
         this.queryVariables = query;
         this.evidenceOverTime = evidencesOverTime;
-        this.priorVariables = priorVariables;
         this.X1_to_X0 = dbn.getX1_to_X0();
         this.ordering = ordering;
         this.verbose = verbose;
@@ -44,7 +40,7 @@ public class RollupFiltering {
         // altre slices
         for (int i = 2; i < evidenceOverTime.size(); i++) {
             previousTable = (ProbabilityTable) new EliminationAskDynamic(ordering, verbose)
-                    .ask(queryVariables, evidenceOverTime.get(i), network, priorVariables, X1_to_X0, previousTable);
+                    .ask(queryVariables, evidenceOverTime.get(i), network, X1_to_X0, previousTable);
             System.out.println("Time " + i + " [slice " + (i - 1) + "-" + i + "]: " + previousTable + "\n");
         }
 

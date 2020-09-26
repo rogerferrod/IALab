@@ -31,17 +31,15 @@ public class EliminationAskDynamic {
     public CategoricalDistribution ask(final RandomVariable[] X,
                                        final AssignmentProposition[] observedEvidence,
                                        final BayesianNetwork bn,
-                                       List<RandomVariable> priorVariables,
                                        Map<RandomVariable, RandomVariable> X1_to_X0,
                                        ProbabilityTable oldFactor) {
-        return this.eliminationAsk(X, observedEvidence, bn, priorVariables, X1_to_X0, oldFactor);
+        return this.eliminationAsk(X, observedEvidence, bn, X1_to_X0, oldFactor);
     }
 
 
     public CategoricalDistribution eliminationAsk(final RandomVariable[] X,
                                                   final AssignmentProposition[] e,
                                                   final BayesianNetwork bn,
-                                                  List<RandomVariable> priorVariables,
                                                   Map<RandomVariable, RandomVariable> X1_to_X0,
                                                   ProbabilityTable oldFactor) {
 
@@ -54,13 +52,16 @@ public class EliminationAskDynamic {
             previousVar.add(X1_to_X0.get(var)); // copia VA precedenti (t=0)
         }
 
-        ProbabilityTable tempTable = new ProbabilityTable(oldFactor.getValues(), previousVar.toArray(new RandomVariable[previousVar.size()]));
-        if (verbose)
-            System.out.println("\toldTable" + tempTable.getArgumentVariables() + " = " + tempTable);
+        ProbabilityTable previousTable = new ProbabilityTable(oldFactor.getValues(), previousVar.toArray(new RandomVariable[previousVar.size()]));
+        Set<RandomVariable> priorVariables = previousTable.getArgumentVariables();
+        //TODO controllare con reti che generano più fattori
 
         // factors <- [old_factor]
         List<Factor> factors = new ArrayList<>();
-        factors.add(0, tempTable);
+        factors.add(0, previousTable);
+
+        if (verbose)
+            System.out.println("\tPreviousFactors=" + factorsToString(factors));
 
         for (RandomVariable var : order(bn, vars)) {
             if (!priorVariables.contains(var)) { // se t != 0 (già in factors)
@@ -70,35 +71,34 @@ public class EliminationAskDynamic {
         }
 
         if (verbose)
-            System.out.println("\toldFactor=" + factors);
+            System.out.println("\tTempFactors=" + factorsToString(factors));
 
-        /*for (RandomVariable var : priorVariables) { // TODO mancano eventuali hidden(t) che non sono in prior
-            if (verbose)
-                System.out.println("\tsumOut(" + var + ")");
-
+        for (RandomVariable var : order(bn, hidden)) {
             List<Factor> toSumOut = factors.stream().filter(x -> x.contains(var)).collect(Collectors.toList());
             factors.removeAll(toSumOut);
             factors.addAll(sumOut(var, toSumOut, bn));
-        }*/
-
-        for (RandomVariable var : hidden) {
-            if (verbose)
+            if (verbose) {
                 System.out.println("\tsumOut(" + var + ")");
-
-            List<Factor> toSumOut = factors.stream().filter(x -> x.contains(var)).collect(Collectors.toList());
-            factors.removeAll(toSumOut);
-            factors.addAll(sumOut(var, toSumOut, bn));
+                System.out.println("\tTempFactors=" + factorsToString(factors));
+            }
         }
 
         Factor product = pointwiseProduct(factors);
         ProbabilityTable newTable = ((ProbabilityTable) product.pointwiseProductPOS(_identity, X)).normalize();
         if (verbose) {
-            System.out.println("\tnewFactor=" + factors);
+            System.out.println("\tNewFactors=" + factorsToString(factors));
             System.out.println("\tnewTable" + newTable.getArgumentVariables() + " = " + newTable);
         }
         return newTable;
     }
 
+    /**
+     * Ordina una collezione di variabili secondo l'ordinamento specificato in "ordering"
+     *
+     * @param bn   Rete Bayesiana di appartenenza
+     * @param vars Variabili da ordinare
+     * @return varibili ordinate
+     */
     protected List<RandomVariable> order(BayesianNetwork bn, Collection<RandomVariable> vars) {
         if (ordering.equals(TOPOLOGICAL)) {
             List<RandomVariable> order = new ArrayList<>(vars);
@@ -107,7 +107,8 @@ public class EliminationAskDynamic {
         }
 
         BayesNet network = (BayesNet) bn;
-        List<RandomVariable> variables = network.getVariablesInTopologicalOrder();
+        List<RandomVariable> variables = network.getVariablesInTopologicalOrder().stream()
+                .filter(vars::contains).collect(Collectors.toList());
         List<RandomVariable> ordered = new ArrayList<>();
         Set<Node> nodes = variables.stream().map(bn::getNode).collect(Collectors.toSet());
         InteractionGraph interGraph = new InteractionGraph(nodes);
@@ -132,6 +133,14 @@ public class EliminationAskDynamic {
                 break;
         }
         return ordered;
+    }
+
+    private String factorsToString(List<Factor> factors) {
+        StringBuilder str = new StringBuilder();
+        for (Factor f : factors) {
+            str.append(f.getArgumentVariables().toString()).append(f).append("; ");
+        }
+        return str.toString();
     }
 
     /*

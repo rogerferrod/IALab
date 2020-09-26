@@ -1,13 +1,9 @@
 package aimacode.dynamic;
 
 import aima.core.probability.RandomVariable;
-import aima.core.probability.bayes.BayesianNetwork;
-import aima.core.probability.bayes.FiniteNode;
-import aima.core.probability.bayes.Node;
 import aima.core.probability.proposition.AssignmentProposition;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class DynamicBN {
     public static void main(String[] args) {
@@ -28,7 +24,6 @@ public class DynamicBN {
         ArrayList<String> evNames = new ArrayList<>(Arrays.asList("Umbrella_t"));
 
         Map<Integer, AssignmentProposition[]> evidencesOverTime = new LinkedHashMap<>(); //t : evidences(t)
-        //Map<Integer, ArrayList<RandomVariable>> variablesOverTime = new LinkedHashMap<>(); //t : va(t)
         RandomVariable[] query = Arrays.stream(dbn.getVariables())
                 .filter(x -> !evNames.contains(x.getName())).toArray(RandomVariable[]::new);
 
@@ -42,15 +37,7 @@ public class DynamicBN {
             }
         }
 
-        /*ArrayList<FiniteNode> priorNodes = new ArrayList<>(Arrays.asList(Arrays.stream(dbn.getPriorNodes())
-                .filter(x -> !evNames.contains(x.getRandomVariable().getName())).toArray(FiniteNode[]::new)));
-        variablesOverTime.put(0, new ArrayList<>(priorNodes.stream().map(Node::getRandomVariable).collect(Collectors.toList())));*/
-
-        List<RandomVariable> priorVariables = Arrays.stream(dbn.getPriorNodes())
-                .filter(x -> !evNames.contains(x.getRandomVariable().getName()))
-                .map(Node::getRandomVariable).collect(Collectors.toList());
-
-        RollupFiltering filtering = new RollupFiltering(dbn, query, evidencesOverTime, priorVariables, args[0], Boolean.parseBoolean(args[1]));
+        RollupFiltering filtering = new RollupFiltering(dbn, query, evidencesOverTime, args[0], Boolean.parseBoolean(args[1]));
         System.out.println(filtering);
 
         System.out.println("\nFinal distribution " + filtering.rollup() + "\n");
