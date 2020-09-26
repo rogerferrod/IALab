@@ -18,7 +18,7 @@ public class RollupFiltering {
     private final String ordering;
     private final boolean verbose;
 
-    public RollupFiltering(DynamicBayesNetwork dbn,
+    public RollupFiltering(WrapDynamicBayesNet dbn,
                            RandomVariable[] query,
                            Map<Integer, AssignmentProposition[]> evidencesOverTime,
                            String ordering,

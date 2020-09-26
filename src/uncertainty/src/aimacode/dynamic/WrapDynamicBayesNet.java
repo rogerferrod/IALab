@@ -5,6 +5,7 @@ import aima.core.probability.bayes.BayesianNetwork;
 import aima.core.probability.bayes.FiniteNode;
 import aima.core.probability.bayes.Node;
 import aima.core.probability.bayes.impl.BayesNet;
+import aima.core.probability.bayes.impl.DynamicBayesNet;
 
 import java.util.*;
 
@@ -12,19 +13,21 @@ import java.util.*;
  * Implementa una rete bayesiana dinamica rappresentandola come una serie (finita)
  * di reti bayesiane statiche
  */
-public class DynamicBayesNetwork {
+public class WrapDynamicBayesNet {
     private final BayesianNetwork staticBN;
+    private final DynamicBayesNet dbn;
     private final FiniteNode[] priorNodes;
     private final FiniteNode[] tNodes;
     private final HashMap<String, RandomVariable> vaNamesMap;
     private final Map<RandomVariable, RandomVariable> X1_to_X0;
 
-    public DynamicBayesNetwork(FiniteNode[] priorNodes, FiniteNode[] tNodes, HashMap<String, RandomVariable> vaNamesMap, Map<RandomVariable, RandomVariable> X1_to_X0) {
+    public WrapDynamicBayesNet(FiniteNode[] priorNodes, FiniteNode[] tNodes, HashMap<String, RandomVariable> vaNamesMap, Map<RandomVariable, RandomVariable> X1_to_X0, DynamicBayesNet dbn) {
         this.priorNodes = priorNodes;
         this.tNodes = tNodes;
         this.vaNamesMap = vaNamesMap;
         this.staticBN = new BayesNet(priorNodes);
         this.X1_to_X0 = X1_to_X0;
+        this.dbn = dbn;
     }
 
     public BayesianNetwork getStaticBN() {
@@ -33,6 +36,10 @@ public class DynamicBayesNetwork {
 
     public FiniteNode[] getPriorNodes() {
         return priorNodes;
+    }
+
+    public DynamicBayesNet getDbn() {
+        return dbn;
     }
 
     public RandomVariable[] getVariables() {

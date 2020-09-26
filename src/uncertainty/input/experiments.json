@@ -1,0 +1,24 @@
+{
+  "Umbrella_00": {
+    "network": "umbrella",
+    "iterations" : 5,
+    "evidences": {
+      "Umbrella_t" : ["1", "0", "1", "0", "1"]
+    }
+  },
+  "UmbrellaWind_00": {
+    "network": "wind",
+    "iterations" : 5,
+    "evidences": {
+      "Umbrella_t" : ["1", "0", "1", "0", "1"]
+    }
+  },
+  "TwoFactors_00": {
+    "network": "twofactors",
+    "iterations" : 5,
+    "evidences": {
+      "E_t" : ["1", "0", "1", "0", "1"],
+      "G_t" : ["0", "1", "0", "1", "0"]
+    }
+  }
+}
