@@ -1,4 +1,4 @@
-package aimacode.dynamic;
+package aimacode.exercises;
 
 import aima.core.probability.RandomVariable;
 import aima.core.probability.bayes.DynamicBayesianNetwork;

@@ -11,7 +11,7 @@ import java.util.*;
 
 
 public class RollupFiltering {
-    private final Map<Integer, AssignmentProposition[]> evidenceOverTime; //t : evidences(t)
+    private final Map<Integer, AssignmentProposition[]> evidenceOverTime;
     private final BayesianNetwork network;
     private final RandomVariable[] queryVariables;
     private final Map<RandomVariable, RandomVariable> X1_to_X0;

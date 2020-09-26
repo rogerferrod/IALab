@@ -12,10 +12,11 @@ import java.util.*;
 /**
  * Implementa una rete bayesiana dinamica rappresentandola come una serie (finita)
  * di reti bayesiane statiche
+ * Include la rappresentazione di rete baesiana dinamica nativa di AimaCode
  */
 public class WrapDynamicBayesNet {
     private final BayesianNetwork staticBN;
-    private final DynamicBayesNet dbn;
+    private final DynamicBayesNet dynamicBN;
     private final FiniteNode[] priorNodes;
     private final FiniteNode[] tNodes;
     private final HashMap<String, RandomVariable> vaNamesMap;
@@ -27,7 +28,7 @@ public class WrapDynamicBayesNet {
         this.vaNamesMap = vaNamesMap;
         this.staticBN = new BayesNet(priorNodes);
         this.X1_to_X0 = X1_to_X0;
-        this.dbn = dbn;
+        this.dynamicBN = dbn;
     }
 
     public BayesianNetwork getStaticBN() {
@@ -38,8 +39,8 @@ public class WrapDynamicBayesNet {
         return priorNodes;
     }
 
-    public DynamicBayesNet getDbn() {
-        return dbn;
+    public DynamicBayesNet getDynamicBN() {
+        return dynamicBN;
     }
 
     public RandomVariable[] getVariables() {

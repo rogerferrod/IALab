@@ -13,21 +13,18 @@ import java.util.stream.Collectors;
 import java.util.*;
 
 
-public class Testing {
+public class ParticleTesting {
 
     public static void main(String[] args) throws IOException {
         args = new String[3];
-
         args[0] = "10000";
-
-
-        int iterations = Integer.parseInt(args[0]);
 
         args[1] = "./input/experiments.json";
         //args[2] = "Umbrella_00";
         //args[2] = "UmbrellaWind_00";
         args[2] = "TwoFactors_00";
 
+        int iterations = Integer.parseInt(args[0]);
 
         String jsonData = new String(Files.readAllBytes(Paths.get(args[1])));
         JSONObject obj = new JSONObject(jsonData);
@@ -52,7 +49,7 @@ public class Testing {
             }
         }
 
-        ParticleFiltering pf = new ParticleFiltering(iterations, dbn.getDbn());
+        ParticleFiltering pf = new ParticleFiltering(iterations, dbn.getDynamicBN());
 
         for (int i = 0; i < m; i++) {
             AssignmentProposition[][] S = pf.particleFiltering(aps[i]);
@@ -80,6 +77,7 @@ public class Testing {
             }
         }
 
+        // ordinamento alfabetico inverso
         List<String> sorted = new ArrayList<>(hm.keySet()).stream().sorted().collect(Collectors.toList());
         Collections.reverse(sorted);
         for (String key : sorted) {

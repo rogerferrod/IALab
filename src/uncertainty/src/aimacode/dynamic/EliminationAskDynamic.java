@@ -54,7 +54,6 @@ public class EliminationAskDynamic {
 
         ProbabilityTable previousTable = new ProbabilityTable(oldFactor.getValues(), previousVar.toArray(new RandomVariable[previousVar.size()]));
         Set<RandomVariable> priorVariables = previousTable.getArgumentVariables();
-        //TODO controllare con reti che generano più fattori
 
         // factors <- [old_factor]
         List<Factor> factors = new ArrayList<>();
