@@ -29,6 +29,12 @@
 	(slot num)
 )
 
+(deftemplate b-cell ;; belief cell
+	(slot x)
+	(slot y)
+	(slot content (allowed-values water boat))
+)
+
 ;; ******************************
 ;; FUNCTIONS
 ;; ******************************

@@ -67,6 +67,15 @@
 	(focus ENV)
 )
 
+(deffunction check-boundary (?x ?y)
+	(if (or (< ?x 0) 
+			(< ?y 0) 
+			(> ?x 9) 
+			(> ?y 9))
+	then (bind ?return FALSE)
+	else (bind ?return TRUE))
+)
+
 (deftemplate board
 	(slot air-carrier)  ;tipo nave, #navi, #celle occupate
 	(slot cruiser)

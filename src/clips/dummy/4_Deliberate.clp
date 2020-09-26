@@ -1,4 +1,4 @@
-(defmodule DELIBERATE (import MAIN ?ALL) (import ENV ?ALL) (import HEAT ?ALL) (export ?ALL))
+(defmodule DELIBERATE (import MAIN ?ALL) (import ENV ?ALL) (import HEAT ?ALL) (import CONVOLUTION ?ALL) (export ?ALL))
 
 ;; ******************************
 ;; TEMPLATES
@@ -9,38 +9,12 @@
 	(slot y)
 )
 
-(deftemplate b-cell ;; belief cell
-	(slot x)
-	(slot y)
-	(slot content (allowed-values water boat))
-)
-
 
 (deftemplate intention-sink
 	(slot x-stern)
 	(slot y-stern)
 	(slot orientation (allowed-values ver hor))
 	(slot type (allowed-values air-carrier cruiser destroyer submarine))
-)
-
-(deftemplate convolution-area
-	(slot id)
-	(slot type)
-	(slot size)
-	(slot x)
-	(slot y)
-	(slot orientation (allowed-values ver hor))
-	(slot score)
-	(multislot area) ; id dei fatti corrispondenti alle celle dell'area
-	(slot computed)
-	(slot visited) ; counter of cells already visited during convolution
-)
-
-(deftemplate conv-cell
-	(slot id)
-	(slot area-id)
-	(slot x)
-	(slot y)
 )
 
 
@@ -128,4 +102,5 @@
 	
 	;(modify ?i (ship-index (+ ?s 1))) ; TODO da mettere quando si asserisce intention-sink
 	(retract ?f) ; TODO temporaneo
+	(focus CONVOLUTION)
 )

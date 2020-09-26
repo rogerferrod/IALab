@@ -11,15 +11,6 @@
 ;; *******************************
 
 
-(deffunction check-boundary (?x ?y)
-	(if (or (< ?x 0) 
-			(< ?y 0) 
-			(> ?x 9) 
-			(> ?y 9))
-	then (bind ?return FALSE)
-	else (bind ?return TRUE))
-)
-
 ;; *******************************
 ;; RULES
 ;; *******************************
