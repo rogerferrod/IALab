@@ -28,16 +28,15 @@ public class StaticBN {
 
         //args[2] = "cow_00";
         //args[2] = "cow_01";
-        args[2] = "earthquake_00";
-        //args[2] = "survey_00"; //TODO non funziona con ordinamento
-        //args[2] = "sachs_00"; //TODO non funziona con ordinamento
-        //args[2] = "asia_00"; //TODO non funziona con ordinamento
+        //args[2] = "earthquake_00";
+        args[2] = "survey_00";
+        //args[2] = "sachs_00";
         //args[2] = "alarm_00";
-        //args[2] = "insurance_00"; //TODO non funziona con ordinamento
-        //args[2] = "munin_00"; //TODO non funziona con ordinamento
-        //args[2] = "link_00"; //TODO con ordinamento eccede heap memory
+        //args[2] = "insurance_00";
+        //args[2] = "munin_00"; //TODO è quella grossa?
+        //args[2] = "link_00";
         //args[2] = "win95pts_00";
-        //args[2] = "andes_00"; //TODO ??
+        //args[2] = "andes_00"; //TODO troppo grossa??
 
         String jsonData = new String(Files.readAllBytes(Paths.get(args[1])));
         JSONObject obj = new JSONObject(jsonData);
