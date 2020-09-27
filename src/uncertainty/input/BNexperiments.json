@@ -19,10 +19,20 @@
     "query": "S",
     "evidences": "T=Car"
   },
+  "sachs_00": {
+    "network": "./networks/sachs.xml",
+    "query": "PKC",
+    "evidences": "Erk=LOW"
+  },
   "alarm_00": {
     "network": "./networks/alarm.xml",
     "query": "MINVOLSET",
     "evidences": "VENTTUBE=LOW"
+  },
+  "insurance_00": {
+    "network": "./networks/insurance.xml",
+    "query": "DrivQuality",
+    "evidences": "Accident=Mild"
   },
   "munin_00": {
     "network": "./networks/munin.xml",
@@ -38,5 +48,10 @@
     "network": "./networks/win95pts.xml",
     "query": "PrtCbl",
     "evidences": "TnrSpply=Low"
+  },
+  "andes_00": {
+    "network": "./networks/andes.xml",
+    "query": "GOAL_53",
+    "evidences": "GOAL_149=false"
   }
 }
