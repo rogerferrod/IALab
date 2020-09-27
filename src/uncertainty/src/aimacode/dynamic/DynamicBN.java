@@ -12,7 +12,6 @@ import org.json.*;
 
 public class DynamicBN {
     public static void main(String[] args) throws IOException {
-
         args = new String[4];
         //args[0] = EliminationAskDynamic.TOPOLOGICAL;
         args[0] = EliminationAskDynamic.MIN_DEGREE;
@@ -21,8 +20,8 @@ public class DynamicBN {
         args[1] = "true";
         args[2] = "./input/DBNexperiments.json";
         //args[3] = "Umbrella_00";
-        args[3] = "UmbrellaWind_00";
-        //args[3] = "TwoFactors_00";
+        //args[3] = "UmbrellaWind_00";
+        args[3] = "TwoFactors_00";
 
         String jsonData = new String(Files.readAllBytes(Paths.get(args[2])));
         JSONObject obj = new JSONObject(jsonData);

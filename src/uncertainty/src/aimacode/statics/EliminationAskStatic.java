@@ -7,8 +7,6 @@ import aima.core.probability.bayes.BayesianNetwork;
 import aima.core.probability.bayes.FiniteNode;
 import aima.core.probability.bayes.Node;
 import aima.core.probability.bayes.exact.EliminationAsk;
-import aima.core.probability.bayes.impl.BayesNet;
-import aima.core.probability.proposition.AbstractTermProposition;
 import aima.core.probability.proposition.AssignmentProposition;
 import aima.core.probability.util.ProbabilityTable;
 
@@ -25,9 +23,11 @@ public class EliminationAskStatic extends EliminationAsk {
     final public static String MIN_FILL = "minfill";
 
     final private String ordering;
+    final private boolean verbose;
 
-    public EliminationAskStatic(String ordering) {
+    public EliminationAskStatic(String ordering, boolean verbose) {
         this.ordering = ordering;
+        this.verbose = verbose;
     }
 
     /**
@@ -38,33 +38,38 @@ public class EliminationAskStatic extends EliminationAsk {
 
         Set<RandomVariable> hidden = new HashSet<>();
         List<RandomVariable> VARS = new ArrayList<>();
-        calculateVariables(X, e, bn, hidden, VARS);
-
-        List<RandomVariable> evidenceVars = Arrays.stream(e).map(AbstractTermProposition::getTermVariable).collect(Collectors.toList());
-        List<RandomVariable> queryVars = Arrays.stream(X).collect(Collectors.toList());
-        List<RandomVariable> toSumOut = new ArrayList<>();
+        calculateVariables(X, e, bn, hidden, VARS); // aggiorna hidden e vars
 
         // factors <- []
         List<Factor> factors = new ArrayList<>();
+        List<RandomVariable> toSumOut = new ArrayList<>();
         for (RandomVariable var : order(bn, VARS)) {
             // factors <- [MAKE-FACTOR(var, e) | factors]
             Factor factor = makeFactor(var, e, bn);
             factors.add(0, factor);
-            // se non è variabile di query o di evidenza
-            if (!queryVars.contains(var) && !evidenceVars.contains(var)) {
+            if (hidden.contains(var)) {
                 toSumOut.add(var);
             }
         }
 
+        if (verbose)
+            System.out.println("\tTempFactors=" + factorsToString(factors));
+
         for (RandomVariable var : toSumOut) {
             factors = sumOut(var, factors, bn);
+            if (verbose) {
+                System.out.println("\tsumOut(" + var + ")");
+                System.out.println("\tTempFactors=" + factorsToString(factors));
+            }
         }
 
-        // return NORMALIZE(POINTWISE-PRODUCT(factors))
         Factor product = pointwiseProduct(factors);
-        // Note: Want to ensure the order of the product matches the
-        // query variables
-        return ((ProbabilityTable) product.pointwiseProductPOS(_identity, X)).normalize();
+        ProbabilityTable newTable = ((ProbabilityTable) product.pointwiseProductPOS(_identity, X)).normalize();
+        if (verbose) {
+            System.out.println("\tNewFactors=" + factorsToString(factors));
+            System.out.println("\tnewTable" + newTable.getArgumentVariables() + " = " + newTable);
+        }
+        return newTable;
     }
 
     /**
@@ -106,6 +111,14 @@ public class EliminationAskStatic extends EliminationAsk {
                 break;
         }
         return ordered;
+    }
+
+    private String factorsToString(List<Factor> factors) {
+        StringBuilder str = new StringBuilder();
+        for (Factor f : factors) {
+            str.append(f.getArgumentVariables().toString()).append(f).append("; ");
+        }
+        return str.toString();
     }
 
     /*

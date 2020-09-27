@@ -6,7 +6,6 @@ import aima.core.probability.RandomVariable;
 import aima.core.probability.bayes.BayesianNetwork;
 import aima.core.probability.bayes.FiniteNode;
 import aima.core.probability.bayes.Node;
-import aima.core.probability.bayes.impl.BayesNet;
 import aima.core.probability.proposition.AssignmentProposition;
 import aima.core.probability.util.ProbabilityTable;
 import aimacode.statics.InteractionGraph;
@@ -44,8 +43,8 @@ public class EliminationAskDynamic {
                                                   ProbabilityTable oldFactor) {
 
         Set<RandomVariable> hidden = new HashSet<>();
-        List<RandomVariable> vars = new ArrayList<>();
-        calculateVariables(X, e, bn, hidden, vars); // aggiorna hidden e vars
+        List<RandomVariable> VARS = new ArrayList<>();
+        calculateVariables(X, e, bn, hidden, VARS); // aggiorna hidden e vars
 
         ArrayList<RandomVariable> previousVar = new ArrayList<>();
         for (RandomVariable var : oldFactor.getArgumentVariables()) {
@@ -56,11 +55,12 @@ public class EliminationAskDynamic {
         Set<RandomVariable> priorVariables = previousTable.getArgumentVariables();
 
         // ordering
-        List<RandomVariable> ordered = order(bn, vars);
+        List<RandomVariable> ordered = order(bn, VARS);
 
         // factors <- [old_factor]
         List<Factor> factors = new ArrayList<>();
         factors.add(0, previousTable);
+        List<RandomVariable> toSumOut = new ArrayList<>();
 
         if (verbose)
             System.out.println("\tPreviousFactors=" + factorsToString(factors));
@@ -70,20 +70,21 @@ public class EliminationAskDynamic {
                 // factors <- [MAKE-FACTOR(var, e) | factors]
                 factors.add(0, makeFactor(var, e, bn));
             }
+            if (hidden.contains(var)) {
+                toSumOut.add(var);
+            }
         }
 
         if (verbose)
             System.out.println("\tTempFactors=" + factorsToString(factors));
 
-        for (RandomVariable var : ordered) {
-            if (hidden.contains(var)) {
-                List<Factor> toSumOut = factors.stream().filter(x -> x.contains(var)).collect(Collectors.toList());
-                factors.removeAll(toSumOut);
-                factors.addAll(sumOut(var, toSumOut, bn));
-                if (verbose) {
-                    System.out.println("\tsumOut(" + var + ")");
-                    System.out.println("\tTempFactors=" + factorsToString(factors));
-                }
+        for (RandomVariable var : toSumOut) {
+            List<Factor> filteredFactors = factors.stream().filter(x -> x.contains(var)).collect(Collectors.toList());
+            factors.removeAll(filteredFactors);
+            factors.addAll(sumOut(var, filteredFactors, bn));
+            if (verbose) {
+                System.out.println("\tsumOut(" + var + ")");
+                System.out.println("\tTempFactors=" + factorsToString(factors));
             }
         }
 
