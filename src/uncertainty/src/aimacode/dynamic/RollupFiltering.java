@@ -6,6 +6,7 @@ import aima.core.probability.bayes.BayesianNetwork;
 import aima.core.probability.bayes.exact.EliminationAsk;
 import aima.core.probability.proposition.AssignmentProposition;
 import aima.core.probability.util.ProbabilityTable;
+import aimacode.statics.EliminationAskStatic;
 
 import java.util.*;
 
@@ -34,7 +35,7 @@ public class RollupFiltering {
 
     public CategoricalDistribution rollup() {
         // slice 0 - 1
-        ProbabilityTable previousTable = (ProbabilityTable) new EliminationAsk()
+        ProbabilityTable previousTable = (ProbabilityTable) new EliminationAskStatic(ordering)
                 .ask(queryVariables, evidenceOverTime.get(1), network);
         System.out.println("Time 1 [slice 0-1]: " + previousTable + "\n");
 

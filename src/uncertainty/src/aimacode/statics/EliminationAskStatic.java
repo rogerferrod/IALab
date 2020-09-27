@@ -82,13 +82,10 @@ public class EliminationAskStatic extends EliminationAsk {
             return order;
         }
 
-        BayesNet network = (BayesNet) bn;
-        List<RandomVariable> variables = network.getVariablesInTopologicalOrder().stream()
-                .filter(vars::contains).collect(Collectors.toList());
         List<RandomVariable> ordered = new ArrayList<>();
-        Set<Node> nodes = variables.stream().map(bn::getNode).collect(Collectors.toSet());
+        Set<Node> nodes = vars.stream().map(bn::getNode).collect(Collectors.toSet());
         InteractionGraph interGraph = new InteractionGraph(nodes);
-        int size = variables.size();
+        int size = vars.size();
 
         switch (ordering) {
             case MIN_DEGREE:
@@ -111,7 +108,12 @@ public class EliminationAskStatic extends EliminationAsk {
         return ordered;
     }
 
-    /* Original Code */
+    /*
+     *
+     * Original Code
+     *
+     */
+
     private Factor makeFactor(RandomVariable var, AssignmentProposition[] e,
                               BayesianNetwork bn) {
 

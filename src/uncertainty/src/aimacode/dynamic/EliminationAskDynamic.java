@@ -55,6 +55,9 @@ public class EliminationAskDynamic {
         ProbabilityTable previousTable = new ProbabilityTable(oldFactor.getValues(), previousVar.toArray(new RandomVariable[previousVar.size()]));
         Set<RandomVariable> priorVariables = previousTable.getArgumentVariables();
 
+        // ordering
+        List<RandomVariable> ordered = order(bn, vars);
+
         // factors <- [old_factor]
         List<Factor> factors = new ArrayList<>();
         factors.add(0, previousTable);
@@ -62,8 +65,8 @@ public class EliminationAskDynamic {
         if (verbose)
             System.out.println("\tPreviousFactors=" + factorsToString(factors));
 
-        for (RandomVariable var : order(bn, vars)) {
-            if (!priorVariables.contains(var)) { // se t != 0 (già in factors)
+        for (RandomVariable var : ordered) {
+            if (!priorVariables.contains(var)) { // se t == 0 è già in factors (previousTable)
                 // factors <- [MAKE-FACTOR(var, e) | factors]
                 factors.add(0, makeFactor(var, e, bn));
             }
@@ -72,13 +75,15 @@ public class EliminationAskDynamic {
         if (verbose)
             System.out.println("\tTempFactors=" + factorsToString(factors));
 
-        for (RandomVariable var : order(bn, hidden)) {
-            List<Factor> toSumOut = factors.stream().filter(x -> x.contains(var)).collect(Collectors.toList());
-            factors.removeAll(toSumOut);
-            factors.addAll(sumOut(var, toSumOut, bn));
-            if (verbose) {
-                System.out.println("\tsumOut(" + var + ")");
-                System.out.println("\tTempFactors=" + factorsToString(factors));
+        for (RandomVariable var : ordered) {
+            if (hidden.contains(var)) {
+                List<Factor> toSumOut = factors.stream().filter(x -> x.contains(var)).collect(Collectors.toList());
+                factors.removeAll(toSumOut);
+                factors.addAll(sumOut(var, toSumOut, bn));
+                if (verbose) {
+                    System.out.println("\tsumOut(" + var + ")");
+                    System.out.println("\tTempFactors=" + factorsToString(factors));
+                }
             }
         }
 
@@ -105,13 +110,10 @@ public class EliminationAskDynamic {
             return order;
         }
 
-        BayesNet network = (BayesNet) bn;
-        List<RandomVariable> variables = network.getVariablesInTopologicalOrder().stream()
-                .filter(vars::contains).collect(Collectors.toList());
         List<RandomVariable> ordered = new ArrayList<>();
-        Set<Node> nodes = variables.stream().map(bn::getNode).collect(Collectors.toSet());
+        Set<Node> nodes = vars.stream().map(bn::getNode).collect(Collectors.toSet());
         InteractionGraph interGraph = new InteractionGraph(nodes);
-        int size = variables.size();
+        int size = vars.size();
 
         switch (ordering) {
             case MIN_DEGREE:
