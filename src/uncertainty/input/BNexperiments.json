@@ -14,15 +14,15 @@
     "query": "JohnCalls",
     "evidences": "Alarm=True"
   },
-  "survey_00": {
-    "network": "./networks/survey.xml",
-    "query": "S",
-    "evidences": "T=Car"
-  },
   "sachs_00": {
     "network": "./networks/sachs.xml",
     "query": "PKC",
     "evidences": "Erk=LOW"
+  },
+  "survey_00": {
+    "network": "./networks/survey.xml",
+    "query": "S",
+    "evidences": "T=Car"
   },
   "alarm_00": {
     "network": "./networks/alarm.xml",
@@ -34,24 +34,24 @@
     "query": "DrivQuality",
     "evidences": "Accident=Mild"
   },
-  "munin_00": {
-    "network": "./networks/munin.xml",
-    "query": "DIFFN_DISTR",
-    "evidences": "DIFFN_M_SEV_DIST=NO"
+  "win95pts_00": {
+    "network": "./networks/win95pts.xml",
+    "query": "PrtCbl",
+    "evidences": "TnrSpply=Low"
   },
   "link_00": {
     "network": "./networks/link.xml",
     "query": "Z_2_a_f",
     "evidences": "D0_10_d_p=A"
   },
-  "win95pts_00": {
-    "network": "./networks/win95pts.xml",
-    "query": "PrtCbl",
-    "evidences": "TnrSpply=Low"
-  },
   "andes_00": {
     "network": "./networks/andes.xml",
     "query": "GOAL_53",
     "evidences": "GOAL_149=false"
+  },
+  "munin_full_00": {
+    "network": "./networks/munin_full.xml",
+    "query": "DIFFN_DISTR",
+    "evidences": "DIFFN_M_SEV_DIST=NO"
   }
 }

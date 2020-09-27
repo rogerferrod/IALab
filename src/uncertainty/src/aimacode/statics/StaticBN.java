@@ -27,14 +27,14 @@ public class StaticBN {
         //args[3] = "cow_00";
         //args[3] = "cow_01";
         //args[3] = "earthquake_00";
-        //args[3] = "survey_00";
         //args[3] = "sachs_00";
+        //args[3] = "survey_00";
         //args[3] = "alarm_00";
         //args[3] = "insurance_00";
-        args[3] = "munin_00"; //TODO è quella grossa?
-        //args[3] = "link_00";
         //args[3] = "win95pts_00";
+        //args[3] = "link_00";
         //args[3] = "andes_00"; //TODO troppo grossa??
+        args[3] = "munin_full_00";
 
         String jsonData = new String(Files.readAllBytes(Paths.get(args[2])));
         JSONObject obj = new JSONObject(jsonData);
