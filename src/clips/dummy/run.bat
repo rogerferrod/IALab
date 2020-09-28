@@ -7,11 +7,9 @@
 (load Discover.clp)
 (load 5_Planning.clp)
 (load 3_Agent.clp)
-;; (load 7_Neighborhood_fire.clp)
+
 (reset)
-;(watch focus)
 (set-break game-over)
 (run)
 (run 2)
 (focus ENV)
-;; (facts)
