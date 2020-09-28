@@ -15,7 +15,6 @@
 ;;
 ;;
 
-
 ;; --------------------------------------
 ;; RULES
 ;; --------------------------------------
@@ -55,7 +54,7 @@
 ; AGENT - DELIB - AGENT - PLANNING
 ;
 
-(defrule solve (declare (salience 20))
+(defrule solve
 	(status (step ?s)(currently running))
 	?f <- (intention-solve)
 =>
@@ -63,11 +62,11 @@
 	(pop-focus)
 )
 
-(defrule go-on-planning (declare (salience 20))
+(defrule go-on-planning
 	(status (step ?s)(currently running))
 	(or
 		(intention-sink)
-		; ...
+		; (intention-abort)
 	)
 =>
 	;(printout t crlf crlf)
@@ -75,10 +74,9 @@
 	(focus PLANNING)
 )
 
-
-(defrule explode-actions (declare (salience 10)) ; TODO: valutare se togliere salience
+(defrule select-action
 	(status (step ?s) (currently running))
-	(plan-stack (lastplan ?plan))
+	(plan-stack (lastplan ?plan)) ; TODO potremmo aggiungere uno slot "lastback" o "tobacktrack"
 	?p <- (plan (id ?plan) (counter ?i) (action-sequence $?actions))
 	(test (<= ?i (length$ ?actions)))
 =>
@@ -86,7 +84,7 @@
 	(modify ?p (counter (+ ?i 1)))
 )
 
-(defrule execute-action (declare (salience 10))
+(defrule execute-action
 	(status (step ?s) (currently running))
 	?f <- (action-to-exec ?id)
 	(action (id ?id) (type ?t) (x ?x) (y ?y))
@@ -104,7 +102,7 @@
 	)
 )
 
-(defrule go-on-deliberate
+(defrule go-on-deliberate (declare (salience -5))
 	(status (step ?s)(currently running))
 =>
     (printout t "vado a deliberate  step" ?s crlf)

@@ -32,8 +32,7 @@
 	(pop-focus)
 )
 
-
-(defrule update-k-per-col (declare (salience 5)) 
+(defrule update-k-per-col (declare (salience 30)) 
 	(k-per-col (col ?col) (num ?num))
 	=> 
 	(bind ?k-cell-counter 0)
@@ -46,7 +45,7 @@
 	(do-for-all-facts ((?update updated-k-per-col)) (eq ?update:col ?col) (modify ?update (num (- ?num (+ ?k-cell-counter ?b-cell-counter)))))
 )
 
-(defrule update-k-per-row (declare (salience 5)) 
+(defrule update-k-per-row (declare (salience 30)) 
 	(k-per-row (row ?row) (num ?num))
 	=> 
 	(bind ?k-cell-counter 0)
@@ -59,23 +58,22 @@
 	(do-for-all-facts ((?update updated-k-per-row)) (eq ?update:row ?row) (modify ?update (num (- ?num (+ ?k-cell-counter ?b-cell-counter)))))
 )
 
-(defrule make-intention-solve (declare (salience 1))
-	?i <- (ship-index ?s&:(= ?s 10)) ; or guesses >= 20
+(defrule make-intention-solve
+	?i <- (ship-index ?s&:(> ?s 10)) ; serve guesses >= 20
 =>
 	(assert (intention-solve))
 	(pop-focus)
 )
 
 (defrule make-intention-sink
-	(convolution-scores (is-first FALSE))
-	(convolution-scores (best-id ?b&:(neq ?b nil))) ; TODO unificare con la prima
 	?i <- (ship-index ?s)
+	(convolution-scores (is-first FALSE) (best-id ?b&:(neq ?b nil)))
 	?f <- (convolution-area (id ?b) (x ?x) (y ?y) (orientation ?or) (type ?t))
 =>
 	(printout t "intention-sink " ?t " on " ?x " " ?y " orientation " ?or crlf)
 	(assert(intention-sink(x-stern ?x) (y-stern ?y) (orientation ?or) (type ?t)))
 	(retract ?i)
-	(assert (ship-index (+ ?s 1))) ; TODO riprovare con modify
+	(assert (ship-index (+ ?s 1)))
 	(retract ?f) ;TODO eliminare le conv-cell associate alla conv-area
  	(pop-focus)
 )

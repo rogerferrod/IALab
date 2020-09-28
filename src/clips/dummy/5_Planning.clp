@@ -150,6 +150,7 @@
             (bind ?water_id_seq (generate-ship-hor-water ?x-stern ?y-stern ?size)) ;assert water actions
     )
     
+    ; TODO aggiungere a plan x, y e orientation (utile per abort)
     (assert (plan (id ?plan_id ) (ship ?type) (counter 1) (action-sequence (create$ ?guess_id_seq ?water_id_seq)))) ; create a new plan
     (modify ?ps (lastplan ?plan_id) (plans ?plan_id ?list)) ; push new plan on the on stack
     (retract ?f); remove the intention
