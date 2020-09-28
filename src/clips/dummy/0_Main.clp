@@ -126,7 +126,6 @@
   )
   (heatset (values (create$)))
   (plan-stack (plans (create$)))
-  (only-one-demo) ; TODO: temporaneo
   (ship-index 1)
   (convolution-scores (values (create$)) (best-id nil) (is-first TRUE))
 )

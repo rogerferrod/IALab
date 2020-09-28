@@ -32,12 +32,6 @@
 	(pop-focus)
 )
 
-; (defrule solve (declare (salience 30))
-; 	(moves (guesses ?f&:(= ?f 0))) ; TODO eq?
-; =>
-; 	(assert (intention-solve))
-; 	(pop-focus)
-; )
 
 (defrule update-k-per-col (declare (salience 5)) 
 	(k-per-col (col ?col) (num ?num))
@@ -65,62 +59,38 @@
 	(do-for-all-facts ((?update updated-k-per-row)) (eq ?update:row ?row) (modify ?update (num (- ?num (+ ?k-cell-counter ?b-cell-counter)))))
 )
 
-; (defrule demo
-; 	?f <- (only-one-demo)
-; 	(status (step ?s) (currently running))
-; =>
-; 	;(assert(intention-sink(x-stern 6) (y-stern 4) (orientation ver) (type air-carrier)))
-; 	;(assert(intention-sink(x-stern 6) (y-stern 2) (orientation ver) (type cruiser)))
-; 	;(assert(intention-sink(x-stern 6) (y-stern 0) (orientation ver) (type destroyer)))
-; 	;(assert(intention-sink(x-stern 9) (y-stern 0) (orientation ver) (type submarine)))
-; 	(assert(intention-sink(x-stern 9) (y-stern 4) (orientation ver) (type destroyer)))
-; 	(retract ?f)
-; 	(pop-focus)
-; )
-
 (defrule make-intention-solve (declare (salience 1))
-	?i <- (ship-index ?s&:(= ?s 10))
+	?i <- (ship-index ?s&:(= ?s 10)) ; or guesses >= 20
 =>
 	(assert (intention-solve))
 	(pop-focus)
 )
 
 (defrule make-intention-sink
-	?d <- (only-one-demo)
 	(convolution-scores (is-first FALSE))
-	(convolution-scores (best-id ?b&:(neq ?b nil)))
+	(convolution-scores (best-id ?b&:(neq ?b nil))) ; TODO unificare con la prima
 	?i <- (ship-index ?s)
 	?f <- (convolution-area (id ?b) (x ?x) (y ?y) (orientation ?or) (type ?t))
 =>
-	(printout t "intention-sink " ?t crlf)
+	(printout t "intention-sink " ?t " on " ?x " " ?y " orientation " ?or crlf)
 	(assert(intention-sink(x-stern ?x) (y-stern ?y) (orientation ?or) (type ?t)))
-	(modify ?i (ship-index (+ ?s 1)))
+	(retract ?i)
+	(assert (ship-index (+ ?s 1))) ; TODO riprovare con modify
 	(retract ?f) ;TODO eliminare le conv-cell associate alla conv-area
  	(pop-focus)
-	(retract ?d)
 )
 
-;(defrule make-intention-abort) best-id == nil
-
-(defrule make-convolutions (declare (salience -5))
-	?i <- (ship-index ?s)
-	?b <- (board (ordered $?list))
-	?c <- (convolution-scores)
+(defrule make-intention-abort ;is-first FALSE and best-id == nil
+	(convolution-scores (is-first FALSE) (best-id nil)) ; no cell found to place the ship
 =>
-	(bind ?ship-type (nth$ ?s ?list))
-	(bind ?ship-size (fact-slot-value ?b ?ship-type)) ; retrieve ship size from ship type
-	(bind ?limit 9)  ; limite per le x e le y, (0,9) e (9,9)
+	(printout t "ho bisogno di fare backtrack" crlf)
+	(assert (intention-solve)) ; TODO temporaneooo
+	(pop-focus)
+)
 
-	(loop-for-count (?i 0 ?limit)
-		(loop-for-count (?j 0 ?limit)
-			(bind ?id1 (gensym*))
-			(bind ?id2 (gensym*))
-			(assert (convolution-area (id ?id1) (type ?ship-type) (size ?ship-size) (x ?i) (y ?j) (orientation ver)))
-			(assert (convolution-area (id ?id2) (type ?ship-type) (size ?ship-size) (x ?i) (y ?j) (orientation hor)))
-		)
-	) 
-	
-	(printout t "convolution on " ?ship-type crlf)
-	(modify ?c (values (create$)) (best-id nil) (is-first FALSE)) ; reset convolution scores
+(defrule go-to-convolution (declare (salience -5))
+	(ship-index ?s)
+=>
+	(assert (make-new-convolutions))
 	(focus CONVOLUTION)
 )

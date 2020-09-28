@@ -22,6 +22,30 @@
     (slot computed (default FALSE))
 )
 
+(defrule make-convolutions (declare (salience 30))
+    ?f <- (make-new-convolutions)
+	?i <- (ship-index ?s)
+	?b <- (board (ordered $?list))
+	?c <- (convolution-scores)
+=>
+	(bind ?ship-type (nth$ ?s ?list))
+	(bind ?ship-size (fact-slot-value ?b ?ship-type)) ; retrieve ship size from ship type
+	(bind ?limit 9)  ; limite per le x e le y, (0,9) e (9,9)
+
+	(loop-for-count (?i 0 ?limit)
+		(loop-for-count (?j 0 ?limit)
+			(bind ?id1 (gensym*))
+			(bind ?id2 (gensym*))
+			(assert (convolution-area (id ?id1) (type ?ship-type) (size ?ship-size) (x ?i) (y ?j) (orientation ver)))
+			(assert (convolution-area (id ?id2) (type ?ship-type) (size ?ship-size) (x ?i) (y ?j) (orientation hor)))
+		)
+	) 
+	
+	(printout t "convolution on " ?ship-type crlf)
+	(modify ?c (values (create$)) (best-id nil) (is-first FALSE)) ; reset convolution scores
+    (retract ?f)
+)
+
 (defrule convolution
     ?c <- (convolution-area (id ?conv-id) (type ?ship) (size ?size) (x ?x) (y ?y) (orientation ?orientation) (score ?score) (area $?area) (computed FALSE))
 =>
