@@ -1,5 +1,9 @@
 (defmodule CONVOLUTION (import MAIN ?ALL) (import ENV ?ALL) (import HEAT ?ALL) (export ?ALL))
 
+;*****************************
+; DEFRULES
+;*****************************
+
 (deftemplate convolution-area
 	(slot id)
 	(slot type)
@@ -21,6 +25,27 @@
 	(slot y)
     (slot computed (default FALSE))
 )
+
+
+;*****************************
+; DEFFUNCTIONS
+;*****************************
+
+(deffunction delete-conv-cell (?conv-area-id)
+    (do-for-all-facts ; loop and retract avery conv-cell associated with the conv-area with conv-area-id argument
+        ((?area convolution-area) (?cell conv-cell)) 
+        (and 
+            (eq ?area:id ?conv-area-id)
+            (eq ?area:id ?cell:area-id) 
+        )
+        (retract ?cell)
+    )
+)
+
+
+;*****************************
+; DEFRULES
+;*****************************
 
 (defrule make-convolutions (declare (salience 30))
     ?f <- (make-new-convolutions)
@@ -80,10 +105,10 @@
 )
 
 (defrule check-conv-cell-ver 
-;; check invalid condition to carry out convolution operation, 
+;; check invalid condition to carry out convolution operation in vertical orientation, 
 ;; if one condition is invalid stop convolution in that area and remove the conv-cell associated
-    (conv-cell (id ?id) (x ?x) (y ?y) (area-id ?conv))
-    ?c <- (convolution-area (id ?conv) (area $?area) (orientation ver) (size ?size) (visited ?v&:(> ?v 0)))
+    (conv-cell (id ?id) (x ?x) (y ?y) (area-id ?area-id))
+    ?c <- (convolution-area (id ?area-id) (area $?area) (orientation ver) (size ?size) (visited ?v&:(> ?v 0)))
     (or ; 
         (test (not (check-boundary ?x ?y))) ; deletes the cells that exceed the boundary
         (k-cell (x ?x) (y ?y) (content water)) ; no ship could be placed in water
@@ -93,39 +118,27 @@
         ; TODO: controllare sovrapposizioni compatibili di k-cell (bottom, top, middle...)
     )
 =>
-    ;(printout t "elimino convolution_area " ?conv crlf)
-    (do-for-all-facts ; loop and retract conv-cell associated with the area that match with LHS
-        ((?conva convolution-area) (?cell conv-cell)) 
-        (and 
-            (eq ?conva:id ?conv)
-            (eq ?conva:id ?cell:area-id) 
-        )
-        (retract ?cell)
-    )
+    (printout t "elimino convolution_area " ?area-id crlf)
+    (delete-conv-cell ?area-id) ; retract all conv-area associated cells
     (retract ?c)
 )
 
 (defrule check-conv-cell-hor
-    (conv-cell (id ?id) (x ?x) (y ?y) (area-id ?conv))
-    ?c <- (convolution-area (id ?conv) (area $?area) (orientation hor) (size ?size) (visited ?v&:(> ?v 0)))
+;; check invalid condition to carry out convolution operation in horizontal orientation, 
+;; if one condition is invalid stop convolution in that area and remove the conv-cell associated
+    (conv-cell (id ?id) (x ?x) (y ?y) (area-id ?area-id))
+    ?c <- (convolution-area (id ?area-id) (area $?area) (orientation hor) (size ?size) (visited ?v&:(> ?v 0)))
     (or 
         (test (not (check-boundary ?x ?y))) ; deletes the cells that exceed the boundary
         (k-cell (x ?x) (y ?y) (content water))
         (b-cell (x ?x) (y ?y))
-        (updated-k-per-row (row ?y) (num ?num&:(> ?v ?num)))  ; not(v <= row) -> (v > row)
         (updated-k-per-col (col ?x) (num ?num&:(< ?num 1))) ; not(col >= 1) -> (col < 1)
+        (updated-k-per-row (row ?y) (num ?num&:(> ?v ?num)))  ; not(v <= row) -> (v > row)
         ; TODO: controllare sovrapposizioni compatibili di k-cell (bottom, top, middle...)
     )
 =>
-    ;(printout t "elimino convolution_area " ?conv crlf)
-    (do-for-all-facts ; loop and retract conv-cell associated with the area that match with LHS
-        ((?conva convolution-area) (?cell conv-cell)) 
-        (and 
-            (eq ?conva:id ?conv)
-            (eq ?conva:id ?cell:area-id) 
-        )
-        (retract ?cell)
-    )
+    (printout t "elimino convolution_area " ?area-id crlf)
+    (delete-conv-cell ?area-id) ; retract all conv-area associated cells
     (retract ?c)
 )
 
