@@ -32,12 +32,12 @@
 	(pop-focus)
 )
 
-(defrule solve (declare (salience 30))
-	(moves (guesses ?f&:(= ?f 0))) ; TODO eq?
-=>
-	(assert (intention-solve))
-	(pop-focus)
-)
+; (defrule solve (declare (salience 30))
+; 	(moves (guesses ?f&:(= ?f 0))) ; TODO eq?
+; =>
+; 	(assert (intention-solve))
+; 	(pop-focus)
+; )
 
 (defrule update-k-per-col (declare (salience 5)) 
 	(k-per-col (col ?col) (num ?num))
@@ -78,29 +78,49 @@
 ; 	(pop-focus)
 ; )
 
-(defrule sink
- 	?f <- (only-one-demo) ; TODO temporaneo
+(defrule make-intention-solve (declare (salience 1))
+	?i <- (ship-index ?s&:(= ?s 10))
+=>
+	(assert (intention-solve))
+	(pop-focus)
+)
+
+(defrule make-intention-sink
+	?d <- (only-one-demo)
+	(convolution-scores (is-first FALSE))
+	(convolution-scores (best-id ?b&:(neq ?b nil)))
+	?i <- (ship-index ?s)
+	?f <- (convolution-area (id ?b) (x ?x) (y ?y) (orientation ?or) (type ?t))
+=>
+	(printout t "intention-sink " ?t crlf)
+	(assert(intention-sink(x-stern ?x) (y-stern ?y) (orientation ?or) (type ?t)))
+	(modify ?i (ship-index (+ ?s 1)))
+	(retract ?f) ;TODO eliminare le conv-cell associate alla conv-area
+ 	(pop-focus)
+	(retract ?d)
+)
+
+;(defrule make-intention-abort) best-id == nil
+
+(defrule make-convolutions (declare (salience -5))
 	?i <- (ship-index ?s)
 	?b <- (board (ordered $?list))
+	?c <- (convolution-scores)
 =>
 	(bind ?ship-type (nth$ ?s ?list))
 	(bind ?ship-size (fact-slot-value ?b ?ship-type)) ; retrieve ship size from ship type
-	(bind ?id1 (gensym*))
-	(bind ?id2 (gensym*))
-	(bind ?id3 (gensym*)) ; TODO temporaneoo
 	(bind ?limit 9)  ; limite per le x e le y, (0,9) e (9,9)
-	(assert (convolution-area (id ?id1) (type ?ship-type) (size ?ship-size) (x 0) (y 0) (orientation ver) (computed FALSE) (visited 0) (score 0)))
-	(assert (convolution-area (id ?id2) (type ?ship-type) (size ?ship-size) (x 6) (y 8) (orientation ver) (computed FALSE) (visited 0) (score 0)))
-	(assert (convolution-area (id ?id3) (type ?ship-type) (size ?ship-size) (x 6) (y 4) (orientation ver) (computed FALSE) (visited 0) (score 0))) ; Posizione originale
 
-	; (loop-for-count (?i 0 ?limit)
-	; 	(loop-for-count (?j 0 ?limit)
-	; 		(assert (convolution-area (id ?id1) (type ?ship-type) (size ?ship-size) (x ?i) (y ?j) (orientation ver) (computed FALSE)))
-	; 		(assert (convolution-area (id ?id2) (type ?ship-type) (size ?ship-size) (x ?i) (y ?j) (orientation hor) (computed FALSE)))
-	; 	)
-	; ) 
+	(loop-for-count (?i 0 ?limit)
+		(loop-for-count (?j 0 ?limit)
+			(bind ?id1 (gensym*))
+			(bind ?id2 (gensym*))
+			(assert (convolution-area (id ?id1) (type ?ship-type) (size ?ship-size) (x ?i) (y ?j) (orientation ver)))
+			(assert (convolution-area (id ?id2) (type ?ship-type) (size ?ship-size) (x ?i) (y ?j) (orientation hor)))
+		)
+	) 
 	
-	;(modify ?i (ship-index (+ ?s 1))) ; TODO da mettere quando si asserisce intention-sink
-	(retract ?f) ; TODO temporaneo
+	(printout t "convolution on " ?ship-type crlf)
+	(modify ?c (values (create$)) (best-id nil) (is-first FALSE)) ; reset convolution scores
 	(focus CONVOLUTION)
 )

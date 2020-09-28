@@ -7,10 +7,11 @@
 	(slot x)
 	(slot y)
 	(slot orientation (allowed-values ver hor))
-	(slot score)
+	(slot score (default 0))
 	(multislot area) ; id dei fatti corrispondenti alle celle dell'area
-	(slot computed)
-	(slot visited) ; counter of cells already visited during convolution
+	(slot computed (default FALSE))
+	(slot visited (default 0)) ; counter of cells already visited during convolution
+    (slot collected (default FALSE))
 )
 
 (deftemplate conv-cell
@@ -19,10 +20,6 @@
 	(slot x)
 	(slot y)
     (slot computed (default FALSE))
-)
-
-(deftemplate convolution-scores
-    (multislot values)
 )
 
 (defrule convolution
@@ -48,14 +45,14 @@
     (modify ?c (area ?id-list) (computed TRUE))
 )
 
-(defrule count-visited
+(defrule count-visited ; TODO cambiare nome
     ?k <- (conv-cell (id ?id) (x ?x) (y ?y) (area-id ?conv) (computed FALSE))
     ?c <- (convolution-area (size ?size) (score ?score) (visited ?v&:(< ?v ?size)))
     (heat-map (x ?x) (y ?y) (h ?h))
 =>
     (modify ?c (visited (+ ?v 1)) (score (+ ?score ?h)))
     (modify ?k (computed TRUE))
-    (printout t "sono in " ?x " " ?y " con " ?h crlf)
+    ;(printout t "sono in " ?x " " ?y " con " ?h crlf)
 )
 
 (defrule check-conv-cell-ver
@@ -70,7 +67,7 @@
         ; TODO: controllare sovrapposizioni compatibili di k-cell (bottom, top, middle...)
     )
 =>
-    (printout t "elimino convolution_area " ?conv crlf)
+    ;(printout t "elimino convolution_area " ?conv crlf)
     (do-for-all-facts ; loop and retract conv-cell associated with the area that match with LHS
         ((?conva convolution-area) (?cell conv-cell)) 
         (and 
@@ -80,4 +77,47 @@
         (retract ?cell)
     )
     (retract ?c)
+)
+
+(defrule check-conv-cell-hor
+    (conv-cell (id ?id) (x ?x) (y ?y) (area-id ?conv))
+    ?c <- (convolution-area (id ?conv) (area $?area) (orientation hor) (size ?size) (visited ?v&:(> ?v 0)))
+    (or 
+        (test (not (check-boundary ?x ?y))) ; deletes the cells that exceed the boundary
+        (k-cell (x ?x) (y ?y) (content water))
+        (b-cell (x ?x) (y ?y))
+        (updated-k-per-row (row ?y) (num ?num&:(> ?v ?num)))  ; not(v <= row) -> (v > row)
+        (updated-k-per-col (col ?x) (num ?num&:(< ?num 1))) ; not(col >= 1) -> (col < 1)
+        ; TODO: controllare sovrapposizioni compatibili di k-cell (bottom, top, middle...)
+    )
+=>
+    ;(printout t "elimino convolution_area " ?conv crlf)
+    (do-for-all-facts ; loop and retract conv-cell associated with the area that match with LHS
+        ((?conva convolution-area) (?cell conv-cell)) 
+        (and 
+            (eq ?conva:id ?conv)
+            (eq ?conva:id ?cell:area-id) 
+        )
+        (retract ?cell)
+    )
+    (retract ?c)
+)
+
+(defrule collect-conv (declare (salience -5)) ; se non ci sono possibilità, non scatta nemmeno
+    ?c <- (convolution-area (id ?conv-id) (score ?s) (computed TRUE) (collected FALSE))
+    ?scores <- (convolution-scores (values $?list) (best-id ?b))
+=>
+    (if (eq ?b nil)
+        then
+            (modify ?scores (best-id ?conv-id))
+        else
+            (if
+                (> ?s (max (expand$ ?list))) ; ?s è il nuovo max
+                    then
+                        (modify ?scores (best-id ?conv-id))    
+            )
+    )
+    
+    (modify ?scores (values ?list ?s))
+    (modify ?c (collected TRUE))
 )
