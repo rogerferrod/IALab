@@ -79,13 +79,15 @@
     ;(printout t "sono in " ?x " " ?y " con " ?h crlf)
 )
 
-(defrule check-conv-cell-ver
+(defrule check-conv-cell-ver 
+;; check invalid condition to carry out convolution operation, 
+;; if one condition is invalid stop convolution in that area and remove the conv-cell associated
     (conv-cell (id ?id) (x ?x) (y ?y) (area-id ?conv))
     ?c <- (convolution-area (id ?conv) (area $?area) (orientation ver) (size ?size) (visited ?v&:(> ?v 0)))
-    (or 
+    (or ; 
         (test (not (check-boundary ?x ?y))) ; deletes the cells that exceed the boundary
-        (k-cell (x ?x) (y ?y) (content water))
-        (b-cell (x ?x) (y ?y))
+        (k-cell (x ?x) (y ?y) (content water)) ; no ship could be placed in water
+        (b-cell (x ?x) (y ?y)) ; check if there is an already placed guess 
         (updated-k-per-col (col ?y) (num ?num&:(> ?v ?num)))  ; not(v <= col) -> (v > col)
         (updated-k-per-row (row ?x) (num ?num&:(< ?num 1))) ; not(row >= 1) -> (row < 1)
         ; TODO: controllare sovrapposizioni compatibili di k-cell (bottom, top, middle...)
