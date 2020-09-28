@@ -67,14 +67,16 @@
 
 (defrule make-intention-sink
 	?i <- (ship-index ?s)
-	(convolution-scores (is-first FALSE) (best-id ?b&:(neq ?b nil)))
-	?f <- (convolution-area (id ?b) (x ?x) (y ?y) (orientation ?or) (type ?t))
+	(convolution-scores (is-first FALSE) (best-id ?best-area-id&:(neq ?best-area-id nil)))
+	?f <- (convolution-area (id ?best-area-id) (x ?x) (y ?y) (orientation ?or) (type ?t))
 =>
 	(printout t "intention-sink " ?t " on " ?x " " ?y " orientation " ?or crlf)
 	(assert(intention-sink(x-stern ?x) (y-stern ?y) (orientation ?or) (type ?t)))
 	(retract ?i)
-	(assert (ship-index (+ ?s 1)))
-	(retract ?f) ;TODO eliminare le conv-cell associate alla conv-area
+	(assert (ship-index (+ ?s 1))) ; select the next ship
+	
+	(delete-conv-cell ?best-area-id)
+	(retract ?f) 
  	(pop-focus)
 )
 
