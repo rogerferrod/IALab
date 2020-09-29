@@ -23,7 +23,7 @@ def annotate_heatmap():
     for f in fires:
         x = int(f[0])
         y = int(f[1])
-        plt.text(y, x, "F", ha="center", va="center", color="r")
+        plt.text(y, x, "F", ha="center", va="center", color="g")
 
 
 if __name__ == "__main__":
