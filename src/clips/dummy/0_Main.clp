@@ -39,7 +39,7 @@
  =>
 
     ;(printout t crlf crlf)
-    (printout t "vado ad agent  step" ?s crlf)
+    ;(printout t "vado ad agent  step" ?s crlf)
     (focus AGENT)
 )
 
@@ -54,7 +54,7 @@
 =>
 
   ; (printout t crlf crlf)
-  (printout t "vado ad ENV  step" ?s crlf)
+  ;(printout t "vado ad ENV  step" ?s crlf)
   (focus ENV)
 
 )
@@ -128,5 +128,6 @@
   (plan-stack (plans (create$)))
   (ship-index 1)
   (convolution-scores (values (create$)) (best-id nil) (is-first TRUE))
+  (only-one)
 )
 

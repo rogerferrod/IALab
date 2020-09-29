@@ -1,4 +1,10 @@
-(defmodule DELIBERATE (import MAIN ?ALL) (import ENV ?ALL) (import HEAT ?ALL) (import CONVOLUTION ?ALL) (export ?ALL))
+(defmodule DELIBERATE 
+	(import MAIN ?ALL) 
+	(import ENV ?ALL) 
+	(import HEAT ?ALL) 
+	(import CONVOLUTION ?ALL) 
+	(export ?ALL)
+)
 
 ;; ******************************
 ;; TEMPLATES
@@ -9,14 +15,12 @@
 	(slot y)
 )
 
-
 (deftemplate intention-sink
 	(slot x-stern)
 	(slot y-stern)
 	(slot orientation (allowed-values ver hor))
 	(slot type (allowed-values air-carrier cruiser destroyer submarine))
 )
-
 
 ;; ******************************
 ;; RULES
@@ -67,29 +71,33 @@
 
 (defrule make-intention-sink
 	?i <- (ship-index ?s)
-	(convolution-scores (is-first FALSE) (best-id ?best-area-id&:(neq ?best-area-id nil)))
+	?c <- (convolution-scores (is-first FALSE) (best-id ?best-area-id&:(neq ?best-area-id nil)))
 	?f <- (convolution-area (id ?best-area-id) (x ?x) (y ?y) (orientation ?or) (type ?t))
 =>
 	(printout t "intention-sink " ?t " on " ?x " " ?y " orientation " ?or crlf)
 	(assert(intention-sink(x-stern ?x) (y-stern ?y) (orientation ?or) (type ?t)))
 	(retract ?i)
 	(assert (ship-index (+ ?s 1))) ; select the next ship
-	
 	(delete-conv-cell ?best-area-id)
 	(retract ?f) 
+	(modify ?c (is-first TRUE) (best-id nil)) ; TODO cambiare nome a is-first -> ignore score
  	(pop-focus)
 )
 
 (defrule make-intention-abort ;is-first FALSE and best-id == nil
-	(convolution-scores (is-first FALSE) (best-id nil)) ; no cell found to place the ship
+	?i <- (ship-index ?s)
+	?c <- (convolution-scores (is-first FALSE) (best-id nil)) ; no cell found to place the ship
 =>
-	(printout t "ho bisogno di fare backtrack" crlf)
-	(assert (intention-solve)) ; TODO temporaneooo
+	(printout t "intention-abort index" (- ?s 1) crlf)
+	(assert (ship-index (- ?s 1))) ; select the previous ship
+	(assert (intention-abort))
+	(modify ?c (is-first TRUE)) ; TODO cambiare nome a is-first -> ignore score
 	(pop-focus)
 )
 
 (defrule go-to-convolution (declare (salience -5))
-	(ship-index ?s)
+	(status (step ?s)(currently running))
+	(ship-index ?i)
 =>
 	(assert (make-new-convolutions))
 	(focus CONVOLUTION)

@@ -1,32 +1,15 @@
-((defmodule PLANNING (import MAIN ?ALL)	(import ENV ?ALL) (import DELIBERATE ?ALL) (export ?ALL))
+(defmodule PLANNING 
+    (import MAIN ?ALL)	
+    (import ENV ?ALL) 
+    (import DELIBERATE ?ALL) 
+    (export ?ALL)
+)
 
 
 
 ;; *******************************
 ;; TEMPLATES
 ;; *******************************
-
-(deftemplate action
-    (slot id (default-dynamic (gensym*))) ; genX
-    (slot x)
-    (slot y)
-    (slot type (allowed-values guess unguess water fire))
-)
-
-(deftemplate plan
-    (slot id (default-dynamic (gensym*))) ; genX
-    (slot counter)
-    (slot ship)
-	(multislot action-sequence (type SYMBOL))
-)
-
-(deftemplate intention-to-plan
-    (slot x-stern)
-    (slot y-stern)
-    (slot orientation)
-    (slot type)
-    (slot size)
-)
 
 ;; *******************************
 ;; FUNCTIONS
@@ -123,12 +106,25 @@
 ;; RULES
 ;; *******************************
 
+(defrule plan-backtracking
+    (status (step ?s)(currently running))
+    ?i <- (intention-abort)
+    ?ps <- (plan-stack (lastplan ?plan) (plans $?plans))
+	?p <- (plan (id ?plan))
+=>
+    (printout t "Catch intention abort" crlf)
+    (retract ?i)
+    (modify ?ps (lastplan (nth$ 2 ?plans))) ; set lastplan to the previous plan in the stack
+	(modify ?ps (plans (rest$ ?plans))) ; pop plan from the stack
+    (assert (backtracking ?plan))
+)
+
 (defrule plan-ship
 	(status (step ?s)(currently running))
     ?i <- (intention-sink (x-stern ?x-stern) (y-stern ?y-stern) (orientation ?hor) (type ?type))
     ?b <- (board)
 =>
-    (printout t "Catch intention" crlf)
+    (printout t "Catch intention sink" crlf)
     (assert (intention-to-plan (x-stern ?x-stern) (y-stern ?y-stern) (orientation ?hor) (type ?type) (size (fact-slot-value ?b ?type))))
     (retract ?i)
 )
@@ -150,9 +146,8 @@
             (bind ?water_id_seq (generate-ship-hor-water ?x-stern ?y-stern ?size)) ;assert water actions
     )
     
-    ; TODO aggiungere a plan x, y e orientation (utile per abort)
-    (assert (plan (id ?plan_id ) (ship ?type) (counter 1) (action-sequence (create$ ?guess_id_seq ?water_id_seq)))) ; create a new plan
-    (modify ?ps (lastplan ?plan_id) (plans ?plan_id ?list)) ; push new plan on the on stack
+    (assert (plan (id ?plan_id ) (ship ?type) (counter 1) (action-sequence (create$ ?guess_id_seq ?water_id_seq)) (x ?x-stern) (y ?y-stern) (orientation ?orient))) ; create a new plan
+    (modify ?ps (lastplan ?plan_id) (plans ?plan_id ?list)) ; push new plan on the stack
     (retract ?f); remove the intention
 	(assert (to-check-ship-neighborhood))
 )
@@ -167,9 +162,8 @@
     (modify ?p (action-sequence (delete-member$ ?actions ?id)))
 )
 
-
 (defrule back-to-agent (declare (salience -10)) ; ultima regole da eseguire prima di tornare all'agent
-    ?f <- (to-check-ship-neighborhood)  
+    ?f <- (to-check-ship-neighborhood)
 =>
     (retract ?f)
     (pop-focus) ;si potrebbe anche togliere

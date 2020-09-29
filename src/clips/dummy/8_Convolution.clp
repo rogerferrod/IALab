@@ -1,4 +1,9 @@
-(defmodule CONVOLUTION (import MAIN ?ALL) (import ENV ?ALL) (import HEAT ?ALL) (export ?ALL))
+(defmodule CONVOLUTION 
+    (import MAIN ?ALL) 
+    (import ENV ?ALL) 
+    (import HEAT ?ALL) 
+    (export ?ALL)
+)
 
 ;*****************************
 ; DEFRULES
@@ -66,9 +71,16 @@
 		)
 	) 
 	
-	(printout t "convolution on " ?ship-type crlf)
+	(printout t "convolution on " ?ship-type  " index " ?s crlf)
 	(modify ?c (values (create$)) (best-id nil) (is-first FALSE)) ; reset convolution scores
     (retract ?f)
+)
+
+(defrule delete-convolution-before (declare (salience 20))
+    ?c <- (convolution-area (id ?conv-id) (type ?ship) (size ?size) (x ?x) (y ?y) (orientation ?orientation) (score ?score) (area $?area) (computed FALSE))
+    (plan (x ?x) (y ?y) (ship ?ship) (orientation ?orientation))
+=>
+    (retract ?c)
 )
 
 (defrule convolution
@@ -118,7 +130,7 @@
         ; TODO: controllare sovrapposizioni compatibili di k-cell (bottom, top, middle...)
     )
 =>
-    (printout t "elimino convolution_area " ?area-id crlf)
+    ;(printout t "elimino convolution_area " ?area-id crlf)
     (delete-conv-cell ?area-id) ; retract all conv-area associated cells
     (retract ?c)
 )
@@ -137,7 +149,7 @@
         ; TODO: controllare sovrapposizioni compatibili di k-cell (bottom, top, middle...)
     )
 =>
-    (printout t "elimino convolution_area " ?area-id crlf)
+    ;(printout t "elimino convolution_area " ?area-id crlf)
     (delete-conv-cell ?area-id) ; retract all conv-area associated cells
     (retract ?c)
 )

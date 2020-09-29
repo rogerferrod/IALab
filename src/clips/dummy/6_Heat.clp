@@ -35,6 +35,31 @@
 	(slot content (allowed-values water boat))
 )
 
+(deftemplate action
+    (slot id (default-dynamic (gensym*))) ; genX
+    (slot x)
+    (slot y)
+    (slot type (allowed-values guess unguess water fire))
+)
+
+(deftemplate plan
+    (slot id (default-dynamic (gensym*))) ; genX
+    (slot counter)
+    (slot ship)
+	(multislot action-sequence (type SYMBOL))
+    (slot x)
+    (slot y)
+    (slot orientation)
+)
+
+(deftemplate intention-to-plan
+    (slot x-stern)
+    (slot y-stern)
+    (slot orientation)
+    (slot type)
+    (slot size)
+)
+
 ;; ******************************
 ;; FUNCTIONS
 ;; ******************************

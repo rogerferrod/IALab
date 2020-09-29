@@ -66,22 +66,53 @@
 	(status (step ?s)(currently running))
 	(or
 		(intention-sink)
-		; (intention-abort)
+		(intention-abort)
 	)
 =>
 	;(printout t crlf crlf)
-    (printout t "vado a planning  step" ?s crlf)
+    ;(printout t "vado a planning  step" ?s crlf)
 	(focus PLANNING)
 )
 
+
 (defrule select-action
 	(status (step ?s) (currently running))
-	(plan-stack (lastplan ?plan)) ; TODO potremmo aggiungere uno slot "lastback" o "tobacktrack"
+	(plan-stack (lastplan ?plan))
 	?p <- (plan (id ?plan) (counter ?i) (action-sequence $?actions))
 	(test (<= ?i (length$ ?actions)))
 =>
-	(assert (action-to-exec(nth$ ?i $?actions)))
-	(modify ?p (counter (+ ?i 1)))
+	(assert (action-to-exec(nth$ ?i $?actions))) ; TODO togliere ildollaro?
+	(if (< ?i (length$ ?actions))
+		then
+			(modify ?p (counter (+ ?i 1))) ; go forward to the index of the next action		
+	)
+)
+
+; (defrule select-action-to-delete
+; 	(status (step ?s) (currently running))
+; 	?ps <- (plan-stack (lastplan ?plan) (plans $?plans))
+; 	?p <- (plan (id ?plan) (counter ?i) (action-sequence $?actions))
+; 	(test (>= ?i 1)) ; exectute backward until the first action of the plan
+; =>
+; 	(assert (action-to-delete(nth$ ?i $?actions))) 
+; 	(modify ?ps (lastplan (nth$ 2 ?plans))) ; set lastplan to the previous plan in the stack
+; 	(modify ?ps (plans (rest$ ?plans))) ; pop plan from the stack
+; 	(modify ?p (counter (- ?i 1))) ; go backward
+; )
+
+(defrule select-action-to-delete
+	(status (step ?s) (currently running))
+	?b <- (backtracking ?plan)
+	?p <- (plan (id ?plan) (counter ?i) (action-sequence $?actions))
+	(test (> ?i 1)) ; exectute backward until the first action of the plan-
+=>
+	(if (eq 1 ?i) 
+		then
+			(retract ?b)
+		else
+			(assert (action-to-delete(nth$ ?i $?actions))) 
+			(modify ?p (counter (- ?i 1))) ; go backward
+	)
 )
 
 (defrule execute-action
@@ -100,6 +131,31 @@
 			;(printout t "Exec " ?t " on " ?x " " ?y crlf)
 			(pop-focus)
 	)
+)
+
+(defrule delete-action-guess
+	(status (step ?s) (currently running))
+	?f <- (action-to-delete ?id)
+	(action (id ?id) (type guess) (x ?x) (y ?y))
+	?b <- (b-cell (x ?x) (y ?y) (content boat))
+=>	
+	(assert (exec (step ?s) (action unguess) (x ?x) (y ?y)))
+	;(printout t "Delete guess " ?id crlf)
+	(retract ?f)
+	(retract ?b) ; rischiamo di ritrattare anche le b-cell inferire dalle fire inizitiale!
+	;(printout t "Exec " ?t " on " ?x " " ?y crlf)
+	(pop-focus)
+)
+
+(defrule delete-action-water
+	(status (step ?s) (currently running))
+	?f <- (action-to-delete ?id)
+	(action (id ?id) (type water) (x ?x) (y ?y))
+	?b <- (b-cell (x ?x) (y ?y) (content water))
+=>
+	;(printout t "Delete water " ?id crlf)
+	(retract ?f)
+	(retract ?b)
 )
 
 (defrule go-on-deliberate (declare (salience -5))
