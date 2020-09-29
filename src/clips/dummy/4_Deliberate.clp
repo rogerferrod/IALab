@@ -42,7 +42,7 @@
 	(bind ?k-cell-counter 0)
 	(bind ?b-cell-counter 0)
 	
-	(do-for-all-facts ((?k-cell k-cell)) (and (eq ?k-cell:y ?col) (neq ?k-cell:content water)) (bind ?k-cell-counter (+ ?k-cell-counter 1)))
+	;(do-for-all-facts ((?k-cell k-cell)) (and (eq ?k-cell:y ?col) (neq ?k-cell:content water)) (bind ?k-cell-counter (+ ?k-cell-counter 1)))
 	;(printout t "col " ?col " k-cell " ?k-cell-counter crlf)
 	(do-for-all-facts ((?b-cell b-cell)) (and (eq ?b-cell:y ?col) (neq ?b-cell:content water)) (bind ?b-cell-counter (+ ?b-cell-counter 1)))
 	;(printout t "col " ?col " b-cell " ?b-cell-counter crlf) 
@@ -55,7 +55,7 @@
 	(bind ?k-cell-counter 0)
 	(bind ?b-cell-counter 0)
 	
-	(do-for-all-facts ((?k-cell k-cell)) (and (eq ?k-cell:x ?row) (neq ?k-cell:content water)) (bind ?k-cell-counter (+ ?k-cell-counter 1)))
+	;(do-for-all-facts ((?k-cell k-cell)) (and (eq ?k-cell:x ?row) (neq ?k-cell:content water)) (bind ?k-cell-counter (+ ?k-cell-counter 1)))
 	;(printout t "row " ?row " k-cell " ?k-cell-counter crlf)
 	(do-for-all-facts ((?b-cell b-cell)) (and (eq ?b-cell:x ?row) (neq ?b-cell:content water)) (bind ?b-cell-counter (+ ?b-cell-counter 1)))
 	;(printout t "row " ?row " b-cell " ?b-cell-counter crlf) 
@@ -89,6 +89,7 @@
 	?c <- (convolution-scores (is-first FALSE) (best-id nil)) ; no cell found to place the ship
 =>
 	(printout t "intention-abort index" (- ?s 1) crlf)
+	(retract ?i)
 	(assert (ship-index (- ?s 1))) ; select the previous ship
 	(assert (intention-abort))
 	(modify ?c (is-first TRUE)) ; TODO cambiare nome a is-first -> ignore score

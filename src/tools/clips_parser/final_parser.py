@@ -5,7 +5,7 @@ import argparse
 import re
 
 
-input_file = "input/test.txt"
+input_file = "input/out.txt"
 
 heatmap = np.zeros(shape=(10,10))  # initializing the matrix
 
@@ -15,7 +15,10 @@ def highlight_cell(y, x, ax=None, **kwargs):
     ax.add_patch(rect)
     return rect
 
-def annotate_cell(text, x, y):
+# TODO: b-cell water
+# Guess
+
+def annotate_cell(text, x, y): 
     t = ""
     if text == "water":
         t = "w"
@@ -29,8 +32,9 @@ def annotate_cell(text, x, y):
         t = "l"
     elif text == "right":
         t = "r"
-    else:
-        t = "s"  # sub
+    elif text == "sub":
+        t = "s"
+
     plt.text(x, y, t, ha="center", va="center", color="r")
 
 def annotate_heatmap():
@@ -46,6 +50,12 @@ def annotate_heatmap():
         content = c2[2]
         annotate_cell(content, y, x)
 
+    for g in guess:
+        x = int(g[1])
+        y = int(g[2])
+        annotate_cell("guess", x, y)
+
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("-i", "--input", default="./input/test.txt", help="input file")
@@ -58,10 +68,12 @@ if __name__ == "__main__":
         regex_heatmap = re.compile("heat-map \(x (\d)\) \(y (\d)\) \(h (\d+)\)")
         regex_action = re.compile("\(action (.+)\) \(x (\d)\) \(y (\d)\)")
         regex_k_cell = re.compile("k-cell \(x (\d)\) \(y (\d)\) \(content (.+)\)\)")
+        regex_guess = re.compile("\(guess (\d) (\d)\)")
         
         coordinates = re.findall(regex_heatmap, lines)
         actions = re.findall(regex_action, lines)
         k_cells = re.findall(regex_k_cell, lines)
+        guess = re.findall(regex_guess, lines)
         
         #print(actions)  # DEBUG
         #print(k_cells)  # DEBUG
