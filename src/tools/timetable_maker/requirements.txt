@@ -1,4 +1,0 @@
-jupyterlab==1.2.6
-numpy==1.18.1
-pandas==1.0.3
-XlsxWriter==1.2.8
