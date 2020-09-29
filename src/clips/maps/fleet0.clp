@@ -110,7 +110,7 @@
 (boat-hor (name sub9) (x 9) (ys 0) (size 1) (status safe))
 (boat-hor (name sub10) (x 9) (ys 9) (size 1) (status safe))
 ;(k-cell (x 0) (y 0) (content sub))
-(k-cell (x 0) (y 9) (content sub))
+;(k-cell (x 0) (y 9) (content sub))
 ;(k-cell (x 3) (y 4) (content top))
 ;(k-cell (x 4) (y 2) (content top))
 ;(k-cell (x 4) (y 3) (content water))

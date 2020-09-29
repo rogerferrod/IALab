@@ -15,12 +15,12 @@ def highlight_cell(y, x, ax=None, **kwargs):
 
 
 def annotate_heatmap():
-    for k in k_cells:
-        x = int(k[0])
-        y = int(k[1])
-        content = k[2]
-        if content != "water":
-            plt.text(y, x, "K", ha="center", va="center", color="g")
+    # for k in k_cells:
+    #     x = int(k[0])
+    #     y = int(k[1])
+    #     content = k[2]
+    #     if content != "water":
+    #         plt.text(y, x, "K", ha="center", va="center", color="g")
 
     for g in guess:
         x = int(g[0])
@@ -28,9 +28,9 @@ def annotate_heatmap():
         highlight_cell(x,y, color="green", linewidth=2)
 
     for f in fires:
-        x = int(g[0])
-        y = int(g[1])
-        highlight_cell(x,y, color="green", linewidth=2)
+        x = int(f[0])
+        y = int(f[1])
+        plt.text(y, x, "F", ha="center", va="center", color="r")
 
 
 if __name__ == "__main__":
@@ -44,13 +44,13 @@ if __name__ == "__main__":
         
         regex_heatmap = re.compile("heat-map \(x (\d)\) \(y (\d)\) \(h (\d+)\)")
         # regex_action = re.compile("\(action (.+)\) \(x (\d)\) \(y (\d)\)")
-        regex_k_cell = re.compile("k-cell \(x (\d)\) \(y (\d)\) \(content (.+)\)\)")
+        # regex_k_cell = re.compile("k-cell \(x (\d)\) \(y (\d)\) \(content (.+)\)\)")
         regex_guess = re.compile("\(guess (\d) (\d)\)")
         regex_fires = re.compile("\(fire (\d) (\d)\)")
         
         coordinates = re.findall(regex_heatmap, lines)
         # actions = re.findall(regex_action, lines)
-        k_cells = re.findall(regex_k_cell, lines)
+        # k_cells = re.findall(regex_k_cell, lines)
         guess = re.findall(regex_guess, lines)
         fires = re.findall(regex_fires, lines)
         
