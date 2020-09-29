@@ -1,0 +1,340 @@
+         CLIPS (Cypher Beta 8/21/18)
+CLIPS> (load 0_Main.clp)
++%%%%****!%%%%$
+TRUE
+CLIPS> (load 1_Env.clp)
++%%%%%%**************!********
+TRUE
+CLIPS> (load ../maps/fleet0.clp)
+$
+TRUE
+CLIPS> (load 6_Heat.clp)
++%%%%%%%!******
+TRUE
+CLIPS> (load 8_Convolution.clp)
++%%!*******
+TRUE
+CLIPS> (load 4_Deliberate.clp)
++%%*******
+TRUE
+CLIPS> (load Discover.clp)
++*********
+TRUE
+CLIPS> (load 5_Planning.clp)
++!!!!*****
+TRUE
+CLIPS> (load 3_Agent.clp)
++************
+TRUE
+CLIPS> 
+(reset)
+CLIPS> (set-break game-over)
+CLIPS> (run)
+vado a deliberate  step0
+vado a deliberate  step1
+vado a deliberate  step2
+vado a deliberate  step3
+vado a deliberate  step4
+vado a deliberate  step5
+convolution on air-carrier index 1
+intention-sink air-carrier on 6 4 orientation ver
+Catch intention sink
+Plan WarShip
+vado a deliberate  step9
+convolution on cruiser index 2
+intention-sink cruiser on 6 6 orientation ver
+Catch intention sink
+Plan WarShip
+vado a deliberate  step12
+convolution on cruiser index 3
+intention-sink cruiser on 6 2 orientation ver
+Catch intention sink
+Plan WarShip
+vado a deliberate  step15
+convolution on destroyer index 4
+intention-sink destroyer on 6 0 orientation ver
+Catch intention sink
+Plan WarShip
+vado a deliberate  step17
+convolution on destroyer index 5
+intention-sink destroyer on 9 4 orientation ver
+Catch intention sink
+Plan WarShip
+vado a deliberate  step19
+convolution on destroyer index 6
+intention-sink destroyer on 6 9 orientation ver
+Catch intention sink
+Plan WarShip
+vado a deliberate  step21
+convolution on submarine index 7
+intention-sink submarine on 0 0 orientation ver
+Catch intention sink
+Plan WarShip
+vado a deliberate  step22
+convolution on submarine index 8
+intention-sink submarine on 0 4 orientation hor
+Catch intention sink
+Plan WarShip
+vado a deliberate  step23
+convolution on submarine index 9
+intention-sink submarine on 9 0 orientation hor
+Catch intention sink
+Plan WarShip
+vado a deliberate  step24
+convolution on submarine index 10
+intention-sink submarine on 0 2 orientation ver
+Catch intention sink
+Plan WarShip
+vado a deliberate  step25
+Your score is 115
+CLIPS> (run 2)
+CLIPS> (focus ENV)
+TRUE
+CLIPS> (facts)
+f-1     (maxduration 100)
+f-2     (status (step 26) (currently stopped))
+f-3     (statistics (num_fire_ok 3) (num_fire_ko 2) (num_guess_ok 13) (num_guess_ko 4) (num_safe 4) (num_sink 7))
+f-7     (moves (fires 0) (guesses 0))
+f-8     (board (air-carrier 4) (cruiser 3) (destroyer 2) (submarine 1) (n-air-carriers 1) (n-cruisers 2) (n-destroyers 3) (n-submarines 4) (ordered air-carrier cruiser cruiser destroyer destroyer destroyer submarine submarine submarine submarine) (median 6))
+f-9     (heatset (values 4 0 3 5 7 6 8 9 11))
+f-10    (plan-stack (plans gen6106 gen5699 gen5291 gen4882 gen4469 gen3860 gen3249 gen2633 gen1820 gen1001) (lastplan gen6106))
+f-12    (convolution-scores (values 5 5 5 5 5 3 3 3 3 4 4 4 3 3 5 0 0 0 0 4 4 4 4 5 5) (best-id nil) (is-first TRUE))
+f-13    (only-one)
+f-14    (cell (x 0) (y 0) (content hit-boat) (status fired))
+f-15    (cell (x 0) (y 1) (content water) (status none))
+f-16    (cell (x 0) (y 2) (content water) (status missed))
+f-17    (cell (x 0) (y 3) (content water) (status none))
+f-18    (cell (x 0) (y 4) (content water) (status missed))
+f-19    (cell (x 0) (y 5) (content water) (status none))
+f-20    (cell (x 0) (y 6) (content water) (status none))
+f-21    (cell (x 0) (y 7) (content water) (status none))
+f-22    (cell (x 0) (y 8) (content water) (status none))
+f-23    (cell (x 0) (y 9) (content boat) (status missed))
+f-24    (cell (x 1) (y 0) (content water) (status none))
+f-25    (cell (x 1) (y 1) (content water) (status none))
+f-26    (cell (x 1) (y 2) (content water) (status none))
+f-27    (cell (x 1) (y 3) (content water) (status none))
+f-28    (cell (x 1) (y 4) (content water) (status none))
+f-29    (cell (x 1) (y 5) (content water) (status none))
+f-30    (cell (x 1) (y 6) (content water) (status none))
+f-31    (cell (x 1) (y 7) (content water) (status none))
+f-32    (cell (x 1) (y 8) (content water) (status none))
+f-33    (cell (x 1) (y 9) (content water) (status none))
+f-34    (cell (x 2) (y 0) (content water) (status none))
+f-35    (cell (x 2) (y 1) (content water) (status none))
+f-36    (cell (x 2) (y 2) (content water) (status none))
+f-37    (cell (x 2) (y 3) (content water) (status none))
+f-38    (cell (x 2) (y 4) (content water) (status none))
+f-39    (cell (x 2) (y 5) (content water) (status none))
+f-40    (cell (x 2) (y 6) (content water) (status none))
+f-41    (cell (x 2) (y 7) (content water) (status none))
+f-42    (cell (x 2) (y 8) (content water) (status none))
+f-43    (cell (x 2) (y 9) (content water) (status none))
+f-44    (cell (x 3) (y 0) (content water) (status none))
+f-45    (cell (x 3) (y 1) (content water) (status none))
+f-46    (cell (x 3) (y 2) (content water) (status none))
+f-47    (cell (x 3) (y 3) (content water) (status none))
+f-48    (cell (x 3) (y 4) (content hit-boat) (status guessed))
+f-49    (cell (x 3) (y 5) (content water) (status none))
+f-50    (cell (x 3) (y 6) (content water) (status none))
+f-51    (cell (x 3) (y 7) (content water) (status none))
+f-52    (cell (x 3) (y 8) (content water) (status none))
+f-53    (cell (x 3) (y 9) (content water) (status none))
+f-54    (cell (x 4) (y 0) (content water) (status none))
+f-55    (cell (x 4) (y 1) (content water) (status none))
+f-56    (cell (x 4) (y 2) (content hit-boat) (status fired))
+f-57    (cell (x 4) (y 3) (content water) (status none))
+f-58    (cell (x 4) (y 4) (content hit-boat) (status guessed))
+f-59    (cell (x 4) (y 5) (content water) (status none))
+f-60    (cell (x 4) (y 6) (content hit-boat) (status fired))
+f-61    (cell (x 4) (y 7) (content water) (status none))
+f-62    (cell (x 4) (y 8) (content water) (status none))
+f-63    (cell (x 4) (y 9) (content water) (status none))
+f-64    (cell (x 5) (y 0) (content hit-boat) (status guessed))
+f-65    (cell (x 5) (y 1) (content water) (status none))
+f-66    (cell (x 5) (y 2) (content hit-boat) (status guessed))
+f-67    (cell (x 5) (y 3) (content water) (status none))
+f-68    (cell (x 5) (y 4) (content hit-boat) (status guessed))
+f-69    (cell (x 5) (y 5) (content water) (status none))
+f-70    (cell (x 5) (y 6) (content hit-boat) (status guessed))
+f-71    (cell (x 5) (y 7) (content water) (status none))
+f-72    (cell (x 5) (y 8) (content boat) (status missed))
+f-73    (cell (x 5) (y 9) (content water) (status missed))
+f-74    (cell (x 6) (y 0) (content hit-boat) (status guessed))
+f-75    (cell (x 6) (y 1) (content water) (status none))
+f-76    (cell (x 6) (y 2) (content hit-boat) (status guessed))
+f-77    (cell (x 6) (y 3) (content water) (status none))
+f-78    (cell (x 6) (y 4) (content hit-boat) (status guessed))
+f-79    (cell (x 6) (y 5) (content water) (status none))
+f-80    (cell (x 6) (y 6) (content hit-boat) (status guessed))
+f-81    (cell (x 6) (y 7) (content water) (status none))
+f-82    (cell (x 6) (y 8) (content boat) (status missed))
+f-83    (cell (x 6) (y 9) (content water) (status missed))
+f-84    (cell (x 7) (y 0) (content water) (status none))
+f-85    (cell (x 7) (y 1) (content water) (status none))
+f-86    (cell (x 7) (y 2) (content water) (status none))
+f-87    (cell (x 7) (y 3) (content water) (status none))
+f-88    (cell (x 7) (y 4) (content water) (status none))
+f-89    (cell (x 7) (y 5) (content water) (status none))
+f-90    (cell (x 7) (y 6) (content water) (status none))
+f-91    (cell (x 7) (y 7) (content water) (status none))
+f-92    (cell (x 7) (y 8) (content water) (status none))
+f-93    (cell (x 7) (y 9) (content water) (status none))
+f-94    (cell (x 8) (y 0) (content water) (status none))
+f-95    (cell (x 8) (y 1) (content water) (status none))
+f-96    (cell (x 8) (y 2) (content water) (status none))
+f-97    (cell (x 8) (y 3) (content water) (status none))
+f-98    (cell (x 8) (y 4) (content hit-boat) (status guessed))
+f-99    (cell (x 8) (y 5) (content water) (status none))
+f-100   (cell (x 8) (y 6) (content water) (status none))
+f-101   (cell (x 8) (y 7) (content water) (status none))
+f-102   (cell (x 8) (y 8) (content water) (status none))
+f-103   (cell (x 8) (y 9) (content water) (status none))
+f-104   (cell (x 9) (y 0) (content hit-boat) (status guessed))
+f-105   (cell (x 9) (y 1) (content water) (status none))
+f-106   (cell (x 9) (y 2) (content water) (status missed))
+f-107   (cell (x 9) (y 3) (content water) (status none))
+f-108   (cell (x 9) (y 4) (content hit-boat) (status guessed))
+f-109   (cell (x 9) (y 5) (content water) (status none))
+f-110   (cell (x 9) (y 6) (content water) (status missed))
+f-111   (cell (x 9) (y 7) (content water) (status none))
+f-112   (cell (x 9) (y 8) (content water) (status none))
+f-113   (cell (x 9) (y 9) (content boat) (status missed))
+f-114   (boat-hor (name sub1) (x 0) (ys 0) (size 1) (status hit))
+f-115   (boat-hor (name sub2) (x 0) (ys 9) (size 1) (status safe))
+f-116   (boat-ver (name nav3) (xs 3 4 5 6) (y 4) (size 4) (status hit hit hit hit))
+f-117   (boat-ver (name nav4) (xs 4 5 6) (y 2) (size 3) (status hit hit hit))
+f-118   (boat-ver (name nav5) (xs 4 5 6) (y 6) (size 3) (status hit hit hit))
+f-119   (boat-ver (name nav6) (xs 5 6) (y 0) (size 2) (status hit hit))
+f-120   (boat-ver (name nav7) (xs 5 6) (y 8) (size 2) (status safe safe))
+f-121   (boat-ver (name nav8) (xs 8 9) (y 4) (size 2) (status hit hit))
+f-122   (boat-hor (name sub9) (x 9) (ys 0) (size 1) (status hit))
+f-123   (boat-hor (name sub10) (x 9) (ys 9) (size 1) (status safe))
+f-124   (k-per-row (row 0) (num 2))
+f-125   (k-per-row (row 1) (num 0))
+f-126   (k-per-row (row 2) (num 0))
+f-127   (k-per-row (row 3) (num 1))
+f-128   (k-per-row (row 4) (num 3))
+f-129   (k-per-row (row 5) (num 5))
+f-130   (k-per-row (row 6) (num 5))
+f-131   (k-per-row (row 7) (num 0))
+f-132   (k-per-row (row 8) (num 1))
+f-133   (k-per-row (row 9) (num 3))
+f-134   (k-per-col (col 0) (num 4))
+f-135   (k-per-col (col 1) (num 0))
+f-136   (k-per-col (col 2) (num 3))
+f-137   (k-per-col (col 3) (num 0))
+f-138   (k-per-col (col 4) (num 6))
+f-139   (k-per-col (col 5) (num 0))
+f-140   (k-per-col (col 6) (num 3))
+f-141   (k-per-col (col 7) (num 0))
+f-142   (k-per-col (col 8) (num 2))
+f-143   (k-per-col (col 9) (num 2))
+f-265   (exec (step 0) (action fire) (x 0) (y 0))
+f-267   (fire 0 0)
+f-268   (k-cell (x 0) (y 0) (content sub))
+f-269   (resetted 0 0)
+f-270   (considered 0 0)
+f-272   (k-cell (x 0) (y 1) (content water))
+f-274   (k-cell (x 1) (y 0) (content water))
+f-276   (k-cell (x 1) (y 1) (content water))
+f-279   (exec (step 1) (action fire) (x 9) (y 2))
+f-281   (fire 9 2)
+f-282   (k-cell (x 9) (y 2) (content water))
+f-284   (exec (step 2) (action fire) (x 4) (y 2))
+f-286   (fire 4 2)
+f-287   (k-cell (x 4) (y 2) (content top))
+f-288   (resetted 4 2)
+f-289   (considered 4 2)
+f-290   (k-cell (x 3) (y 1) (content water))
+f-292   (k-cell (x 3) (y 2) (content water))
+f-294   (k-cell (x 3) (y 3) (content water))
+f-296   (k-cell (x 4) (y 1) (content water))
+f-298   (k-cell (x 4) (y 3) (content water))
+f-300   (k-cell (x 5) (y 1) (content water))
+f-304   (k-cell (x 5) (y 3) (content water))
+f-307   (exec (step 3) (action fire) (x 9) (y 6))
+f-309   (fire 9 6)
+f-310   (k-cell (x 9) (y 6) (content water))
+f-312   (exec (step 4) (action fire) (x 4) (y 6))
+f-314   (fire 4 6)
+f-315   (k-cell (x 4) (y 6) (content top))
+f-316   (resetted 4 6)
+f-317   (considered 4 6)
+f-318   (k-cell (x 3) (y 5) (content water))
+f-320   (k-cell (x 3) (y 6) (content water))
+f-322   (k-cell (x 3) (y 7) (content water))
+f-324   (k-cell (x 4) (y 5) (content water))
+f-326   (k-cell (x 4) (y 7) (content water))
+f-328   (k-cell (x 5) (y 5) (content water))
+f-332   (k-cell (x 5) (y 7) (content water))
+f-1390  (exec (step 5) (action guess) (x 3) (y 4))
+f-1392  (guess 3 4)
+f-1394  (exec (step 6) (action guess) (x 4) (y 4))
+f-1396  (guess 4 4)
+f-1398  (exec (step 7) (action guess) (x 5) (y 4))
+f-1400  (guess 5 4)
+f-1402  (exec (step 8) (action guess) (x 6) (y 4))
+f-1404  (guess 6 4)
+f-2249  (exec (step 9) (action guess) (x 4) (y 6))
+f-2251  (guess 4 6)
+f-2253  (exec (step 10) (action guess) (x 5) (y 6))
+f-2255  (guess 5 6)
+f-2257  (exec (step 11) (action guess) (x 6) (y 6))
+f-2259  (guess 6 6)
+f-3101  (exec (step 12) (action guess) (x 4) (y 2))
+f-3103  (guess 4 2)
+f-3105  (exec (step 13) (action guess) (x 5) (y 2))
+f-3107  (guess 5 2)
+f-3109  (exec (step 14) (action guess) (x 6) (y 2))
+f-3111  (guess 6 2)
+f-3741  (exec (step 15) (action guess) (x 5) (y 0))
+f-3743  (guess 5 0)
+f-3745  (exec (step 16) (action guess) (x 6) (y 0))
+f-3747  (guess 6 0)
+f-4378  (exec (step 17) (action guess) (x 8) (y 4))
+f-4380  (guess 8 4)
+f-4382  (exec (step 18) (action guess) (x 9) (y 4))
+f-4384  (guess 9 4)
+f-5014  (exec (step 19) (action guess) (x 5) (y 9))
+f-5016  (guess 5 9)
+f-5018  (exec (step 20) (action guess) (x 6) (y 9))
+f-5020  (guess 6 9)
+f-5444  (exec (step 21) (action guess) (x 0) (y 0))
+f-5446  (guess 0 0)
+f-5873  (exec (step 22) (action guess) (x 0) (y 4))
+f-5875  (guess 0 4)
+f-6297  (exec (step 23) (action guess) (x 9) (y 0))
+f-6299  (guess 9 0)
+f-6700  (ship-index 11)
+f-6720  (exec (step 24) (action guess) (x 0) (y 2))
+f-6722  (guess 0 2)
+f-6725  (exec (step 25) (action solve) (x nil) (y nil))
+f-6726  (solve)
+f-6727  (considered 3 4)
+f-6728  (considered 4 4)
+f-6729  (considered 5 4)
+f-6730  (considered 6 4)
+f-6732  (sink-checked nav3)
+f-6733  (considered 5 6)
+f-6734  (considered 6 6)
+f-6736  (sink-checked nav5)
+f-6737  (considered 5 2)
+f-6738  (considered 6 2)
+f-6740  (sink-checked nav4)
+f-6741  (considered 5 0)
+f-6742  (considered 6 0)
+f-6744  (sink-checked nav6)
+f-6745  (considered 8 4)
+f-6746  (considered 9 4)
+f-6748  (sink-checked nav8)
+f-6749  (considered 9 0)
+f-6751  (sink-checked sub9)
+f-6752  (sink-checked sub1)
+f-6753  (sink-boat nav8)
+f-6754  (sink-boat nav6)
+f-6755  (sink-boat nav4)
+f-6756  (sink-boat nav5)
+f-6757  (sink-boat nav3)
+For a total of 245 facts.
+CLIPS> (exit)
