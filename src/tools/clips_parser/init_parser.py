@@ -89,3 +89,6 @@ if __name__ == "__main__":
     plt.ylabel("X")
     annotate_heatmap()
     plt.show()
+    plt.ylabel("X")
+    annotate_heatmap()
+    plt.show()

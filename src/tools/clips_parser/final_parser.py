@@ -78,21 +78,21 @@ if __name__ == "__main__":
         #print(actions)  # DEBUG
         #print(k_cells)  # DEBUG
         
-        for c in coordinates:
-            x = int(c[0])
-            y = int(c[1])
-            value = int(c[2])
-            
-            heatmap[x,y] = value
-                
-        # Getting the cordinates of the cells containing 100
-        cells_100 = np.where(heatmap == 100)
-        # putting them all to 0
-        heatmap[cells_100] = 0
-        # putting them all to max value + 1
-        heatmap[cells_100] = np.max(heatmap) + 1
+    for c in coordinates:
+        x = int(c[0])
+        y = int(c[1])
+        value = int(c[2])
         
-        #print(heatmap)  # DEBUG
+        heatmap[x,y] = value
+            
+    # Getting the cordinates of the cells containing 100
+    cells_100 = np.where(heatmap == 100)
+    # putting them all to 0
+    heatmap[cells_100] = 0
+    # putting them all to max value + 1
+    heatmap[cells_100] = np.max(heatmap) + 1
+    
+    #print(heatmap)  # DEBUG
 
     fig = plt.figure(figsize=(8,8))
     plt.imshow(heatmap)
