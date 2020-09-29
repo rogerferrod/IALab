@@ -93,7 +93,7 @@
 	(if (check-boundary ?nx ?ny) ; x+1, y -> sud neighbor 
 	 then 
 		(assert (modify-heat ?nx ?ny 100))
-		;(assert (b-cell (x ?nx) (y ?ny) (content boat))) ; TODO aggiungere uno slot "sovrapponibile:true/false"
+		(assert (b-cell (x ?nx) (y ?ny) (content hint)))
 	)
 	(bind ?nx (+ ?x 1))
 	(bind ?ny (+ ?y 1))
@@ -141,7 +141,7 @@
 	(if (check-boundary ?nx ?ny) ; x, y+1 -> est neighbor 
 	 then 
 		(assert (modify-heat ?nx ?ny 100))
-		;(assert (b-cell (x ?nx) (y ?ny) (content boat)))
+		(assert (b-cell (x ?nx) (y ?ny) (content hint)))
 	)
 	(bind ?nx (+ ?x 1))
 	(bind ?ny (- ?y 1))
@@ -196,7 +196,7 @@
 	(if (check-boundary ?nx ?ny) ; x, y-1 -> ovest neighbor 
 	 then 
 		(assert (modify-heat ?nx ?ny 100))
-		;(assert (b-cell (x ?nx) (y ?ny) (content boat)))
+		(assert (b-cell (x ?nx) (y ?ny) (content hint)))
 	)
 	(bind ?nx ?x)
 	(bind ?ny (+ ?y 1))
@@ -246,7 +246,7 @@
 	(if (check-boundary ?nx ?ny) ; x-1, y -> nord neighbor
 	 then 
 		(assert (modify-heat ?nx ?ny 100)) ; siamo sicuri che c'è una pezzo di nave ma non sappiamo quale
-		;(assert (b-cell (x ?nx) (y ?ny) (content boat)))
+		(assert (b-cell (x ?nx) (y ?ny) (content hint)))
 	)
 	(bind ?nx (- ?x 1))
 	(bind ?ny (+ ?y 1))

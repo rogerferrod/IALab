@@ -39,27 +39,29 @@
 (defrule update-k-per-col (declare (salience 30)) 
 	(k-per-col (col ?col) (num ?num))
 	=> 
-	(bind ?k-cell-counter 0)
 	(bind ?b-cell-counter 0)
 	
 	;(do-for-all-facts ((?k-cell k-cell)) (and (eq ?k-cell:y ?col) (neq ?k-cell:content water)) (bind ?k-cell-counter (+ ?k-cell-counter 1)))
 	;(printout t "col " ?col " k-cell " ?k-cell-counter crlf)
-	(do-for-all-facts ((?b-cell b-cell)) (and (eq ?b-cell:y ?col) (neq ?b-cell:content water)) (bind ?b-cell-counter (+ ?b-cell-counter 1)))
+	(do-for-all-facts ((?b-cell b-cell)) 
+						(and (eq ?b-cell:y ?col) (eq ?b-cell:content boat)) 
+						(bind ?b-cell-counter (+ ?b-cell-counter 1)))
 	;(printout t "col " ?col " b-cell " ?b-cell-counter crlf) 
-	(do-for-all-facts ((?update updated-k-per-col)) (eq ?update:col ?col) (modify ?update (num (- ?num (+ ?k-cell-counter ?b-cell-counter)))))
+	(do-for-all-facts ((?update updated-k-per-col)) (eq ?update:col ?col) (modify ?update (num (- ?num ?b-cell-counter))))
 )
 
 (defrule update-k-per-row (declare (salience 30)) 
 	(k-per-row (row ?row) (num ?num))
 	=> 
-	(bind ?k-cell-counter 0)
 	(bind ?b-cell-counter 0)
 	
 	;(do-for-all-facts ((?k-cell k-cell)) (and (eq ?k-cell:x ?row) (neq ?k-cell:content water)) (bind ?k-cell-counter (+ ?k-cell-counter 1)))
 	;(printout t "row " ?row " k-cell " ?k-cell-counter crlf)
-	(do-for-all-facts ((?b-cell b-cell)) (and (eq ?b-cell:x ?row) (neq ?b-cell:content water)) (bind ?b-cell-counter (+ ?b-cell-counter 1)))
+	(do-for-all-facts ((?b-cell b-cell)) 
+						(and (eq ?b-cell:x ?row) (eq ?b-cell:content boat)) 
+						(bind ?b-cell-counter (+ ?b-cell-counter 1)))
 	;(printout t "row " ?row " b-cell " ?b-cell-counter crlf) 
-	(do-for-all-facts ((?update updated-k-per-row)) (eq ?update:row ?row) (modify ?update (num (- ?num (+ ?k-cell-counter ?b-cell-counter)))))
+	(do-for-all-facts ((?update updated-k-per-row)) (eq ?update:row ?row) (modify ?update (num (- ?num ?b-cell-counter))))
 )
 
 (defrule make-intention-solve

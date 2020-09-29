@@ -142,7 +142,7 @@
 	(assert (exec (step ?s) (action unguess) (x ?x) (y ?y)))
 	;(printout t "Delete guess " ?id crlf)
 	(retract ?f)
-	(retract ?b) ; rischiamo di ritrattare anche le b-cell inferire dalle fire inizitiale!
+	(retract ?b) 
 	;(printout t "Exec " ?t " on " ?x " " ?y crlf)
 	(pop-focus)
 )
