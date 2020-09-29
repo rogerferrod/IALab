@@ -69,7 +69,6 @@
 		(intention-abort)
 	)
 =>
-	;(printout t crlf crlf)
     ;(printout t "vado a planning  step" ?s crlf)
 	(focus PLANNING)
 )
@@ -87,18 +86,6 @@
 			(modify ?p (counter (+ ?i 1))) ; go forward to the index of the next action		
 	)
 )
-
-; (defrule select-action-to-delete
-; 	(status (step ?s) (currently running))
-; 	?ps <- (plan-stack (lastplan ?plan) (plans $?plans))
-; 	?p <- (plan (id ?plan) (counter ?i) (action-sequence $?actions))
-; 	(test (>= ?i 1)) ; exectute backward until the first action of the plan
-; =>
-; 	(assert (action-to-delete(nth$ ?i $?actions))) 
-; 	(modify ?ps (lastplan (nth$ 2 ?plans))) ; set lastplan to the previous plan in the stack
-; 	(modify ?ps (plans (rest$ ?plans))) ; pop plan from the stack
-; 	(modify ?p (counter (- ?i 1))) ; go backward
-; )
 
 (defrule select-action-to-delete
 	(status (step ?s) (currently running))
@@ -124,11 +111,9 @@
 	(if (eq ?t water)
 		then 
 			(assert (b-cell (x ?x) (y ?y) (content water)))
-			;(printout t "Assert water " ?x " " ?y crlf)
 		else 
 			(assert (exec (step ?s) (action ?t) (x ?x) (y ?y)))
 			(assert (b-cell (x ?x) (y ?y) (content boat)))
-			;(printout t "Exec " ?t " on " ?x " " ?y crlf)
 			(pop-focus)
 	)
 )
@@ -140,10 +125,8 @@
 	?b <- (b-cell (x ?x) (y ?y) (content boat))
 =>	
 	(assert (exec (step ?s) (action unguess) (x ?x) (y ?y)))
-	;(printout t "Delete guess " ?id crlf)
 	(retract ?f)
 	(retract ?b) 
-	;(printout t "Exec " ?t " on " ?x " " ?y crlf)
 	(pop-focus)
 )
 
@@ -153,7 +136,6 @@
 	(action (id ?id) (type water) (x ?x) (y ?y))
 	?b <- (b-cell (x ?x) (y ?y) (content water))
 =>
-	;(printout t "Delete water " ?id crlf)
 	(retract ?f)
 	(retract ?b)
 )
@@ -164,9 +146,3 @@
     (printout t "vado a deliberate  step" ?s crlf)
 	(focus DELIBERATE) 
 )
-
-; (defrule print-what-i-know-since-the-beginning
-; 	(k-cell (x ?x) (y ?y) (content ?t))
-; =>
-; 	(printout t "I know that cell [" ?x ", " ?y "] contains " ?t "." crlf)
-; )

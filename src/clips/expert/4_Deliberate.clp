@@ -26,7 +26,7 @@
 ;; RULES
 ;; ******************************
 
-(defrule fire-at-first (declare (salience 40)) ; TODO: valutare se togliere salience
+(defrule fire-at-first (declare (salience 40))
   	(moves (fires ?f&:(> ?f 0))) ; controlla che ci siano ancora fires disponibili
 	(board (median ?h))
 	(heat-map (x ?x) (y ?y) (h ?h) (computed TRUE))
@@ -41,8 +41,6 @@
 	=> 
 	(bind ?b-cell-counter 0)
 	
-	;(do-for-all-facts ((?k-cell k-cell)) (and (eq ?k-cell:y ?col) (neq ?k-cell:content water)) (bind ?k-cell-counter (+ ?k-cell-counter 1)))
-	;(printout t "col " ?col " k-cell " ?k-cell-counter crlf)
 	(do-for-all-facts ((?b-cell b-cell)) 
 						(and (eq ?b-cell:y ?col) (eq ?b-cell:content boat)) 
 						(bind ?b-cell-counter (+ ?b-cell-counter 1)))
@@ -55,8 +53,6 @@
 	=> 
 	(bind ?b-cell-counter 0)
 	
-	;(do-for-all-facts ((?k-cell k-cell)) (and (eq ?k-cell:x ?row) (neq ?k-cell:content water)) (bind ?k-cell-counter (+ ?k-cell-counter 1)))
-	;(printout t "row " ?row " k-cell " ?k-cell-counter crlf)
 	(do-for-all-facts ((?b-cell b-cell)) 
 						(and (eq ?b-cell:x ?row) (eq ?b-cell:content boat)) 
 						(bind ?b-cell-counter (+ ?b-cell-counter 1)))
@@ -65,7 +61,7 @@
 )
 
 (defrule make-intention-solve
-	?i <- (ship-index ?s&:(> ?s 10)) ; serve guesses >= 20
+	?i <- (ship-index ?s&:(> ?s 10))
 =>
 	(assert (intention-solve))
 	(pop-focus)

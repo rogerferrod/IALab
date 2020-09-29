@@ -93,11 +93,9 @@
         (if (eq ?orientation ver) then ; vertical orientation
             (bind ?nx (- ?x ?i)) ; move along row 
             (assert (conv-cell (id ?id) (area-id ?conv-id) (x ?nx) (y ?y))) ; TODO: aggiungere il content (bot, middle, top), vedi TODO check-conv-cell
-            ;(printout t "Assert conv-cell in " ?nx " " ?y crlf)
         else ; horizontal orientation
             (bind ?ny (- ?y ?i)) ; move along columns
             (assert (conv-cell (id ?id) (area-id ?conv-id) (x ?x) (y ?ny)))
-            ;(printout t "Assert conv-cell in " ?x " " ?ny crlf)
         )
 
         (bind ?id-list (create$ ?id-list ?id))
@@ -113,7 +111,6 @@
 =>
     (modify ?c (visited (+ ?v 1)) (score (+ ?score ?h)))
     (modify ?k (computed TRUE))
-    ;(printout t "sono in " ?x " " ?y " con " ?h crlf)
 )
 
 (defrule check-conv-cell-ver 

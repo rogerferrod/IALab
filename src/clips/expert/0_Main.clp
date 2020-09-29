@@ -121,13 +121,11 @@
     (n-cruisers 2)
     (n-destroyers 3)
     (n-submarines 4)
-    ;(ordered air-carrier cruiser destroyer submarine)
     (ordered air-carrier cruiser cruiser destroyer destroyer destroyer submarine submarine submarine submarine)
   )
   (heatset (values (create$)))
   (plan-stack (plans (create$)))
   (ship-index 1)
   (convolution-scores (values (create$)) (best-id nil) (is-first TRUE))
-  (only-one)
 )
 

@@ -228,7 +228,6 @@
 	)
 )
 
-
 (defrule discover-neighborhood-bottom
 	(k-cell (x ?x) (y ?y) (content bot))
 	?m <- (heat-map (x ?x) (y ?y))
