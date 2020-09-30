@@ -105,7 +105,7 @@
 )
 
 (deffacts initial-facts
-	(maxduration 100)
+	(maxduration 10000)
 	(status (step 0) (currently running))
   (statistics (num_fire_ok 0) (num_fire_ko 0) (num_guess_ok 0) (num_guess_ko 0) (num_safe 0) (num_sink 0))
 	(first-pass-to-env)
@@ -124,7 +124,7 @@
     (ordered air-carrier cruiser cruiser destroyer destroyer destroyer submarine submarine submarine submarine)
   )
   (heatset (values (create$)))
-  (plan-stack (plans (create$)))
+  (plan-stack (plans (create$)) (lastplan nil))
   (ship-index 1)
   (convolution-scores (values (create$)) (best-id nil) (is-first TRUE))
 )

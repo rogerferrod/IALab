@@ -91,15 +91,17 @@
 	(status (step ?s) (currently running))
 	?b <- (backtracking ?plan)
 	?p <- (plan (id ?plan) (counter ?i) (action-sequence $?actions))
-	(test (> ?i 1)) ; exectute backward until the first action of the plan-
+	(test (>= ?i 1)) ; exectute backward until the first action of the plan-
 =>
-	(if (eq 1 ?i) 
+	(if (eq 1 ?i)
 		then
 			(retract ?b)
+			(assert (action-to-delete(nth$ ?i $?actions))) 
 		else
 			(assert (action-to-delete(nth$ ?i $?actions))) 
 			(modify ?p (counter (- ?i 1))) ; go backward
 	)
+	;(printout t "backtrack " ?plan " con i=" ?i crlf)
 )
 
 (defrule execute-action
