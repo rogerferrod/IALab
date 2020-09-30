@@ -78,9 +78,14 @@
 
 (defrule delete-convolution-before (declare (salience 20)); keep track of past intention-sink already tried 
     ?c <- (convolution-area (id ?conv-id) (type ?ship) (size ?size) (x ?x) (y ?y) (orientation ?orientation) (score ?score) (area $?area) (computed FALSE))
-    (plan (x ?x) (y ?y) (ship ?ship) (orientation ?orientation))
+    (MAX-AGE ?max)
+    ?p <- (plan (x ?x) (y ?y) (ship ?ship) (orientation ?orientation) (age ?age&:(<= ?age ?max)))
 =>
-    (retract ?c)
+    (if (< ?age ?max)
+        then
+            (retract ?c)
+    )
+    (modify ?p (age (+ ?age 1)))
 )
 
 (defrule convolution

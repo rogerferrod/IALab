@@ -146,7 +146,7 @@
             (bind ?water_id_seq (generate-ship-hor-water ?x-stern ?y-stern ?size)) ;assert water actions
     )
     
-    (assert (plan (id ?plan_id ) (ship ?type) (counter 1) (action-sequence (create$ ?guess_id_seq ?water_id_seq)) (x ?x-stern) (y ?y-stern) (orientation ?orient))) ; create a new plan
+    (assert (plan (id ?plan_id ) (ship ?type) (counter 1) (action-sequence (create$ ?guess_id_seq ?water_id_seq)) (x ?x-stern) (y ?y-stern) (orientation ?orient) (age 0))) ; create a new plan
     (modify ?ps (lastplan ?plan_id) (plans ?plan_id ?list)) ; push new plan on the stack
     (retract ?f); remove the intention
 	(assert (to-check-ship-neighborhood))

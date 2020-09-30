@@ -63,7 +63,10 @@
 )
 
 (defrule make-intention-solve
-	?i <- (ship-index ?s&:(> ?s 10))
+	(maxduration ?max)
+	(or (status (step ?t&:(>= ?t (- ?max 1)))(currently running))
+		?i <- (ship-index ?s&:(> ?s 10))
+	)
 =>
 	(assert (intention-solve))
 	(pop-focus)

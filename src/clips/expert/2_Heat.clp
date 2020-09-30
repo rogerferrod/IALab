@@ -50,6 +50,7 @@
     (slot x)
     (slot y)
     (slot orientation)
+	(slot age)
 )
 
 (deftemplate intention-to-plan

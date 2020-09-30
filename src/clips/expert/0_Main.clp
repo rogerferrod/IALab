@@ -105,7 +105,7 @@
 )
 
 (deffacts initial-facts
-	(maxduration 10000)
+	(maxduration 100)
 	(status (step 0) (currently running))
   (statistics (num_fire_ok 0) (num_fire_ko 0) (num_guess_ok 0) (num_guess_ko 0) (num_safe 0) (num_sink 0))
 	(first-pass-to-env)
@@ -127,5 +127,6 @@
   (plan-stack (plans (create$)) (lastplan nil))
   (ship-index 1)
   (convolution-scores (values (create$)) (best-id nil) (is-first TRUE))
+  (MAX-AGE 5)
 )
 
