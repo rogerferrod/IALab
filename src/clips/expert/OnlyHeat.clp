@@ -26,7 +26,7 @@
 ;; RULES
 ;; ******************************
 
-(defrule fire-at-first (declare (salience 40))
+(defrule make-intention-fire (declare (salience 40))
   	(moves (fires ?f&:(> ?f 0))) ; controlla che ci siano ancora fires disponibili
 	(board (median ?h))
 	(heat-map (x ?x) (y ?y) (h ?h) (computed TRUE))
@@ -45,7 +45,7 @@
 	(do-for-all-facts ((?b-cell b-cell)) 
 						(and (eq ?b-cell:y ?col) (eq ?b-cell:content boat)) 
 						(bind ?b-cell-counter (+ ?b-cell-counter 1)))
-	;(printout t "col " ?col " b-cell " ?b-cell-counter crlf) 
+	
 	(do-for-all-facts ((?update updated-k-per-col)) (eq ?update:col ?col) (modify ?update (num (- ?num ?b-cell-counter))))
 )
 
@@ -58,6 +58,6 @@
 	(do-for-all-facts ((?b-cell b-cell)) 
 						(and (eq ?b-cell:x ?row) (eq ?b-cell:content boat)) 
 						(bind ?b-cell-counter (+ ?b-cell-counter 1)))
-	;(printout t "row " ?row " b-cell " ?b-cell-counter crlf) 
+	
 	(do-for-all-facts ((?update updated-k-per-row)) (eq ?update:row ?row) (modify ?update (num (- ?num ?b-cell-counter))))
 )

@@ -38,7 +38,6 @@
 
  =>
 
-    ;(printout t crlf crlf)
     ;(printout t "vado ad agent  step" ?s crlf)
     (focus AGENT)
 )
@@ -53,10 +52,8 @@
 
 =>
 
-  ; (printout t crlf crlf)
   ;(printout t "vado ad ENV  step" ?s crlf)
   (focus ENV)
-
 )
 
 (defrule game-over
@@ -67,7 +64,11 @@
 	(focus ENV)
 )
 
-(deffunction check-boundary (?x ?y)
+;; ******************************
+;; FUNCTIONS
+;; ******************************
+
+(deffunction check-in-boundary (?x ?y)
 	(if (or (< ?x 0) 
 			(< ?y 0) 
 			(> ?x 9) 
@@ -76,18 +77,18 @@
 	else (bind ?return TRUE))
 )
 
+;; ******************************
+;; TEMPLATE
+;; ******************************
+
 (deftemplate board
 	(slot air-carrier)  ;tipo nave, #navi, #celle occupate
 	(slot cruiser)
 	(slot destroyer)
 	(slot submarine)
-  (slot n-air-carriers)  ;tipo nave, #navi, #celle occupate
-	(slot n-cruisers)
-	(slot n-destroyers)
-	(slot n-submarines)
   (multislot ordered)
   (slot median)
-)  
+)
 
 (deftemplate heatset
 	(multislot values (type SYMBOL))
@@ -96,13 +97,17 @@
 (deftemplate convolution-scores
     (multislot values (type SYMBOL))
     (slot best-id)
-    (slot is-first)
+    (slot ignore)
 )
 
 (deftemplate plan-stack
   (multislot plans (type SYMBOL))
   (slot lastplan)
 )
+
+;; ******************************
+;; INITIAL FACTS
+;; ******************************
 
 (deffacts initial-facts
 	(maxduration 100)
@@ -117,16 +122,12 @@
     (cruiser 3)
     (destroyer 2)
     (submarine 1)
-    (n-air-carriers 1)
-    (n-cruisers 2)
-    (n-destroyers 3)
-    (n-submarines 4)
     (ordered air-carrier cruiser cruiser destroyer destroyer destroyer submarine submarine submarine submarine)
   )
   (heatset (values (create$)))
   (plan-stack (plans (create$)) (lastplan nil))
+  (convolution-scores (values (create$)) (best-id nil) (ignore TRUE))
   (ship-index 1)
-  (convolution-scores (values (create$)) (best-id nil) (is-first TRUE))
   (MAX-AGE 5)
 )
 

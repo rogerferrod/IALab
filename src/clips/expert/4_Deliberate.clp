@@ -26,7 +26,7 @@
 ;; RULES
 ;; ******************************
 
-(defrule fire-at-first (declare (salience 40))
+(defrule make-intention-fire (declare (salience 40))
   	(moves (fires ?f&:(> ?f 0))) ; controlla che ci siano ancora fires disponibili
 	(board (median ?h))
 	(heat-map (x ?x) (y ?y) (h ?h) (computed TRUE))
@@ -45,7 +45,7 @@
 	(do-for-all-facts ((?b-cell b-cell)) 
 						(and (eq ?b-cell:y ?col) (eq ?b-cell:content boat)) 
 						(bind ?b-cell-counter (+ ?b-cell-counter 1)))
-	;(printout t "col " ?col " b-cell " ?b-cell-counter crlf) 
+	
 	(do-for-all-facts ((?update updated-k-per-col)) (eq ?update:col ?col) (modify ?update (num (- ?num ?b-cell-counter))))
 )
 
@@ -58,15 +58,12 @@
 	(do-for-all-facts ((?b-cell b-cell)) 
 						(and (eq ?b-cell:x ?row) (eq ?b-cell:content boat)) 
 						(bind ?b-cell-counter (+ ?b-cell-counter 1)))
-	;(printout t "row " ?row " b-cell " ?b-cell-counter crlf) 
+	
 	(do-for-all-facts ((?update updated-k-per-row)) (eq ?update:row ?row) (modify ?update (num (- ?num ?b-cell-counter))))
 )
 
 (defrule make-intention-solve
-	(maxduration ?max)
-	(or (status (step ?t&:(>= ?t (- ?max 1)))(currently running))
-		?i <- (ship-index ?s&:(> ?s 10))
-	)
+	?i <- (ship-index ?s&:(> ?s 10))
 =>
 	(assert (intention-solve))
 	(pop-focus)
@@ -74,28 +71,29 @@
 
 (defrule make-intention-sink
 	?i <- (ship-index ?s)
-	?c <- (convolution-scores (is-first FALSE) (best-id ?best-area-id&:(neq ?best-area-id nil)))
-	?f <- (convolution-area (id ?best-area-id) (x ?x) (y ?y) (orientation ?or) (type ?t))
+	?c <- (convolution-scores (ignore FALSE) (best-id ?best-area-id&:(neq ?best-area-id nil)))
+	?f <- (convolution-area (id ?best-area-id) (x ?x) (y ?y) (orientation ?or) (type ?t) (score ?score))
 =>
-	(printout t "intention-sink " ?t " on " ?x " " ?y " orientation " ?or crlf)
+	(printout t "    best-score " ?score crlf)
+	(printout t "    intention-sink " ?t " on " ?x " " ?y " orientation " ?or crlf)
 	(assert(intention-sink(x-stern ?x) (y-stern ?y) (orientation ?or) (type ?t)))
 	(retract ?i)
 	(assert (ship-index (+ ?s 1))) ; select the next ship
 	(delete-conv-cell ?best-area-id)
+	(modify ?c (ignore TRUE) (best-id nil))
 	(retract ?f) 
-	(modify ?c (is-first TRUE) (best-id nil)) ; TODO cambiare nome a is-first -> ignore score
  	(pop-focus)
 )
 
-(defrule make-intention-abort ;is-first FALSE and best-id == nil
+(defrule make-intention-abort
 	?i <- (ship-index ?s)
-	?c <- (convolution-scores (is-first FALSE) (best-id nil)) ; no cell found to place the ship
+	?c <- (convolution-scores (ignore FALSE) (best-id nil)) ; no cell found to place the ship
 =>
-	(printout t "intention-abort index" (- ?s 1) crlf)
+	(printout t "    intention-abort on ship index" (- ?s 1) crlf)
 	(retract ?i)
 	(assert (ship-index (- ?s 1))) ; select the previous ship
 	(assert (intention-abort))
-	(modify ?c (is-first TRUE)) ; TODO cambiare nome a is-first -> ignore score
+	(modify ?c (ignore TRUE))
 	(pop-focus)
 )
 

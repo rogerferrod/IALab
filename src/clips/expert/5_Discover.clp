@@ -7,11 +7,6 @@
 )
 
 ;; *******************************
-;; FUNCTIONS
-;; *******************************
-
-
-;; *******************************
 ;; RULES
 ;; *******************************
 
@@ -48,56 +43,56 @@
 =>
 	(bind ?nx (- ?x 1))
 	(bind ?ny (- ?y 1))
-	(if (check-boundary ?nx ?ny) ; x-1, y-1 -> nord-ovest neighbor
+	(if (check-in-boundary ?nx ?ny) ; x-1, y-1 -> nord-ovest neighbor
 	 then 
 		(assert (k-cell (x ?nx) (y ?ny) (content water)))
 		(assert (modify-heat ?nx ?ny 0))
 	)
 	(bind ?nx (- ?x 1))
 	(bind ?ny ?y)
-	(if (check-boundary ?nx ?ny) ; x-1, y -> nord neighbor
+	(if (check-in-boundary ?nx ?ny) ; x-1, y -> nord neighbor
 	 then 
 		(assert(k-cell (x ?nx) (y ?ny) (content water)))
 		(assert (modify-heat ?nx ?ny 0))
 	)
 	(bind ?nx (- ?x 1))
 	(bind ?ny (+ ?y 1))
-	(if (check-boundary ?nx ?ny) ; x-1, y+1 -> nord-est neighbor 
+	(if (check-in-boundary ?nx ?ny) ; x-1, y+1 -> nord-est neighbor 
 	 then 
 		(assert (k-cell (x ?nx) (y ?ny) (content water)))
 		(assert (modify-heat ?nx ?ny 0))
 	)
 	(bind ?nx ?x)
 	(bind ?ny (- ?y 1))
-	(if (check-boundary ?nx ?ny) ; x, y-1 -> ovest neighbor 
+	(if (check-in-boundary ?nx ?ny) ; x, y-1 -> ovest neighbor 
 	 then 
 		(assert(k-cell (x ?nx) (y ?ny) (content water)))
 		(assert (modify-heat ?nx ?ny 0))
 	)
 	(bind ?nx ?x)
 	(bind ?ny (+ ?y 1))
-	(if (check-boundary ?nx ?ny) ; x, y+1 -> est neighbor 
+	(if (check-in-boundary ?nx ?ny) ; x, y+1 -> est neighbor 
 	 then 
 		(assert(k-cell (x ?nx) (y ?ny) (content water)))
 		(assert (modify-heat ?nx ?ny 0))
 	)
 	(bind ?nx (+ ?x 1))
 	(bind ?ny (- ?y 1))
-	(if (check-boundary ?nx ?ny) ; x+1, y-1 -> sud-ovest neighbor 
+	(if (check-in-boundary ?nx ?ny) ; x+1, y-1 -> sud-ovest neighbor 
 	 then 
 		(assert(k-cell (x ?nx) (y ?ny) (content water)))
 		(assert (modify-heat ?nx ?ny 0))
 	)
 	(bind ?nx (+ ?x 1))
 	(bind ?ny ?y)
-	(if (check-boundary ?nx ?ny) ; x+1, y -> sud neighbor 
+	(if (check-in-boundary ?nx ?ny) ; x+1, y -> sud neighbor 
 	 then 
 		(assert (modify-heat ?nx ?ny 100))
 		(assert (b-cell (x ?nx) (y ?ny) (content hint)))
 	)
 	(bind ?nx (+ ?x 1))
 	(bind ?ny (+ ?y 1))
-	(if (check-boundary ?nx ?ny) ; x+1, y+1 -> sud-est neighbor 
+	(if (check-in-boundary ?nx ?ny) ; x+1, y+1 -> sud-est neighbor 
 	 then 
 		(assert(k-cell (x ?nx) (y ?ny) (content water)))
 		(assert (modify-heat ?nx ?ny 0))
@@ -110,56 +105,56 @@
 =>
 	(bind ?nx (- ?x 1))
 	(bind ?ny (- ?y 1))
-	(if (check-boundary ?nx ?ny) ; x-1, y-1 -> nord-ovest neighbor
+	(if (check-in-boundary ?nx ?ny) ; x-1, y-1 -> nord-ovest neighbor
 	 then 
 		(assert (k-cell (x ?nx) (y ?ny) (content water)))
 		(assert (modify-heat ?nx ?ny 0))
 	)
 	(bind ?nx (- ?x 1))
 	(bind ?ny ?y)
-	(if (check-boundary ?nx ?ny) ; x-1, y -> nord neighbor
+	(if (check-in-boundary ?nx ?ny) ; x-1, y -> nord neighbor
 	 then 
 		(assert(k-cell (x ?nx) (y ?ny) (content water)))
 		(assert (modify-heat ?nx ?ny 0))
 	)
 	(bind ?nx (- ?x 1))
 	(bind ?ny (+ ?y 1))
-	(if (check-boundary ?nx ?ny) ; x-1, y+1 -> nord-est neighbor 
+	(if (check-in-boundary ?nx ?ny) ; x-1, y+1 -> nord-est neighbor 
 	 then 
 		(assert (k-cell (x ?nx) (y ?ny) (content water)))
 		(assert (modify-heat ?nx ?ny 0))
 	)
 	(bind ?nx ?x)
 	(bind ?ny (- ?y 1))
-	(if (check-boundary ?nx ?ny) ; x, y-1 -> ovest neighbor 
+	(if (check-in-boundary ?nx ?ny) ; x, y-1 -> ovest neighbor 
 	 then 
 		(assert (k-cell (x ?nx) (y ?ny) (content water)))
 		(assert (modify-heat ?nx ?ny 0))
 	)
 	(bind ?nx ?x)
 	(bind ?ny (+ ?y 1))
-	(if (check-boundary ?nx ?ny) ; x, y+1 -> est neighbor 
+	(if (check-in-boundary ?nx ?ny) ; x, y+1 -> est neighbor 
 	 then 
 		(assert (modify-heat ?nx ?ny 100))
 		(assert (b-cell (x ?nx) (y ?ny) (content hint)))
 	)
 	(bind ?nx (+ ?x 1))
 	(bind ?ny (- ?y 1))
-	(if (check-boundary ?nx ?ny) ; x+1, y-1 -> sud-ovest neighbor 
+	(if (check-in-boundary ?nx ?ny) ; x+1, y-1 -> sud-ovest neighbor 
 	 then 
 		(assert(k-cell (x ?nx) (y ?ny) (content water)))
 		(assert (modify-heat ?nx ?ny 0))
 	)
 	(bind ?nx (+ ?x 1))
 	(bind ?ny ?y)
-	(if (check-boundary ?nx ?ny) ; x+1, y -> sud neighbor 
+	(if (check-in-boundary ?nx ?ny) ; x+1, y -> sud neighbor 
 	 then 
 		(assert(k-cell (x ?nx) (y ?ny) (content water)))
 		(assert (modify-heat ?nx ?ny 0))
 	)
 	(bind ?nx (+ ?x 1))
 	(bind ?ny (+ ?y 1))
-	(if (check-boundary ?nx ?ny) ; x+1, y+1 -> sud-est neighbor 
+	(if (check-in-boundary ?nx ?ny) ; x+1, y+1 -> sud-est neighbor 
 	 then 
 		(assert(k-cell (x ?nx) (y ?ny) (content water)))
 		(assert (modify-heat ?nx ?ny 0))
@@ -172,56 +167,56 @@
 =>
 	(bind ?nx (- ?x 1))
 	(bind ?ny (- ?y 1))
-	(if (check-boundary ?nx ?ny) ; x-1, y-1 -> nord-ovest neighbor
+	(if (check-in-boundary ?nx ?ny) ; x-1, y-1 -> nord-ovest neighbor
 	 then 
 		(assert (k-cell (x ?nx) (y ?ny) (content water)))
 		(assert (modify-heat ?nx ?ny 0))
 	)
 	(bind ?nx (- ?x 1))
 	(bind ?ny ?y)
-	(if (check-boundary ?nx ?ny) ; x-1, y -> nord neighbor
+	(if (check-in-boundary ?nx ?ny) ; x-1, y -> nord neighbor
 	 then 
 		(assert(k-cell (x ?nx) (y ?ny) (content water)))
 		(assert (modify-heat ?nx ?ny 0))
 	)
 	(bind ?nx (- ?x 1))
 	(bind ?ny (+ ?y 1))
-	(if (check-boundary ?nx ?ny) ; x-1, y+1 -> nord-est neighbor 
+	(if (check-in-boundary ?nx ?ny) ; x-1, y+1 -> nord-est neighbor 
 	 then 
 		(assert (k-cell (x ?nx) (y ?ny) (content water)))
 		(assert (modify-heat ?nx ?ny 0))
 	)
 	(bind ?nx ?x)
 	(bind ?ny (- ?y 1))
-	(if (check-boundary ?nx ?ny) ; x, y-1 -> ovest neighbor 
+	(if (check-in-boundary ?nx ?ny) ; x, y-1 -> ovest neighbor 
 	 then 
 		(assert (modify-heat ?nx ?ny 100))
 		(assert (b-cell (x ?nx) (y ?ny) (content hint)))
 	)
 	(bind ?nx ?x)
 	(bind ?ny (+ ?y 1))
-	(if (check-boundary ?nx ?ny) ; x, y+1 -> est neighbor 
+	(if (check-in-boundary ?nx ?ny) ; x, y+1 -> est neighbor 
 	 then 
 		(assert(k-cell (x ?nx) (y ?ny) (content water)))
 		(assert (modify-heat ?nx ?ny 0))
 	)
 	(bind ?nx (+ ?x 1))
 	(bind ?ny (- ?y 1))
-	(if (check-boundary ?nx ?ny) ; x+1, y-1 -> sud-ovest neighbor 
+	(if (check-in-boundary ?nx ?ny) ; x+1, y-1 -> sud-ovest neighbor 
 	 then 
 		(assert(k-cell (x ?nx) (y ?ny) (content water)))
 		(assert (modify-heat ?nx ?ny 0))
 	)
 	(bind ?nx (+ ?x 1))
 	(bind ?ny ?y)
-	(if (check-boundary ?nx ?ny) ; x+1, y -> sud neighbor 
+	(if (check-in-boundary ?nx ?ny) ; x+1, y -> sud neighbor 
 	 then 
 		(assert(k-cell (x ?nx) (y ?ny) (content water)))
 		(assert (modify-heat ?nx ?ny 0))
 	)
 	(bind ?nx (+ ?x 1))
 	(bind ?ny (+ ?y 1))
-	(if (check-boundary ?nx ?ny) ; x+1, y+1 -> sud-est neighbor 
+	(if (check-in-boundary ?nx ?ny) ; x+1, y+1 -> sud-est neighbor 
 	 then 
 		(assert(k-cell (x ?nx) (y ?ny) (content water)))
 		(assert (modify-heat ?nx ?ny 0))
@@ -235,56 +230,56 @@
     ;(printout t "CURRENT MODULE: " (get-current-module))
 	(bind ?nx (- ?x 1))
 	(bind ?ny (- ?y 1))
-	(if (check-boundary ?nx ?ny) ; x-1, y-1 -> nord-ovest neighbor
+	(if (check-in-boundary ?nx ?ny) ; x-1, y-1 -> nord-ovest neighbor
 	 then 
 		(assert (k-cell (x ?nx) (y ?ny) (content water)))
 		(assert (modify-heat ?nx ?ny 0))
 	)
 	(bind ?nx (- ?x 1))
 	(bind ?ny ?y)
-	(if (check-boundary ?nx ?ny) ; x-1, y -> nord neighbor
+	(if (check-in-boundary ?nx ?ny) ; x-1, y -> nord neighbor
 	 then 
 		(assert (modify-heat ?nx ?ny 100)) ; siamo sicuri che c'è una pezzo di nave ma non sappiamo quale
 		(assert (b-cell (x ?nx) (y ?ny) (content hint)))
 	)
 	(bind ?nx (- ?x 1))
 	(bind ?ny (+ ?y 1))
-	(if (check-boundary ?nx ?ny) ; x-1, y+1 -> nord-est neighbor 
+	(if (check-in-boundary ?nx ?ny) ; x-1, y+1 -> nord-est neighbor 
 	 then 
 		(assert (k-cell (x ?nx) (y ?ny) (content water)))
 		(assert (modify-heat ?nx ?ny 0))
 	)
 	(bind ?nx ?x)
 	(bind ?ny (- ?y 1))
-	(if (check-boundary ?nx ?ny) ; x, y-1 -> ovest neighbor 
+	(if (check-in-boundary ?nx ?ny) ; x, y-1 -> ovest neighbor 
 	 then 
 		(assert(k-cell (x ?nx) (y ?ny) (content water)))
 		(assert (modify-heat ?nx ?ny 0))
 	)
 	(bind ?nx ?x)
 	(bind ?ny (+ ?y 1))
-	(if (check-boundary ?nx ?ny) ; x, y+1 -> est neighbor 
+	(if (check-in-boundary ?nx ?ny) ; x, y+1 -> est neighbor 
 	 then 
 		(assert(k-cell (x ?nx) (y ?ny) (content water)))
 		(assert (modify-heat ?nx ?ny 0))
 	)
 	(bind ?nx (+ ?x 1))
 	(bind ?ny (- ?y 1))
-	(if (check-boundary ?nx ?ny) ; x+1, y-1 -> sud-ovest neighbor 
+	(if (check-in-boundary ?nx ?ny) ; x+1, y-1 -> sud-ovest neighbor 
 	 then 
 		(assert(k-cell (x ?nx) (y ?ny) (content water)))
 		(assert (modify-heat ?nx ?ny 0))
 	)
 	(bind ?nx (+ ?x 1))
 	(bind ?ny ?y)
-	(if (check-boundary ?nx ?ny) ; x+1, y -> sud neighbor 
+	(if (check-in-boundary ?nx ?ny) ; x+1, y -> sud neighbor 
 	 then 
 		(assert (k-cell (x ?nx) (y ?ny) (content water)))
 		(assert (modify-heat ?nx ?ny 0))
 	)
 	(bind ?nx (+ ?x 1))
 	(bind ?ny (+ ?y 1))
-	(if (check-boundary ?nx ?ny) ; x+1, y+1 -> sud-est neighbor 
+	(if (check-in-boundary ?nx ?ny) ; x+1, y+1 -> sud-est neighbor 
 	 then 
 		(assert(k-cell (x ?nx) (y ?ny) (content water)))
 		(assert (modify-heat ?nx ?ny 0))
@@ -297,56 +292,56 @@
 =>
 	(bind ?nx (- ?x 1))
 	(bind ?ny (- ?y 1))
-	(if (check-boundary ?nx ?ny) ; x-1, y-1 -> nord-ovest neighbor
+	(if (check-in-boundary ?nx ?ny) ; x-1, y-1 -> nord-ovest neighbor
 	 then 
 		(assert (k-cell (x ?nx) (y ?ny) (content water)))
 		(assert (modify-heat ?nx ?ny 0))
 	)
 	(bind ?nx (- ?x 1))
 	(bind ?ny ?y)
-	(if (check-boundary ?nx ?ny) ; x-1, y -> nord neighbor
+	(if (check-in-boundary ?nx ?ny) ; x-1, y -> nord neighbor
 	 then 
 		(assert(k-cell (x ?nx) (y ?ny) (content water)))
 		(assert (modify-heat ?nx ?ny 0))
 	)
 	(bind ?nx (- ?x 1))
 	(bind ?ny (+ ?y 1))
-	(if (check-boundary ?nx ?ny) ; x-1, y+1 -> nord-est neighbor 
+	(if (check-in-boundary ?nx ?ny) ; x-1, y+1 -> nord-est neighbor 
 	 then 
 		(assert (k-cell (x ?nx) (y ?ny) (content water)))
 		(assert (modify-heat ?nx ?ny 0))
 	)
 	(bind ?nx ?x)
 	(bind ?ny (- ?y 1))
-	(if (check-boundary ?nx ?ny) ; x, y-1 -> ovest neighbor 
+	(if (check-in-boundary ?nx ?ny) ; x, y-1 -> ovest neighbor 
 	 then 
 		(assert (k-cell (x ?nx) (y ?ny) (content water)))
 		(assert (modify-heat ?nx ?ny 0))
 	)
 	(bind ?nx ?x)
 	(bind ?ny (+ ?y 1))
-	(if (check-boundary ?nx ?ny) ; x, y+1 -> est neighbor 
+	(if (check-in-boundary ?nx ?ny) ; x, y+1 -> est neighbor 
 	 then 
 		(assert (k-cell (x ?nx) (y ?ny) (content water)))
 		(assert (modify-heat ?nx ?ny 0))
 	)
 	(bind ?nx (+ ?x 1))
 	(bind ?ny (- ?y 1))
-	(if (check-boundary ?nx ?ny) ; x+1, y-1 -> sud-ovest neighbor 
+	(if (check-in-boundary ?nx ?ny) ; x+1, y-1 -> sud-ovest neighbor 
 	 then 
 		(assert(k-cell (x ?nx) (y ?ny) (content water)))
 		(assert (modify-heat ?nx ?ny 0))
 	)
 	(bind ?nx (+ ?x 1))
 	(bind ?ny ?y)
-	(if (check-boundary ?nx ?ny) ; x+1, y -> sud neighbor 
+	(if (check-in-boundary ?nx ?ny) ; x+1, y -> sud neighbor 
 	 then 
 		(assert(k-cell (x ?nx) (y ?ny) (content water)))
 		(assert (modify-heat ?nx ?ny 0))
 	)
 	(bind ?nx (+ ?x 1))
 	(bind ?ny (+ ?y 1))
-	(if (check-boundary ?nx ?ny) ; x+1, y+1 -> sud-est neighbor 
+	(if (check-in-boundary ?nx ?ny) ; x+1, y+1 -> sud-est neighbor 
 	 then 
 		(assert(k-cell (x ?nx) (y ?ny) (content water)))
 		(assert (modify-heat ?nx ?ny 0))
@@ -359,28 +354,28 @@
 =>
 	(bind ?nx (- ?x 1))
 	(bind ?ny (- ?y 1))
-	(if (check-boundary ?nx ?ny) ; x-1, y-1 -> nord-ovest neighbor
+	(if (check-in-boundary ?nx ?ny) ; x-1, y-1 -> nord-ovest neighbor
 	 then 
 		(assert (k-cell (x ?nx) (y ?ny) (content water)))
 		(assert (modify-heat ?nx ?ny 0))
 	)
 	(bind ?nx (- ?x 1))
 	(bind ?ny (+ ?y 1))
-	(if (check-boundary ?nx ?ny) ; x-1, y+1 -> nord-est neighbor 
+	(if (check-in-boundary ?nx ?ny) ; x-1, y+1 -> nord-est neighbor 
 	 then 
 		(assert (k-cell (x ?nx) (y ?ny) (content water)))
 		(assert (modify-heat ?nx ?ny 0))
 	)
 	(bind ?nx (+ ?x 1))
 	(bind ?ny (- ?y 1))
-	(if (check-boundary ?nx ?ny) ; x+1, y-1 -> sud-ovest neighbor 
+	(if (check-in-boundary ?nx ?ny) ; x+1, y-1 -> sud-ovest neighbor 
 	 then 
 		(assert(k-cell (x ?nx) (y ?ny) (content water)))
 		(assert (modify-heat ?nx ?ny 0))
 	)
 	(bind ?nx (+ ?x 1))
 	(bind ?ny (+ ?y 1))
-	(if (check-boundary ?nx ?ny) ; x+1, y+1 -> sud-est neighbor 
+	(if (check-in-boundary ?nx ?ny) ; x+1, y+1 -> sud-est neighbor 
 	 then 
 		(assert(k-cell (x ?nx) (y ?ny) (content water)))
 		(assert (modify-heat ?nx ?ny 0))

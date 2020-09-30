@@ -1,6 +1,3 @@
-;  ---------------------------------------------
-;  --- Definizione del modulo e dei template ---
-;  ---------------------------------------------
 (defmodule HEAT 
 	(import MAIN ?ALL) 
 	(import ENV ?ALL) 

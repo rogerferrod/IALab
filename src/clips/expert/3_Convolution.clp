@@ -6,7 +6,7 @@
 )
 
 ;*****************************
-; DEFRULES
+; DEFTEMPLATES
 ;*****************************
 
 (deftemplate convolution-area
@@ -18,8 +18,8 @@
 	(slot orientation (allowed-values ver hor))
 	(slot score (default 0))
 	(multislot area) ; id dei fatti corrispondenti alle celle dell'area
-	(slot computed (default FALSE))
-	(slot visited (default 0)) ; counter of cells already visited during convolution
+	(slot computed (default FALSE)) ; TRUE when all conv-cell associated are generated 
+	(slot visited (default 0)) ; counter of cells already visited and updated during convolution
     (slot collected (default FALSE))
 )
 
@@ -28,7 +28,7 @@
 	(slot area-id)
 	(slot x)
 	(slot y)
-    (slot computed (default FALSE))
+    (slot counted (default FALSE))
 )
 
 
@@ -71,8 +71,8 @@
 		)
 	) 
 	
-	(printout t "convolution on " ?ship-type  " index " ?s crlf)
-	(modify ?c (values (create$)) (best-id nil) (is-first FALSE)) ; reset convolution scores
+	(printout t "    convolution on " ?ship-type  " (index " ?s ")" crlf)
+	(modify ?c (values (create$)) (best-id nil) (ignore FALSE)) ; reset convolution scores
     (retract ?f)
 )
 
@@ -91,14 +91,13 @@
 (defrule convolution
     ?c <- (convolution-area (id ?conv-id) (type ?ship) (size ?size) (x ?x) (y ?y) (orientation ?orientation) (score ?score) (area $?area) (computed FALSE))
 =>
-    ;(printout t "trying new convolution on: " ?x ", " ?y " type: " ?ship " orient:" ?orientation crlf)
     (bind ?id-list (create$))  
     (loop-for-count (?i 0 (- ?size 1)) 
         (bind ?id (gensym*)) ; area cell id
         
         (if (eq ?orientation ver) then ; vertical orientation
             (bind ?nx (- ?x ?i)) ; move along row 
-            (assert (conv-cell (id ?id) (area-id ?conv-id) (x ?nx) (y ?y))) ; TODO: aggiungere il content (bot, middle, top), vedi TODO check-conv-cell
+            (assert (conv-cell (id ?id) (area-id ?conv-id) (x ?nx) (y ?y)))
         else ; horizontal orientation
             (bind ?ny (- ?y ?i)) ; move along columns
             (assert (conv-cell (id ?id) (area-id ?conv-id) (x ?x) (y ?ny)))
@@ -110,13 +109,13 @@
     (modify ?c (area ?id-list) (computed TRUE))
 )
 
-(defrule count-visited ; TODO cambiare nome
-    ?k <- (conv-cell (id ?id) (x ?x) (y ?y) (area-id ?conv) (computed FALSE))
+(defrule update-score
+    ?k <- (conv-cell (id ?id) (x ?x) (y ?y) (area-id ?conv) (counted FALSE))
     ?c <- (convolution-area (size ?size) (score ?score) (visited ?v&:(< ?v ?size)))
     (heat-map (x ?x) (y ?y) (h ?h))
 =>
     (modify ?c (visited (+ ?v 1)) (score (+ ?score ?h)))
-    (modify ?k (computed TRUE))
+    (modify ?k (counted TRUE))
 )
 
 (defrule check-conv-cell-ver 
@@ -125,16 +124,14 @@
     (conv-cell (id ?id) (x ?x) (y ?y) (area-id ?area-id))
     ?c <- (convolution-area (id ?area-id) (area $?area) (orientation ver) (size ?size) (visited ?v&:(> ?v 0)))
     (or 
-        (test (not (check-boundary ?x ?y))) ; deletes the cells that exceed the boundary
+        (test (not (check-in-boundary ?x ?y))) ; deletes the cells that exceed the boundary
         (k-cell (x ?x) (y ?y) (content water)) ; no ship could be placed in water
         (b-cell (x ?x) (y ?y) (content water))
         (b-cell (x ?x) (y ?y) (content boat)) ; check if there is an already placed guess 
         (updated-k-per-col (col ?y) (num ?num&:(> ?v ?num)))  ; not(v <= col) -> (v > col)
         (updated-k-per-row (row ?x) (num ?num&:(< ?num 1))) ; not(row >= 1) -> (row < 1)
-        ; TODO: controllare sovrapposizioni compatibili di k-cell (bottom, top, middle...)
     )
 =>
-    ;(printout t "elimino convolution_area " ?area-id crlf)
     (delete-conv-cell ?area-id) ; retract all conv-area associated cells
     (retract ?c)
 )
@@ -145,16 +142,14 @@
     (conv-cell (id ?id) (x ?x) (y ?y) (area-id ?area-id))
     ?c <- (convolution-area (id ?area-id) (area $?area) (orientation hor) (size ?size) (visited ?v&:(> ?v 0)))
     (or 
-        (test (not (check-boundary ?x ?y))) ; deletes the cells that exceed the boundary
+        (test (not (check-in-boundary ?x ?y))) ; deletes the cells that exceed the boundary
         (k-cell (x ?x) (y ?y) (content water))
         (b-cell (x ?x) (y ?y) (content water))
         (b-cell (x ?x) (y ?y) (content boat))
         (updated-k-per-col (col ?y) (num ?num&:(< ?num 1))) ; not(col >= 1) -> (col < 1)
         (updated-k-per-row (row ?x) (num ?num&:(> ?v ?num)))  ; not(v <= row) -> (v > row)
-        ; TODO: controllare sovrapposizioni compatibili di k-cell (bottom, top, middle...)
     )
 =>
-    ;(printout t "elimino convolution_area " ?area-id crlf)
     (delete-conv-cell ?area-id) ; retract all conv-area associated cells
     (retract ?c)
 )

@@ -1,6 +1,3 @@
-;  ---------------------------------------------
-;  --- Definizione del modulo e dei template ---
-;  ---------------------------------------------
 (defmodule AGENT 
 	(import MAIN ?ALL)
 	(import ENV ?ALL)
@@ -10,10 +7,6 @@
 	(import PLANNING ?ALL) 
 	(export ?ALL)
 )
-
-;;
-;;
-;;
 
 ;; --------------------------------------
 ;; RULES
@@ -38,7 +31,7 @@
 	?f <- (intention-fire (x ?x) (y ?y))
 =>
 	(assert (exec (step ?s) (action fire) (x ?x) (y ?y)))
-	(assert (check-fire ?x ?y)) ; MEMO: controllare il risultato della fire richiesta
+	(assert (check-fire ?x ?y))
 	(retract ?f)
 	(pop-focus)
 )
@@ -48,11 +41,6 @@
 =>
 	(focus DISCOVER)
 )
-
-
-;
-; AGENT - DELIB - AGENT - PLANNING
-;
 
 (defrule solve
 	(status (step ?s)(currently running))
@@ -70,21 +58,35 @@
 		(intention-abort)
 	)
 =>
-    ;(printout t "vado a planning  step" ?s crlf)
 	(focus PLANNING)
 )
 
-
-(defrule select-action
+(defrule select-action-to-exec
 	(status (step ?s) (currently running))
 	(plan-stack (lastplan ?plan))
 	?p <- (plan (id ?plan) (counter ?i) (action-sequence $?actions))
 	(test (<= ?i (length$ ?actions)))
 =>
-	(assert (action-to-exec(nth$ ?i $?actions))) ; TODO togliere ildollaro?
+	(assert (action-to-exec(nth$ ?i $?actions)))
 	(if (< ?i (length$ ?actions))
 		then
 			(modify ?p (counter (+ ?i 1))) ; go forward to the index of the next action		
+	)
+)
+
+(defrule execute-action
+	(status (step ?s) (currently running))
+	?f <- (action-to-exec ?id)
+	(action (id ?id) (type ?t) (x ?x) (y ?y))
+=>
+	(retract ?f)
+	(if (eq ?t water)
+		then 
+			(assert (b-cell (x ?x) (y ?y) (content water)))
+		else 
+			(assert (exec (step ?s) (action ?t) (x ?x) (y ?y)))
+			(assert (b-cell (x ?x) (y ?y) (content boat)))
+			(pop-focus)
 	)
 )
 
@@ -101,23 +103,6 @@
 		else
 			(assert (action-to-delete(nth$ ?i $?actions))) 
 			(modify ?p (counter (- ?i 1))) ; go backward
-	)
-	;(printout t "backtrack " ?plan " con i=" ?i crlf)
-)
-
-(defrule execute-action
-	(status (step ?s) (currently running))
-	?f <- (action-to-exec ?id)
-	(action (id ?id) (type ?t) (x ?x) (y ?y))
-=>
-	(retract ?f)
-	(if (eq ?t water)
-		then 
-			(assert (b-cell (x ?x) (y ?y) (content water)))
-		else 
-			(assert (exec (step ?s) (action ?t) (x ?x) (y ?y)))
-			(assert (b-cell (x ?x) (y ?y) (content boat)))
-			(pop-focus)
 	)
 )
 
@@ -146,7 +131,7 @@
 (defrule go-on-deliberate (declare (salience -5))
 	(status (step ?s)(currently running))
 =>
-    (printout t "vado a deliberate  step" ?s crlf)
+    (printout t "deliberate phase at step " ?s crlf)
 	(focus DELIBERATE) 
 )
 
