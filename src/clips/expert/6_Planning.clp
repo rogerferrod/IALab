@@ -133,6 +133,7 @@
     (status (step ?s)(currently running))
 	?f <- (intention-to-plan (x-stern ?x-stern) (y-stern ?y-stern) (orientation ?orient) (type ?type) (size ?size))
     ?ps <- (plan-stack (plans $?list))
+    (not (plan (ship ?type) (x ?x-stern) (y ?y-stern) (orientation ?orient))) ; non qui, deve comunque modificare lo stack
 =>
     (printout t "Plan WarShip" crlf)
     (bind ?plan_id (gensym*))
@@ -147,6 +148,29 @@
     )
     
     (assert (plan (id ?plan_id ) (ship ?type) (counter 1) (action-sequence (create$ ?guess_id_seq ?water_id_seq)) (x ?x-stern) (y ?y-stern) (orientation ?orient) (age 0))) ; create a new plan
+    (modify ?ps (lastplan ?plan_id) (plans ?plan_id ?list)) ; push new plan on the stack
+    (retract ?f); remove the intention
+	(assert (to-check-ship-neighborhood))
+)
+
+(defrule re-generate-plan ; TODO serve?
+    (status (step ?s)(currently running))
+	?f <- (intention-to-plan (x-stern ?x-stern) (y-stern ?y-stern) (orientation ?orient) (type ?type) (size ?size))
+    ?ps <- (plan-stack (plans $?list))
+    ?p <- (plan (id ?plan_id ) (ship ?type) (x ?x-stern) (y ?y-stern) (orientation ?orient) (age ?age))
+=>
+    (printout t "Plan WarShip" crlf)
+    (bind ?plan_id (gensym*))
+    
+    (bind ?guess_id_seq (generate-ship-guess ?x-stern ?y-stern ?orient ?size)) ;assert guess actions
+    
+    (if (eq ?orient ver)
+        then
+            (bind ?water_id_seq (generate-ship-vert-water ?x-stern ?y-stern ?size)) ;assert water actions
+        else    
+            (bind ?water_id_seq (generate-ship-hor-water ?x-stern ?y-stern ?size)) ;assert water actions
+    )
+
     (modify ?ps (lastplan ?plan_id) (plans ?plan_id ?list)) ; push new plan on the stack
     (retract ?f); remove the intention
 	(assert (to-check-ship-neighborhood))

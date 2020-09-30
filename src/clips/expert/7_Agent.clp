@@ -148,3 +148,10 @@
     (printout t "vado a deliberate  step" ?s crlf)
 	(focus DELIBERATE) 
 )
+
+(defrule surrender (declare (salience -5))
+	(status (step ?s)(currently running))
+=>
+	(assert (exec (step ?s) (action solve)))
+	(pop-focus)	
+)
