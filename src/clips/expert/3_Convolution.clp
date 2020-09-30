@@ -76,7 +76,7 @@
     (retract ?f)
 )
 
-(defrule delete-convolution-before (declare (salience 20))
+(defrule delete-convolution-before (declare (salience 20)); keep track of past intention-sink already tried 
     ?c <- (convolution-area (id ?conv-id) (type ?ship) (size ?size) (x ?x) (y ?y) (orientation ?orientation) (score ?score) (area $?area) (computed FALSE))
     (plan (x ?x) (y ?y) (ship ?ship) (orientation ?orientation))
 =>
@@ -86,6 +86,7 @@
 (defrule convolution
     ?c <- (convolution-area (id ?conv-id) (type ?ship) (size ?size) (x ?x) (y ?y) (orientation ?orientation) (score ?score) (area $?area) (computed FALSE))
 =>
+    ;(printout t "trying new convolution on: " ?x ", " ?y " type: " ?ship " orient:" ?orientation crlf)
     (bind ?id-list (create$))  
     (loop-for-count (?i 0 (- ?size 1)) 
         (bind ?id (gensym*)) ; area cell id
@@ -143,8 +144,8 @@
         (k-cell (x ?x) (y ?y) (content water))
         (b-cell (x ?x) (y ?y) (content water))
         (b-cell (x ?x) (y ?y) (content boat))
-        (updated-k-per-col (col ?x) (num ?num&:(< ?num 1))) ; not(col >= 1) -> (col < 1)
-        (updated-k-per-row (row ?y) (num ?num&:(> ?v ?num)))  ; not(v <= row) -> (v > row)
+        (updated-k-per-col (col ?y) (num ?num&:(< ?num 1))) ; not(col >= 1) -> (col < 1)
+        (updated-k-per-row (row ?x) (num ?num&:(> ?v ?num)))  ; not(v <= row) -> (v > row)
         ; TODO: controllare sovrapposizioni compatibili di k-cell (bottom, top, middle...)
     )
 =>
