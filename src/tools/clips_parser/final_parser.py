@@ -63,4 +63,4 @@ if __name__ == "__main__":
     plt.xlabel("Y")
     plt.ylabel("X")
     annotate_heatmap()
-    plt.show()
+    plt.savefig('fig.png')
