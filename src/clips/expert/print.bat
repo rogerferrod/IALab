@@ -15,3 +15,4 @@
 (facts)
 (focus ENV)
 (facts)
+(exit)
