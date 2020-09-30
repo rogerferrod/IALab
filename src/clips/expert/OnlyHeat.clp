@@ -37,6 +37,7 @@
 )
 
 (defrule update-k-per-col (declare (salience 30)) 
+	(status (step ?s)(currently running))
 	(k-per-col (col ?col) (num ?num))
 	=> 
 	(bind ?b-cell-counter 0)
@@ -49,6 +50,7 @@
 )
 
 (defrule update-k-per-row (declare (salience 30)) 
+	(status (step ?s)(currently running))
 	(k-per-row (row ?row) (num ?num))
 	=> 
 	(bind ?b-cell-counter 0)
