@@ -58,6 +58,7 @@
 	(status (step ?s)(currently running))
 	?f <- (intention-solve)
 =>
+	(printout t "I find a complete solution" ?s crlf)
 	(assert (exec (step ?s) (action solve)))
 	(pop-focus)
 )
@@ -152,6 +153,7 @@
 (defrule surrender (declare (salience -5))
 	(status (step ?s)(currently running))
 =>
+	(printout t "I surrender " ?s crlf)
 	(assert (exec (step ?s) (action solve)))
 	(pop-focus)	
 )
