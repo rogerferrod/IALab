@@ -3,10 +3,10 @@
 (load ../maps/fleet0.clp)
 (load 2_Heat.clp)
 (load 3_Convolution.clp)
-(load OnlyHeat.clp)
+(load 4_Deliberate.clp)
 (load 5_Discover.clp)
 (load 6_Planning.clp)
-(load 7_Agent.clp)
+(load OnlyHeat.clp)
 
 (reset)
 (set-break game-over)
