@@ -118,7 +118,7 @@ def get_clips_cmd(agent_dir, map_path, clipsbinary="clipsdos"):
 parser = argparse.ArgumentParser()
 parser.add_argument("-m", "--maps", default=r"../../clips/maps", help="path to maps files")
 parser.add_argument("-a", "--agent", default=r"../../clips/expert", help="path to clips agent")
-parser.add_argument("-e", "--experiments", default="../../clips/experiments", help="path to experiments")
+parser.add_argument("-e", "--experiments", default="./experiments", help="path to experiments")
 parser.add_argument("-en", "--expName", default="all", help="experiment name")
 parser.add_argument("-p", "--paramsSetName", default="knowledge", help="parameters set name")
 

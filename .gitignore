@@ -68,8 +68,7 @@ src/tools/timetable_maker/output
 # TOOLS
 src/tools/labyrinths/.idea/*
 src/tools/labyrinths/output/*
-src/tools/clips_parser/input/*
-src/tools/clips_parser/output/*
+src/tools/clips_parser/experiments/*
 
 # JAVA
 src/clips/java/*.class
