@@ -119,8 +119,8 @@ parser = argparse.ArgumentParser()
 parser.add_argument("-m", "--maps", default=r"../../clips/maps", help="path to maps files")
 parser.add_argument("-a", "--agent", default=r"../../clips/expert", help="path to clips agent")
 parser.add_argument("-e", "--experiments", default="../../clips/experiments", help="path to experiments")
-parser.add_argument("-en", "--expName", default="fire", help="experiment name")
-parser.add_argument("-p", "--paramsSetName", default="median", help="parameters set name")
+parser.add_argument("-en", "--expName", default="all", help="experiment name")
+parser.add_argument("-p", "--paramsSetName", default="knowledge", help="parameters set name")
 
 
 if __name__ == "__main__":
