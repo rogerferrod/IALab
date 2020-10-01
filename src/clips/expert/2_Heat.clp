@@ -97,7 +97,7 @@
 	(k-cell (x ?x) (y ?y) (content water))
 	?f <- (heat-map (x ?x) (y ?y) (computed FALSE))
 =>
-	(modify ?f (h 100) (computed TRUE)) ; importante che sia TRUE per non alterare la mediana (collect-heat)
+	(modify ?f (h 0) (computed TRUE)) ; importante che sia TRUE per non alterare la mediana (collect-heat)
 )
 
 (defrule heat-dropout ; effettua il "drop" delle righe e colonne, impostando il valore della cella a 0 
