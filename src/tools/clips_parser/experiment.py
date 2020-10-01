@@ -43,7 +43,7 @@ def draw_heatmap(path, output_name, output_folder):
         for x, y, content in k_cells:
             if content == "top":
                 t = "t"
-            elif content == "mid":
+            elif content == "middle":
                 t = "m"
             elif content == "bot":
                 t = "b"
@@ -116,12 +116,11 @@ def get_clips_cmd(agent_dir, map_path, clipsbinary="clipsdos"):
     return cmd
     
 parser = argparse.ArgumentParser()
-parser.add_argument("-m", "--maps", default=r"C:\Users\Pio Raffaele Fina\Desktop\IALab\src\clips\maps", help="path to maps files")
-parser.add_argument("-a", "--agent", default=r"C:\Users\Pio Raffaele Fina\Desktop\IALab\src\clips\expert", help="path to clips agent")
-parser.add_argument("-e", "--experiments", default=".\experiments", help="path to experiments")
-parser.add_argument("-en", "--expName", required=True, help="experiment name")
-parser.add_argument("-p", "--paramsSetName", required=True, help="parameters set name")
-
+parser.add_argument("-m", "--maps", default=r"../../clips/maps", help="path to maps files")
+parser.add_argument("-a", "--agent", default=r"../../clips/expert", help="path to clips agent")
+parser.add_argument("-e", "--experiments", default="../../clips/experiments", help="path to experiments")
+parser.add_argument("-en", "--expName", default="fire", help="experiment name")
+parser.add_argument("-p", "--paramsSetName", default="median", help="parameters set name")
 
 
 if __name__ == "__main__":
@@ -135,7 +134,6 @@ if __name__ == "__main__":
         experiment_dir.mkdir(parents=True)
         for map_path in maps_dir.glob("*.clp"):
             out_file = experiment_dir / (map_path.stem + "_out.txt")
-            
             with open(out_file, "w") as file:
                 
                 #print("calling {}".format(get_clips_cmd_argument(agent_dir,map_path)))
