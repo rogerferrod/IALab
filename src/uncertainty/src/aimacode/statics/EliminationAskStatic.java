@@ -55,6 +55,9 @@ public class EliminationAskStatic extends EliminationAsk {
         if (verbose)
             System.out.println("\tTempFactors=" + factorsToString(factors));
 
+        List<Integer> lengths = factors.stream().map(x -> x.getArgumentVariables().size()).collect(Collectors.toList());
+        int width = Collections.max(lengths, null);
+
         for (RandomVariable var : toSumOut) {
             factors = sumOut(var, factors, bn);
             if (verbose) {
@@ -69,6 +72,8 @@ public class EliminationAskStatic extends EliminationAsk {
             System.out.println("\tNewFactors=" + factorsToString(factors));
             System.out.println("\tnewTable" + newTable.getArgumentVariables() + " = " + newTable);
         }
+
+        System.out.println("Width " + width);
         return newTable;
     }
 
