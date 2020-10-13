@@ -1,0 +1,1 @@
+java -classpath /home/jside/MySoftwares/BNGenerator-0.3/Classes/colt.jar:/home/jside/MySoftwares/BNGenerator-0.3/Classes/embayes.jar:/home/jside/MySoftwares/BNGenerator-0.3/Classes BNGenerator -nNodes 12 -maxDegree 11 -nBNs 25 -format xml -nVal 2 -fName polyN50IW2_ -testUnif no -structure singly -maxIW 2
