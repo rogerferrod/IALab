@@ -148,6 +148,10 @@ public class NetworkFactory {
         FiniteNode tE = new FullCPTNode(tEVar, new double[]{0.9, 0.1, 0.2, 0.8}, tX);
         vaNamesMap.put("E_t", tEVar);
 
+        RandVar tFVar = new RandVar("F_t", new BooleanDomain());
+        FiniteNode tF = new FullCPTNode(tFVar, new double[]{0.9, 0.1, 0.2, 0.8}, tY);
+        vaNamesMap.put("F_t", tFVar);
+
         X1_to_X0.put(tXVar, priorXVar);
         X1_to_X0.put(tYVar, priorYVar);
         X1_to_X0.put(tZVar, priorZVar);
@@ -157,10 +161,11 @@ public class NetworkFactory {
 
         Set<RandomVariable> E_1 = new HashSet<>();
         E_1.add(tEVar);
+        E_1.add(tFVar);
         E_1.add(tGVar);
         DynamicBayesNet dbn = new DynamicBayesNet(priorNetwork, X0_to_X1, E_1, priorX, priorY, priorZ);
 
-        return new WrapDynamicBayesNet(new FiniteNode[]{priorX, priorY, priorZ}, new FiniteNode[]{tX, tY, tZ, tE, tG}, vaNamesMap, X1_to_X0, dbn);
+        return new WrapDynamicBayesNet(new FiniteNode[]{priorX, priorY, priorZ}, new FiniteNode[]{tX, tY, tZ, tE, tF, tG}, vaNamesMap, X1_to_X0, dbn);
     }
 
     private WrapDynamicBayesNet getRandomNetwork(BayesianNetwork bn, Map<String, List<String>> mapping, Set<String> evNames) {
