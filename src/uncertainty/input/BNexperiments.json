@@ -34,6 +34,11 @@
     "query": "DrivQuality",
     "evidences": "Accident=Mild"
   },
+  "insurance_01": {
+    "network": "./networks/insurance.xml",
+    "query": "Age",
+    "evidences": "PropCost=Million"
+  },
   "win95pts_00": {
     "network": "./networks/win95pts.xml",
     "query": "PrtCbl",
