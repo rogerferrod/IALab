@@ -1,0 +1,1 @@
+java -classpath ../Classes/colt.jar:../Classes/embayes.jar:../Classes BNGenerator $(<bnconfig.txt)

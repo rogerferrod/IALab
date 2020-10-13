@@ -1,0 +1,56 @@
+// 	Credal network in CIF(CredalNet Interchange Format)
+// 	Produced by BNGenerator (http://www.pmr.poli.usp.br/ltd/Software/BNGenerator
+// 	Number of nodes:5
+// 	Output created Tue May 20 12:58:38 GMT-05:00 2008
+network "cn51"	{
+}
+variable  "node0"	{
+	type discrete[2]  { "state0"  "state1" };
+	property "position = (44, 270) ";
+}
+variable  "node1"	{
+	type discrete[4]  { "state0"  "state1"  "state2"  "state3" };
+	property "position = (15, 150) ";
+}
+variable  "node2"	{
+	type discrete[4]  { "state0"  "state1"  "state2"  "state3" };
+	property "position = (164, 284) ";
+}
+variable  "node3"	{
+	type discrete[4]  { "state0"  "state1"  "state2"  "state3" };
+	property "position = (284, 270) ";
+}
+variable  "node4"	{
+	type discrete[3]  { "state0"  "state1"  "state2" };
+	property "position = (45, 30) ";
+}
+probability ( "node0"  "node4"  "node2" ) { //4 variable(s) and 8 values
+	table 
+	0.1512	0.2825	0.3311	0.649	0.8488	0.7175	0.6689	0.351;
+	table 
+	0.9984	0.386	0.5313	0.7207	0.0016	0.614	0.4687	0.2793;
+}
+probability ( "node1"  "node4" ) { //3 variable(s) and 4 values
+	table 
+	0.1903	0.0042	0.8097	0.9958;
+	table 
+	0.3169	0.4851	0.6831	0.5149;
+}
+probability ( "node2"  "node4"  "node1" ) { //4 variable(s) and 8 values
+	table 
+	0.9437	0.2125	0.7798	0.4874	0.0563	0.7875	0.2202	0.5126;
+	table 
+	0.9631	0.9962	0.7974	0.7337	0.0369	0.0038	0.2026	0.2663;
+}
+probability ( "node3"  "node2"  "node4" ) { //4 variable(s) and 8 values
+	table 
+	0.0127	0.5852	0.0908	0.0308	0.9873	0.4148	0.9092	0.9692;
+	table 
+	0.0672	0.9064	0.3983	0.8741	0.9328	0.0936	0.6017	0.1259;
+}
+probability ( "node4" ) { //2 variable(s) and 2 values
+	table 
+	0.295	0.705;
+	table 
+	0.8283	0.1717;
+}
