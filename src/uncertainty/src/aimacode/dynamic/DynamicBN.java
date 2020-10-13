@@ -24,12 +24,8 @@ public class DynamicBN {
         args[2] = "./input/DBNexperiments.json";
         //args[3] = "Umbrella_00";
         //args[3] = "UmbrellaWind_00";
-        args[3] = "TwoFactors_00";
-        //args[3] = "Random_00";
-        //args[3] = "Random_02";
-        //args[3] = "Random_03";
-        //args[3] = "Random_04";
-        //args[3] = "Random_05";
+        //args[3] = "TwoFactors_00";
+        args[3] = "Random_two_factors";
 
         String jsonData = new String(Files.readAllBytes(Paths.get(args[2])));
         JSONObject obj = new JSONObject(jsonData);

@@ -25,40 +25,7 @@
     },
     "map" : {}
   },
-  "Random_00": {
-    "network": "./networks/example1.xml",
-    "iterations" : 5,
-    "evidences": {
-      "Node5_t" : ["1", "0", "1", "0", "1"],
-      "Node4_t" : ["0", "1", "0", "1", "0"]
-    },
-    "map" : {"Node16_t": ["Node16_0"], "Node14_t": ["Node14_0"]}
-  },
-  "Random_02": {
-    "network": "./networks/example2.xml",
-    "iterations" : 5,
-    "evidences": {
-      "C_t" : ["1", "0", "1", "0", "1"]
-    },
-    "map" : {"B_t": ["B_0"]}
-  },
-  "Random_03": {
-    "network": "./networks/example3.xml",
-    "iterations" : 5,
-    "evidences": {
-      "C_t" : ["1", "0", "1", "0", "1"]
-    },
-    "map" : {"B_t": ["B_0", "A_0"], "A_t": ["A_0"]}
-  },
-  "Random_04": {
-    "network": "./networks/example4.xml",
-    "iterations" : 5,
-    "evidences": {
-      "C_t" : ["1", "0", "1", "0", "1"]
-    },
-    "map" : {"B_t": ["B_0", "A_0", "D_0"], "A_t": ["A_0"], "D_t": ["D_0"]}
-  },
-  "Random_05": {
+  "Random_two_factors": {
     "network": "./networks/example5.xml",
     "iterations" : 5,
     "evidences": {
