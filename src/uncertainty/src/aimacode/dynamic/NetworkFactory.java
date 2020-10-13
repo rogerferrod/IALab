@@ -169,6 +169,7 @@ public class NetworkFactory {
 
         // priorNodes (t = 0)
         List<Node> priorNodes = new ArrayList<>();
+        List<FiniteNode> roots = new ArrayList<>();
         for (RandomVariable var : bn.getVariablesInTopologicalOrder()) {
             String name = var.getName();
             if (!evNames.contains(name)) {
@@ -177,6 +178,9 @@ public class NetworkFactory {
                 FiniteNode priorNode = new FullCPTNode(priorVar, new double[]{0.5, 0.5});
                 vaNamesMap.put(newName, priorVar);
                 priorNodes.add(priorNode);
+                if (bn.getNode(var).isRoot()) { // se originariamente era root
+                    roots.add(priorNode);
+                }
             }
         }
         BayesNet priorNetwork = new BayesNet(priorNodes.toArray(new Node[0]));
@@ -241,11 +245,11 @@ public class NetworkFactory {
             }
         }
 
-        FiniteNode[] priorNodeArray = priorNodes.toArray(new FiniteNode[0]);
-        DynamicBayesNet dbn = new DynamicBayesNet(priorNetwork, X0_to_X1, E_1, priorNodeArray);
+        FiniteNode[] priorRoots = roots.toArray(new FiniteNode[0]);
+        DynamicBayesNet dbn = new DynamicBayesNet(priorNetwork, X0_to_X1, E_1, priorRoots);
         FiniteNode[] tNodeArray = tNodes.toArray(new FiniteNode[0]);
 
-        return new WrapDynamicBayesNet(priorNodeArray, tNodeArray, vaNamesMap, X1_to_X0, dbn);
+        return new WrapDynamicBayesNet(priorRoots, tNodeArray, vaNamesMap, X1_to_X0, dbn);
     }
 }
 

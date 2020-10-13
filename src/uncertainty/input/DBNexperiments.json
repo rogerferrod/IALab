@@ -31,6 +31,6 @@
       "Node5" : ["state1", "state0", "state1", "state0", "state1"],
       "Node4" : ["state0", "state1", "state0", "state1", "state0"]
     },
-    "map" : {"Node16_t": ["Node16_0", "Node15_0"], "Node19_t": ["Node19_0"]}
+    "map" : {"Node16_t": ["Node16_0"], "Node14_t": ["Node14_0"]}
   }
 }
