@@ -4,14 +4,16 @@
     "iterations" : 5,
     "evidences": {
       "Umbrella_t" : ["1", "0", "1", "0", "1"]
-    }
+    },
+    "map" : {}
   },
   "UmbrellaWind_00": {
     "network": "wind",
     "iterations" : 5,
     "evidences": {
       "Umbrella_t" : ["1", "0", "1", "0", "1"]
-    }
+    },
+    "map" : {}
   },
   "TwoFactors_00": {
     "network": "twofactors",
@@ -19,6 +21,16 @@
     "evidences": {
       "E_t" : ["1", "0", "1", "0", "1"],
       "G_t" : ["0", "1", "0", "1", "0"]
-    }
+    },
+    "map" : {}
+  },
+  "Random_00": {
+    "network": "./networks/example1.xml",
+    "iterations" : 5,
+    "evidences": {
+      "Node5" : ["state1", "state0", "state1", "state0", "state1"],
+      "Node4" : ["state0", "state1", "state0", "state1", "state0"]
+    },
+    "map" : {"Node16_t": ["Node16_0", "Node15_0"], "Node19_t": ["Node19_0"]}
   }
 }
