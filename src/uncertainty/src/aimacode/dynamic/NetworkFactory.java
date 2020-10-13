@@ -22,6 +22,7 @@ public class NetworkFactory {
     public final static String UMBRELLA = "umbrella";
     public final static String WIND = "wind";
     public final static String TWOFACTORS = "twofactors";
+    private final Random generator = new Random(42);
 
     public WrapDynamicBayesNet getNetwork(String net) {
         switch (net) {
@@ -222,7 +223,7 @@ public class NetworkFactory {
 
                 int missingSize = (int) (2 * Math.pow(2.0, newParents.length) - cpt.length);
                 for (int i = 0; i < missingSize / 2; i++) {
-                    double rnd = Math.random() * (1.0 - 0.0 + 1) + 0.0;
+                    double rnd = generator.nextDouble();
                     cpt = ArrayUtils.addAll(cpt, rnd, 1 - rnd);
                 }
 
