@@ -177,7 +177,7 @@ public class NetworkFactory {
         List<FiniteNode> roots = new ArrayList<>();
         for (RandomVariable var : bn.getVariablesInTopologicalOrder()) {
             String name = var.getName();
-            if (!evNames.contains(name)) {
+            if (!evNames.contains(name + "_t")) {
                 String newName = name + "_0";
                 RandVar priorVar = new RandVar(newName, new BooleanDomain());
                 FiniteNode priorNode = new FullCPTNode(priorVar, new double[]{0.5, 0.5});
@@ -239,9 +239,10 @@ public class NetworkFactory {
         Set<RandomVariable> E_1 = new HashSet<>();
         for (FiniteNode tNode : tNodes) {
             RandomVariable tVar = tNode.getRandomVariable();
-            String name = tVar.getName().split("_")[0];
+            String name = tVar.getName();
+            String originalName = name.split("_")[0];
             if (!evNames.contains(name)) {
-                String priorName = name + "_0";
+                String priorName = originalName + "_0";
                 RandomVariable priorVar = vaNamesMap.get(priorName);
                 X1_to_X0.put(tVar, priorVar);
                 X0_to_X1.put(priorVar, tVar);

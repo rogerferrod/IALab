@@ -1,8 +1,10 @@
 package aimacode.dynamic;
 
 import aima.core.probability.RandomVariable;
+import aima.core.probability.bayes.BayesianNetwork;
 import aima.core.probability.bayes.approx.ParticleFiltering;
 import aima.core.probability.proposition.AssignmentProposition;
+import aimacode.bnparser.BifReader;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -23,6 +25,7 @@ public class ParticleTesting {
         //args[2] = "Umbrella_00";
         //args[2] = "UmbrellaWind_00";
         args[2] = "TwoFactors_00";
+        //args[2] = "Random_two_factors";
 
         int iterations = Integer.parseInt(args[0]);
 
@@ -31,13 +34,27 @@ public class ParticleTesting {
         JSONObject experiment = (JSONObject) obj.get(args[2]);
         JSONObject evidencesInput = (JSONObject) experiment.get("evidences");
 
+        String network = experiment.getString("network");
+        Map<String, List<String>> mapping = new HashMap<>();
+        JSONObject map = (JSONObject) experiment.get("map");
+        for (String key : map.keySet()) {
+            mapping.put(key, map.getJSONArray(key).toList().stream().map(Object::toString).collect(Collectors.toList()));
+        }
+
         int m = (int) experiment.get("iterations");
         int n = evidencesInput.length();
         String[] argsEvNames = evidencesInput.keySet().toArray(new String[n]);
         AssignmentProposition[][] aps = new AssignmentProposition[m][n];
 
+        WrapDynamicBayesNet dbn;
         NetworkFactory factory = new NetworkFactory();
-        WrapDynamicBayesNet dbn = factory.getNetwork((String) experiment.get("network"));
+        if (mapping.size() != 0) {
+            BayesianNetwork bn = BifReader.readBIF(network);
+            Set<String> evNames = evidencesInput.keySet();
+            dbn = factory.getNetwork(bn, mapping, evNames);
+        } else {
+            dbn = factory.getNetwork((String) experiment.get("network"));
+        }
 
         for (int i = 0; i < n; i++) {
             String varName = argsEvNames[i];

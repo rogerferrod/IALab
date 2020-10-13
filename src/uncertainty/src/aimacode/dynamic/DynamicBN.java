@@ -16,8 +16,8 @@ import org.json.*;
 public class DynamicBN {
     public static void main(String[] args) throws IOException {
         args = new String[4];
-        args[0] = EliminationAskDynamic.TOPOLOGICAL;
-        //args[0] = EliminationAskDynamic.MIN_DEGREE;
+        //args[0] = EliminationAskDynamic.TOPOLOGICAL;
+        args[0] = EliminationAskDynamic.MIN_DEGREE;
         //args[0] = EliminationAskDynamic.MIN_FILL;
 
         args[1] = "true";
@@ -51,7 +51,7 @@ public class DynamicBN {
             mapping.put(key, map.getJSONArray(key).toList().stream().map(Object::toString).collect(Collectors.toList()));
         }
 
-        WrapDynamicBayesNet dbn = null;
+        WrapDynamicBayesNet dbn;
         NetworkFactory factory = new NetworkFactory();
         if (mapping.size() != 0) {
             BayesianNetwork bn = BifReader.readBIF(network);
