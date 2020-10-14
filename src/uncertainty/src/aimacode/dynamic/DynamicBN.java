@@ -16,8 +16,8 @@ import org.json.*;
 public class DynamicBN {
     public static void main(String[] args) throws IOException {
         args = new String[4];
-        //args[0] = EliminationAskDynamic.TOPOLOGICAL;
-        args[0] = EliminationAskDynamic.MIN_DEGREE;
+        args[0] = EliminationAskDynamic.TOPOLOGICAL;
+        //args[0] = EliminationAskDynamic.MIN_DEGREE;
         //args[0] = EliminationAskDynamic.MIN_FILL;
 
         args[1] = "true";
@@ -27,7 +27,8 @@ public class DynamicBN {
         //args[3] = "TwoFactors_00";
         //args[3] = "earthquake_00";
         //args[3] = "fivestates_00";
-        args[3] = "fivestates2_00";
+        //args[3] = "fivestates2_00";
+        args[3] = "tenstates_00";
         //args[3] = "Random_two_factors";
         //args[3] = "test_05";
 
@@ -55,15 +56,15 @@ public class DynamicBN {
             mapping.put(key, map.getJSONArray(key).toList().stream().map(Object::toString).collect(Collectors.toList()));
         }
 
-        WrapDynamicBayesNet dbn;
         NetworkFactory factory = new NetworkFactory();
-        if (mapping.size() != 0) {
+        WrapDynamicBayesNet dbn = factory.getNetwork((String) experiment.get("network"));
+        /*if (mapping.size() != 0) {
             BayesianNetwork bn = BifReader.readBIF(network);
             Set<String> evNames = evidencesInput.keySet();
             dbn = factory.getNetwork(bn, mapping, evNames);
         } else {
             dbn = factory.getNetwork((String) experiment.get("network"));
-        }
+        }*/
 
         ArrayList<String> evNames = new ArrayList<>(Arrays.asList(argsEvNames));
         Map<Integer, AssignmentProposition[]> evidencesOverTime = new LinkedHashMap<>(); //t : evidences(t)
