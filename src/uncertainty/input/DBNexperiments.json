@@ -34,6 +34,14 @@
     },
     "map" : {}
   },
+  "fivestates_00": {
+    "network": "fivestates",
+    "iterations" : 5,
+    "evidences": {
+      "E_t" : ["1", "1", "0", "0", "0"]
+    },
+    "map" : {}
+  },
   "Random_two_factors": {
     "network": "./networks/example5.xml",
     "iterations" : 5,
