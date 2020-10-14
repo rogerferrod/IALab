@@ -26,7 +26,8 @@ public class DynamicBN {
         //args[3] = "UmbrellaWind_00";
         //args[3] = "TwoFactors_00";
         //args[3] = "earthquake_00";
-        args[3] = "fivestates_00";
+        //args[3] = "fivestates_00";
+        args[3] = "fivestates2_00";
         //args[3] = "Random_two_factors";
         //args[3] = "test_05";
 
