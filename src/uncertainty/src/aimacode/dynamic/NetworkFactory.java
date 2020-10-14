@@ -1,21 +1,14 @@
 package aimacode.dynamic;
 
 import aima.core.probability.RandomVariable;
-import aima.core.probability.bayes.BayesianNetwork;
 import aima.core.probability.bayes.FiniteNode;
-import aima.core.probability.bayes.Node;
 import aima.core.probability.bayes.impl.BayesNet;
 import aima.core.probability.bayes.impl.DynamicBayesNet;
 import aima.core.probability.bayes.impl.FullCPTNode;
 import aima.core.probability.domain.BooleanDomain;
 import aima.core.probability.util.RandVar;
-import aimacode.statics.CPTNode;
-import org.apache.commons.lang3.ArrayUtils;
 
 import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-import java.util.Random;
 
 public class NetworkFactory {
     public final static String UMBRELLA = "umbrella";
@@ -25,8 +18,6 @@ public class NetworkFactory {
     public final static String FIVESTATES = "fivestates";
     public final static String FIVESTATES2 = "fivestates2";
     public final static String TENSTATES = "tenstates";
-
-    private final Random generator = new Random(42);
 
     public WrapDynamicBayesNet getNetwork(String net) {
         switch (net) {
@@ -47,10 +38,6 @@ public class NetworkFactory {
             default:
                 return null;
         }
-    }
-
-    public WrapDynamicBayesNet getNetwork(BayesianNetwork bn, Map<String, List<String>> mapping, Set<String> evNames) {
-        return getRandomNetwork(bn, mapping, evNames);
     }
 
     private WrapDynamicBayesNet umbrellaNetwork() {
@@ -451,97 +438,6 @@ public class NetworkFactory {
 
         return new WrapDynamicBayesNet(new FiniteNode[]{prior0, prior3, prior4, prior5, prior6, prior8, prior9},
                 new FiniteNode[]{t0, t1, t2, t3, t4, t5, t6, t7, t8, t9}, vaNamesMap, X1_to_X0, dbn);
-    }
-
-    private WrapDynamicBayesNet getRandomNetwork(BayesianNetwork bn, Map<String, List<String>> mapping, Set<String> evNames) {
-        HashMap<String, RandomVariable> vaNamesMap = new HashMap<>();
-        Map<RandomVariable, RandomVariable> X1_to_X0 = new LinkedHashMap<>();
-        Map<RandomVariable, RandomVariable> X0_to_X1 = new LinkedHashMap<>();
-
-        // priorNodes (t = 0)
-        List<Node> priorNodes = new ArrayList<>();
-        List<FiniteNode> roots = new ArrayList<>();
-        for (RandomVariable var : bn.getVariablesInTopologicalOrder()) {
-            String name = var.getName();
-            if (!evNames.contains(name + "_t")) {
-                String newName = name + "_0";
-                RandVar priorVar = new RandVar(newName, new BooleanDomain());
-                FiniteNode priorNode = new FullCPTNode(priorVar, new double[]{0.5, 0.5});
-                vaNamesMap.put(newName, priorVar);
-                priorNodes.add(priorNode);
-                if (bn.getNode(var).isRoot()) { // se originariamente era root
-                    roots.add(priorNode);
-                }
-            }
-        }
-        BayesNet priorNetwork = new BayesNet(priorNodes.toArray(new Node[0]));
-
-        // tNodes (t = 1)
-        List<FiniteNode> tmpNodes = new ArrayList<>();
-        Map<String, Node> mapNodes = new HashMap<>();
-        List<FiniteNode> tNodes = new ArrayList<>();
-        for (RandomVariable var : bn.getVariablesInTopologicalOrder()) { // importante che sia in ordine topologico inverso
-            String name = var.getName();
-            String newName = name + "_t";
-            RandVar tVar = new RandVar(newName, new BooleanDomain());
-            CPTNode oldNode = (CPTNode) bn.getNode(var);
-            Node[] parents = oldNode.getParentsList().stream()
-                    .map(x -> mapNodes.get(x.getRandomVariable().getName() + "_t")).toArray(Node[]::new);
-            FiniteNode tNode = new CPTNode(tVar, oldNode.getCPTDistribution(), parents);
-            vaNamesMap.put(newName, tVar);
-            tmpNodes.add(tNode);
-            mapNodes.put(newName, tNode);
-        }
-
-        for (FiniteNode tNode : tmpNodes) {
-            // tNodes with intergraph link
-            CPTNode oldNode = (CPTNode) tNode;
-            String name = oldNode.getRandomVariable().getName();
-            if (mapping.containsKey(name)) {
-                List<Node> parents = oldNode.getParentsList();
-                List<String> previousVarNames = mapping.get(name);
-                List<Node> previousNodes = priorNodes.stream()
-                        .filter(x -> previousVarNames.contains(x.getRandomVariable().getName())).collect(Collectors.toList());
-
-                RandVar tVar = (RandVar) oldNode.getRandomVariable();
-                double[] cpt = new double[0];
-                if (parents.size() != 0) { // se è root
-                    cpt = oldNode.getCPTDistribution();
-                }
-
-                Node[] newParents = Stream.concat(parents.stream(), previousNodes.stream()).toArray(Node[]::new);
-
-                int missingSize = (int) (2 * Math.pow(2.0, newParents.length) - cpt.length);
-                for (int i = 0; i < missingSize / 2; i++) {
-                    double rnd = generator.nextDouble();
-                    cpt = ArrayUtils.addAll(cpt, rnd, 1 - rnd);
-                }
-
-                tNode = new FullCPTNode(tVar, cpt, newParents);
-            }
-            tNodes.add(tNode);
-        }
-
-        Set<RandomVariable> E_1 = new HashSet<>();
-        for (FiniteNode tNode : tNodes) {
-            RandomVariable tVar = tNode.getRandomVariable();
-            String name = tVar.getName();
-            String originalName = name.split("_")[0];
-            if (!evNames.contains(name)) {
-                String priorName = originalName + "_0";
-                RandomVariable priorVar = vaNamesMap.get(priorName);
-                X1_to_X0.put(tVar, priorVar);
-                X0_to_X1.put(priorVar, tVar);
-            } else {
-                E_1.add(tVar);
-            }
-        }
-
-        FiniteNode[] priorRoots = roots.toArray(new FiniteNode[0]);
-        DynamicBayesNet dbn = new DynamicBayesNet(priorNetwork, X0_to_X1, E_1, priorRoots);
-        FiniteNode[] tNodeArray = tNodes.toArray(new FiniteNode[0]);
-
-        return new WrapDynamicBayesNet(priorRoots, tNodeArray, vaNamesMap, X1_to_X0, dbn);
     }
 }
 

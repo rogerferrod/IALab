@@ -4,16 +4,14 @@
     "iterations" : 5,
     "evidences": {
       "Umbrella_t" : ["1", "0", "1", "0", "1"]
-    },
-    "map" : {}
+    }
   },
   "UmbrellaWind_00": {
     "network": "wind",
     "iterations" : 5,
     "evidences": {
       "Umbrella_t" : ["1", "0", "1", "0", "1"]
-    },
-    "map" : {}
+    }
   },
   "TwoFactors_00": {
     "network": "twofactors",
@@ -22,8 +20,7 @@
       "E_t" : ["1", "0", "1", "0", "1"],
       "F_t" : ["1", "1", "0", "0", "0"],
       "G_t" : ["0", "1", "0", "1", "0"]
-    },
-    "map" : {}
+    }
   },
   "earthquake_00": {
     "network": "earthquake",
@@ -31,24 +28,21 @@
     "evidences": {
       "D_t" : ["1", "0", "1", "0", "1"],
       "E_t" : ["1", "1", "0", "0", "0"]
-    },
-    "map" : {}
+    }
   },
   "fivestates_00": {
     "network": "fivestates",
     "iterations" : 5,
     "evidences": {
       "E_t" : ["1", "1", "0", "0", "0"]
-    },
-    "map" : {}
+    }
   },
   "fivestates2_00": {
     "network": "fivestates2",
     "iterations" : 5,
     "evidences": {
       "E_t" : ["1", "1", "0", "0", "0"]
-    },
-    "map" : {}
+    }
   },
   "tenstates_00": {
     "network": "tenstates",
@@ -57,25 +51,6 @@
       "N1_t" : ["1", "1", "0", "0", "1"],
       "N2_t" : ["0", "0", "0", "0", "0"],
       "N7_t" : ["1", "1", "1", "1", "1"]
-    },
-    "map" : {}
-  },
-  "Random_two_factors": {
-    "network": "./networks/example5.xml",
-    "iterations" : 5,
-    "evidences": {
-      "I_t" : ["1", "0", "1", "0", "1"],
-      "F_t" : ["0", "1", "0", "1", "0"],
-      "D_t" : ["0", "1", "0", "1", "0"]
-    },
-    "map" : {"C_t": ["C_0"], "E_t": ["E_0", "C_0"], "H_t": ["H_0"]}
-  },
-  "test_05": {
-    "network": "./networks/test5.xml",
-    "iterations" : 5,
-    "evidences": {
-      "Node4_t" : ["1", "0", "1", "0", "1"]
-    },
-    "map" : {"Node0_t": ["Node0_0"], "Node1_t": ["Node1_0"], "Node2_t": ["Node2_0"], "Node3_t": ["Node3_0"]}
+    }
   }
 }

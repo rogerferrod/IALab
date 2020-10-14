@@ -1,16 +1,13 @@
 package aimacode.dynamic;
 
 import aima.core.probability.RandomVariable;
-import aima.core.probability.bayes.BayesianNetwork;
 import aima.core.probability.proposition.AssignmentProposition;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
-import java.util.stream.Collectors;
 
-import aimacode.bnparser.BifReader;
 import org.json.*;
 
 public class DynamicBN {
@@ -24,18 +21,15 @@ public class DynamicBN {
         args[2] = "./input/DBNexperiments.json";
         //args[3] = "Umbrella_00";
         //args[3] = "UmbrellaWind_00";
-        //args[3] = "TwoFactors_00";
+        args[3] = "TwoFactors_00";
         //args[3] = "earthquake_00";
         //args[3] = "fivestates_00";
         //args[3] = "fivestates2_00";
-        args[3] = "tenstates_00";
-        //args[3] = "Random_two_factors";
-        //args[3] = "test_05";
+        //args[3] = "tenstates_00";
 
         String jsonData = new String(Files.readAllBytes(Paths.get(args[2])));
         JSONObject obj = new JSONObject(jsonData);
         JSONObject experiment = (JSONObject) obj.get(args[3]);
-        String network = experiment.getString("network");
         JSONObject evidencesInput = (JSONObject) experiment.get("evidences");
 
         int m = (int) experiment.get("iterations");
@@ -50,21 +44,8 @@ public class DynamicBN {
             }
         }
 
-        Map<String, List<String>> mapping = new HashMap<>();
-        JSONObject map = (JSONObject) experiment.get("map");
-        for (String key : map.keySet()) {
-            mapping.put(key, map.getJSONArray(key).toList().stream().map(Object::toString).collect(Collectors.toList()));
-        }
-
         NetworkFactory factory = new NetworkFactory();
         WrapDynamicBayesNet dbn = factory.getNetwork((String) experiment.get("network"));
-        /*if (mapping.size() != 0) {
-            BayesianNetwork bn = BifReader.readBIF(network);
-            Set<String> evNames = evidencesInput.keySet();
-            dbn = factory.getNetwork(bn, mapping, evNames);
-        } else {
-            dbn = factory.getNetwork((String) experiment.get("network"));
-        }*/
 
         ArrayList<String> evNames = new ArrayList<>(Arrays.asList(argsEvNames));
         Map<Integer, AssignmentProposition[]> evidencesOverTime = new LinkedHashMap<>(); //t : evidences(t)
