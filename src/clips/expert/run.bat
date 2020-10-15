@@ -1,6 +1,6 @@
 (load 0_Main.clp)
 (load 1_Env.clp)
-(load ../maps/fleet1.clp)
+(load ../maps/fleet0.clp)
 (load 2_Heat.clp)
 (load 3_Convolution.clp)
 (load 4_Deliberate.clp)

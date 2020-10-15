@@ -18,7 +18,39 @@
     "iterations" : 5,
     "evidences": {
       "E_t" : ["1", "0", "1", "0", "1"],
+      "F_t" : ["1", "1", "0", "0", "0"],
       "G_t" : ["0", "1", "0", "1", "0"]
+    }
+  },
+  "earthquake_00": {
+    "network": "earthquake",
+    "iterations" : 5,
+    "evidences": {
+      "D_t" : ["1", "0", "1", "0", "1"],
+      "E_t" : ["1", "1", "0", "0", "0"]
+    }
+  },
+  "fivestates_00": {
+    "network": "fivestates",
+    "iterations" : 5,
+    "evidences": {
+      "E_t" : ["1", "1", "0", "0", "0"]
+    }
+  },
+  "fivestates2_00": {
+    "network": "fivestates2",
+    "iterations" : 5,
+    "evidences": {
+      "E_t" : ["1", "1", "0", "0", "0"]
+    }
+  },
+  "tenstates_00": {
+    "network": "tenstates",
+    "iterations" : 5,
+    "evidences": {
+      "N1_t" : ["1", "1", "0", "0", "1"],
+      "N2_t" : ["0", "0", "0", "0", "0"],
+      "N7_t" : ["1", "1", "1", "1", "1"]
     }
   }
 }

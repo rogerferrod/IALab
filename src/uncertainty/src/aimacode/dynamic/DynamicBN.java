@@ -13,8 +13,8 @@ import org.json.*;
 public class DynamicBN {
     public static void main(String[] args) throws IOException {
         args = new String[4];
-        //args[0] = EliminationAskDynamic.TOPOLOGICAL;
-        args[0] = EliminationAskDynamic.MIN_DEGREE;
+        args[0] = EliminationAskDynamic.TOPOLOGICAL;
+        //args[0] = EliminationAskDynamic.MIN_DEGREE;
         //args[0] = EliminationAskDynamic.MIN_FILL;
 
         args[1] = "true";
@@ -22,6 +22,10 @@ public class DynamicBN {
         //args[3] = "Umbrella_00";
         //args[3] = "UmbrellaWind_00";
         args[3] = "TwoFactors_00";
+        //args[3] = "earthquake_00";
+        //args[3] = "fivestates_00";
+        //args[3] = "fivestates2_00";
+        //args[3] = "tenstates_00";
 
         String jsonData = new String(Files.readAllBytes(Paths.get(args[2])));
         JSONObject obj = new JSONObject(jsonData);
@@ -42,8 +46,8 @@ public class DynamicBN {
 
         NetworkFactory factory = new NetworkFactory();
         WrapDynamicBayesNet dbn = factory.getNetwork((String) experiment.get("network"));
-        ArrayList<String> evNames = new ArrayList<>(Arrays.asList(argsEvNames));
 
+        ArrayList<String> evNames = new ArrayList<>(Arrays.asList(argsEvNames));
         Map<Integer, AssignmentProposition[]> evidencesOverTime = new LinkedHashMap<>(); //t : evidences(t)
         RandomVariable[] query = Arrays.stream(dbn.getVariables())
                 .filter(x -> !evNames.contains(x.getName())).toArray(RandomVariable[]::new);

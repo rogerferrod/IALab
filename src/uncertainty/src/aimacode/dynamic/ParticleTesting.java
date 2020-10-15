@@ -22,7 +22,11 @@ public class ParticleTesting {
         args[1] = "./input/DBNexperiments.json";
         //args[2] = "Umbrella_00";
         //args[2] = "UmbrellaWind_00";
-        args[2] = "TwoFactors_00";
+        //args[2] = "TwoFactors_00";
+        //args[2] = "earthquake_00";
+        //args[2] = "fivestates_00";
+        args[2] = "fivestates2_00";
+        //args[2] = "tenstates_00";
 
         int iterations = Integer.parseInt(args[0]);
 

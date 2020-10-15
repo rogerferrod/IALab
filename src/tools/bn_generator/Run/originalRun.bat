@@ -1,0 +1,1 @@
+C:\j2sdk1.4.2_11\bin\java -classpath C:\j2sdk1.4.2_11\lib\*.jar;C:\jisoft\BNGenerator-0.4\Classes\;C:\jisoft\BNGenerator-0.4\Classes\colt.jar;C:\jisoft\BNGenerator-0.4\Classes\embayes.jar BNGenerator -nNodes 5 -maxInDegree 3 -nBNs 3 -format cif_interval -maxVal 4 -maxArcs 10 -fName cn5 -structure multi -testUnif no

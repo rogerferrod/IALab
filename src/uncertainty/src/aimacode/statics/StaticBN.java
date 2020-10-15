@@ -17,8 +17,8 @@ import java.util.stream.Collectors;
 public class StaticBN {
     public static void main(String[] args) throws IOException {
         args = new String[4];
-        //args[0] = EliminationAskStatic.TOPOLOGICAL;
-        args[0] = EliminationAskStatic.MIN_DEGREE;
+        args[0] = EliminationAskStatic.TOPOLOGICAL;
+        //args[0] = EliminationAskStatic.MIN_DEGREE;
         //args[0] = EliminationAskStatic.MIN_FILL;
 
         args[1] = "false";
@@ -31,10 +31,11 @@ public class StaticBN {
         //args[3] = "survey_00";
         //args[3] = "alarm_00";
         //args[3] = "insurance_00";
+        args[3] = "insurance_01";
         //args[3] = "win95pts_00";
         //args[3] = "link_00";
         //args[3] = "andes_00"; //TODO troppo grossa??
-        args[3] = "munin_full_00";
+        //args[3] = "munin_full_00";
 
         String jsonData = new String(Files.readAllBytes(Paths.get(args[2])));
         JSONObject obj = new JSONObject(jsonData);
