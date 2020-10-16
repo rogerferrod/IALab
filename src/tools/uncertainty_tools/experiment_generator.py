@@ -5,10 +5,11 @@ import json
 from pathlib import Path
 
 EXP = "E3"
-QTYPE = "simple"
+QTYPE = "conjunctive"
 N_RUNS = 10
 N_QUERY = 3
 N_EVIDENCES = 5
+network_file = "./networks/bif/pathfinder.bif"
 
 def generate_json_experiment(network, query, evidences):
     evidences_string = ",".join(["{}={}".format(va,state) for va,state in evidences])
@@ -22,7 +23,7 @@ def generate_json_experiment(network, query, evidences):
 
 if __name__ == "__main__":
     np.random.seed(1620)
-    network_file = ".networks/bif/pathfinder.bif"
+    
 
     reader = BIFReader(network_file)   
     nodes = reader.get_variables()
