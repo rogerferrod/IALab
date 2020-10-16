@@ -9,6 +9,11 @@
     "query": "Pregnancy,Progesterone",
     "evidences": "Blood=P,Urine=P"
   },
+  "cow_02": {
+    "network": "./networks/cow.xml",
+    "query": "Pregnancy,Progesterone",
+    "evidences": ""
+  },
   "earthquake_00": {
     "network": "./networks/earthquake.xml",
     "query": "JohnCalls",

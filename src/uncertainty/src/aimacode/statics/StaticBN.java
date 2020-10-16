@@ -26,12 +26,13 @@ public class StaticBN {
 
         //args[3] = "cow_00";
         //args[3] = "cow_01";
+        args[3] = "cow_02";
         //args[3] = "earthquake_00";
         //args[3] = "sachs_00";
         //args[3] = "survey_00";
         //args[3] = "alarm_00";
         //args[3] = "insurance_00";
-        args[3] = "insurance_01";
+        //args[3] = "insurance_01";
         //args[3] = "win95pts_00";
         //args[3] = "link_00";
         //args[3] = "andes_00"; //TODO troppo grossa??
@@ -50,7 +51,9 @@ public class StaticBN {
         List<String[]> assignements = new ArrayList<>();
         for (String assignement : evidencesInput) {
             String[] splits = assignement.split("=");
-            assignements.add(splits);
+            if (!splits[0].equals("")) {
+                assignements.add(splits);
+            }
         }
 
         HashMap<String, RandomVariable> vaNames = new HashMap<>();
