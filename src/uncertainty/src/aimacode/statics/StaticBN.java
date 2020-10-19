@@ -22,11 +22,12 @@ public class StaticBN {
         //args[0] = EliminationAskStatic.MIN_FILL;
 
         args[1] = "false";
-        args[2] = "./input/BNexperiments.json";
+        //args[2] = "./input/static/BNexperiments.json";
+        args[2] = "./input/static/E0_baseline.json";
 
-        //args[3] = "cow_00";
+        //args[3] = "asia_00";
         //args[3] = "cow_01";
-        args[3] = "cow_02";
+        //args[3] = "cow_02";
         //args[3] = "earthquake_00";
         //args[3] = "sachs_00";
         //args[3] = "survey_00";
@@ -37,6 +38,18 @@ public class StaticBN {
         //args[3] = "link_00";
         //args[3] = "andes_00"; //TODO troppo grossa??
         //args[3] = "munin_full_00";
+
+//        args[3] = "earthquake_00"; // OK
+//        args[3] = "asia_00"; // OK
+        args[3] = "sachs_00"; // OK
+//        args[3] = "mildew_00";
+//        args[3] = "win95pts_00"; // OK
+//        args[3] = "pathfinder_00";
+//        args[3] = "water_00";
+//        args[3] = "munin_full_00"; // OK
+//        args[3] = "pigs_00";
+//        args[3] = "andes_00"; //TODO troppo grossa??
+//        args[3] = "link_00";
 
         String jsonData = new String(Files.readAllBytes(Paths.get(args[2])));
         JSONObject obj = new JSONObject(jsonData);
@@ -62,6 +75,7 @@ public class StaticBN {
             vaNames.put(va.getName(), va);
         }
 
+        // Attention: It only work with the VA's first letter to uppercase!
         RandomVariable[] queryVariables = queryInput.stream().map(vaNames::get).toArray(RandomVariable[]::new);
         AssignmentProposition[] aps = assignements.stream()
                 .map(x -> new AssignmentProposition(vaNames.get(x[0]), x[1])).toArray(AssignmentProposition[]::new);

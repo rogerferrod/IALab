@@ -1,0 +1,57 @@
+{
+  "earthquake_00": {
+    "network": "./networks/earthquake.xml",
+    "query": "Burglary,Earthquake",
+    "evidences": "Alarm=True"
+  },
+  "asia_00": {
+    "network": "./networks/asia.xml",
+    "query": "Asia,Smoke",
+    "evidences": "Either=yes"
+  },
+  "sachs_00": {
+    "network": "./networks/sachs.xml",
+    "query": "PKC,Plcg",
+    "evidences": "Mek=LOW,PIP3=LOW"
+  },
+  "mildew_00": {
+    "network": "./networks/survey.xml",
+    "query": "S",
+    "evidences": "T=Car"
+  },
+  "win95pts_00": {
+    "network": "./networks/win95pts.xml",
+    "query": "PrtCbl",
+    "evidences": "TnrSpply=Low"
+  },
+  "pathfinder_00": {
+    "network": "./networks/alarm.xml",
+    "query": "MINVOLSET",
+    "evidences": "VENTTUBE=LOW"
+  },
+  "water_00": {
+    "network": "./networks/insurance.xml",
+    "query": "DrivQuality",
+    "evidences": "Accident=Mild"
+  },
+  "munin_full_00": {
+    "network": "./networks/munin_full.xml",
+    "query": "DIFFN_DISTR",
+    "evidences": "DIFFN_M_SEV_DIST=NO"
+  },
+  "pigs_00": {
+    "network": "./networks/insurance.xml",
+    "query": "Age",
+    "evidences": "PropCost=Million"
+  },
+  "andes_00": {
+    "network": "./networks/andes.xml",
+    "query": "GOAL_53",
+    "evidences": "GOAL_149=false"
+  },
+  "link_00": {
+    "network": "./networks/link.xml",
+    "query": "Z_2_a_f",
+    "evidences": "D0_10_d_p=A"
+  }
+}
