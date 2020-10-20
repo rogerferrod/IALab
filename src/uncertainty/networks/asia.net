@@ -1,67 +1,111 @@
-net 
-{ 
-}
-node asia 
+net
 {
-  states = ( "yes" "no" );
+	huginenginegenerator3061656038650325130L = "edu.ucla.belief.inference.JoinTreeSettings@12aa65a3";
 }
-node tub 
+
+node smoke
 {
-  states = ( "yes" "no" );
+	states = ("yes" "no" );
+	position = (0 0);
+	ismapvariable = "false";
+	diagnosistype = "AUXILIARY";
+	excludepolicy = "include whole CPT";
 }
-node smoke 
+node bronc
 {
-  states = ( "yes" "no" );
+	states = ("yes" "no" );
+	position = (300 0);
+	ismapvariable = "false";
+	diagnosistype = "AUXILIARY";
+	excludepolicy = "include whole CPT";
 }
-node lung 
+node lung
 {
-  states = ( "yes" "no" );
+	states = ("yes" "no" );
+	position = (450 0);
+	ismapvariable = "false";
+	diagnosistype = "AUXILIARY";
+	excludepolicy = "include whole CPT";
 }
-node bronc 
+node asia
 {
-  states = ( "yes" "no" );
+	states = ("yes" "no" );
+	position = (150 0);
+	ismapvariable = "false";
+	diagnosistype = "AUXILIARY";
+	excludepolicy = "include whole CPT";
 }
-node either 
+node tub
 {
-  states = ( "yes" "no" );
+	states = ("yes" "no" );
+	position = (600 0);
+	ismapvariable = "false";
+	diagnosistype = "AUXILIARY";
+	excludepolicy = "include whole CPT";
 }
-node xray 
+node xray
 {
-  states = ( "yes" "no" );
+	states = ("yes" "no" );
+	position = (0 -75);
+	ismapvariable = "false";
+	diagnosistype = "AUXILIARY";
+	excludepolicy = "include whole CPT";
 }
-node dysp 
+node dysp
 {
-  states = ( "yes" "no" );
+	states = ("yes" "no" );
+	position = (150 -75);
+	ismapvariable = "false";
+	diagnosistype = "AUXILIARY";
+	excludepolicy = "include whole CPT";
 }
-potential ( asia ) 
+node either
 {
-  data = ( 0.01 0.99 );
+	states = ("yes" "no" );
+	position = (750 0);
+	ismapvariable = "false";
+	diagnosistype = "AUXILIARY";
+	excludepolicy = "include whole CPT";
 }
-potential ( tub | asia ) 
+potential ( smoke | )
 {
-  data = ((0.05 0.95)(0.01 0.99)) ;
+	data = (	0.5	0.5	);
 }
-potential ( smoke ) 
+potential ( bronc | smoke )
 {
-  data = ( 0.5 0.5 );
+	data = ((	0.6	0.4	)
+		(	0.3	0.7	));
 }
-potential ( lung | smoke ) 
+potential ( lung | smoke )
 {
-  data = ((0.1 0.9)(0.01 0.99)) ;
+	data = ((	0.1	0.9	)
+		(	0.01	0.99	));
 }
-potential ( bronc | smoke ) 
+potential ( asia | )
 {
-  data = ((0.6 0.4)(0.3 0.7)) ;
+	data = (	0.01	0.99	);
 }
-potential ( either | lung tub ) 
+potential ( tub | asia )
 {
-  data = (((1.0 0.0)(1.0 0.0))((1.0 0.0)(0.0 1.0))) ;
+	data = ((	0.05	0.95	)
+		(	0.01	0.99	));
 }
-potential ( xray | either ) 
+potential ( xray | either )
 {
-  data = ((0.98 0.02)(0.05 0.95)) ;
+	data = ((	0.98	0.02	)
+		(	0.05	0.95	));
 }
-potential ( dysp | bronc either ) 
+potential ( dysp | bronc either )
 {
-  data = (((0.9 0.1)(0.8 0.2))((0.7 0.3)(0.1 0.9))) ;
+	data = (((	0.9	0.1	)
+		(	0.8	0.2	))
+		((	0.7	0.3	)
+		(	0.1	0.9	)));
+}
+potential ( either | lung tub )
+{
+	data = (((	1.0	0.0	)
+		(	1.0	0.0	))
+		((	1.0	0.0	)
+		(	0.0	1.0	)));
 }

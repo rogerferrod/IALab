@@ -1,0 +1,23 @@
+install.packages("devtools")
+devtools::install_github("robson-fernandes/bnviewer")
+
+library(bnlearn)
+library(bnviewer)
+
+# Load the BN from bif file
+nh <- read.bif("/Users/lorenzotabasso/Desktop/University/IALAB/Progetto/IALab/src/uncertainty/networks/bif/asia.bif")
+
+# Converting "network_handler" (a list of objects) to a "bn" object
+n <- bn.net(nh)
+
+# Pretty print the network
+bnviewer::viewer(n,
+       bayesianNetwork.width = "100%",
+       bayesianNetwork.height = "80vh",
+       bayesianNetwork.layout = "layout_with_sugiyama",
+       bayesianNetwork.title="Discrete Bayesian Network - Alarm",
+       bayesianNetwork.subtitle = "Monitoring of emergency care patients",
+       bayesianNetwork.footer = "Fig. 1 - Layout with Sugiyama"
+)
+
+
