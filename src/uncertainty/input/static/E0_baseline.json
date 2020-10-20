@@ -15,7 +15,7 @@
     "evidences": "Mek=LOW,PIP3=LOW"
   },
   "mildew_00": {
-    "network": "./networks/survey.xml",
+    "network": "./networks/mildew.xml",
     "query": "S",
     "evidences": "T=Car"
   },
@@ -30,7 +30,7 @@
     "evidences": "VENTTUBE=LOW"
   },
   "water_00": {
-    "network": "./networks/insurance.xml",
+    "network": "./networks/water.xml",
     "query": "DrivQuality",
     "evidences": "Accident=Mild"
   },
@@ -40,7 +40,7 @@
     "evidences": "DIFFN_M_SEV_DIST=NO"
   },
   "pigs_00": {
-    "network": "./networks/insurance.xml",
+    "network": "./networks/pigs.xml",
     "query": "Age",
     "evidences": "PropCost=Million"
   },
