@@ -5,12 +5,13 @@ library(bnlearn)
 library(bnviewer)
 
 # Load the BN from bif file
-nh <- read.bif("/Users/lorenzotabasso/Desktop/University/IALAB/Progetto/IALab/src/uncertainty/networks/bif/asia.bif")
+nh <- read.bif("/Users/lorenzotabasso/Desktop/University/IALAB/Progetto/IALab/src/uncertainty/networks/bif/munin.bif")
 
 # Converting "network_handler" (a list of objects) to a "bn" object
 n <- bn.net(nh)
 
 # Pretty print the network
+# TODO: change the descriptions and comment for each network
 bnviewer::viewer(n,
        bayesianNetwork.width = "100%",
        bayesianNetwork.height = "80vh",
