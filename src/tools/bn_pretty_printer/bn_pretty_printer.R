@@ -55,6 +55,19 @@ viewer(network,
        bayesianNetwork.title="Static Bayesian Network - Sachs",
 )
 
+# ALARM -----------------------------------------------------------------------
+network_handler <- read.bif("alarm.bif")
+cat("network in use:", n)
+
+network <- bn.net(network_handler)
+
+viewer(network,
+       bayesianNetwork.width = "100%",
+       bayesianNetwork.height = "500px",
+       bayesianNetwork.layout = "layout_with_sugiyama",
+       bayesianNetwork.title="Static Bayesian Network - Alarm",
+)
+
 # MILDEW ----------------------------------------------------------------------
 network_handler <- read.bif("mildew.bif")
 cat("network in use:", n)
@@ -79,6 +92,32 @@ viewer(network,
        bayesianNetwork.height = "500px",
        bayesianNetwork.layout = "layout_with_sugiyama",
        bayesianNetwork.title="Static Bayesian Network - Win95pts",
+)
+
+# INSURANCE -------------------------------------------------------------------
+network_handler <- read.bif("insurance.bif")
+cat("network in use:", n)
+
+network <- bn.net(network_handler)
+
+viewer(network,
+       bayesianNetwork.width = "100%",
+       bayesianNetwork.height = "500px",
+       bayesianNetwork.layout = "layout_with_sugiyama",
+       bayesianNetwork.title="Static Bayesian Network - Insurance",
+)
+
+# BARLEY ----------------------------------------------------------------------
+network_handler <- read.bif("barley.bif")
+cat("network in use:", n)
+
+network <- bn.net(network_handler)
+
+viewer(network,
+       bayesianNetwork.width = "100%",
+       bayesianNetwork.height = "500px",
+       bayesianNetwork.layout = "layout_with_sugiyama",
+       bayesianNetwork.title="Static Bayesian Network - Barley",
 )
 
 # WATER -----------------------------------------------------------------------

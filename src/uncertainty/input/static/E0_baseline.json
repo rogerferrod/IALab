@@ -7,12 +7,17 @@
   "asia_00": {
     "network": "./networks/asia.xml",
     "query": "Asia,Smoke",
-    "evidences": "Either=yes,Bronc=no"
+    "evidences": "Either=Yes,Bronc=No"
   },
   "sachs_00": {
     "network": "./networks/sachs.xml",
     "query": "PKC,Plcg",
     "evidences": "Mek=HIGH,PIP3=AVG"
+  },
+  "alarm_00": {
+    "network": "./networks/alarm.xml",
+    "query": "MINVOLSET,HYPOVOLEMIA,FIO2",
+    "evidences": "MINVOL=NORMAL,VENTALV=HIGH"
   },
   "mildew_00": {
     "network": "./networks/mildew.xml",
@@ -22,12 +27,22 @@
   "win95pts_00": {
     "network": "./networks/win95pts.xml",
     "query": "FllCrrptdBffr,NtwrkCnfg,PrtSpool",
-    "evidences": "Problem3=yes,NtSpd=Slow"
+    "evidences": "Problem3=No,NtSpd=Slow"
   },
   "pathfinder_00": {
     "network": "./networks/alarm.xml",
     "query": "MINVOLSET",
     "evidences": "VENTTUBE=LOW"
+  },
+  "barley_00": {
+    "network": "./networks/barley.xml",
+    "query": "pesticid,sort,partigerm",
+    "evidences": "ntilg=x_75,nprot=x_40"
+  },
+  "insurance_00": {
+    "network": "./networks/insurance.xml",
+    "query": "Mileage,Age",
+    "evidences": "RuggedAuto=Tank,Airbag=False"
   },
   "water_00": {
     "network": "./networks/water.xml",
@@ -37,19 +52,24 @@
   "munin_full_00": {
     "network": "./networks/munin_full.xml",
     "query": "R_LNLW_ADM_MUSIZE,L_DELT_VOL_ACT,L_OTHER_DELT_MALOSS",
-    "evidences": "R_DELT_SF_DENSITY=x_2SD,R_APB_MUSIZE=LARGE"
+    "evidences": "R_DELT_MUDENS=INCR,R_APB_MUSIZE=LARGE"
   },
   "pigs_00": {
     "network": "./networks/pigs.xml",
-    "query": "p630475686,p751106191,p197130888",
-    "evidences": "p197211690=1,p609133389=0"
+    "query": "P630475686,P630844188,P630390690",
+    "evidences": "P95084689=2,P82334391=0"
   },
   "andes_00": {
     "network": "./networks/andes.xml",
     "query": "SNode_16,DEFINE23,VECTOR73",
-    "evidences": "GOAL_87=false,RApp5=true"
+    "evidences": "GOAL_87=False,RApp5=False"
   },
   "link_00": {
+    "network": "./networks/link.xml",
+    "query": "Z_27_a_f,N60_a_f,Z_47_a_f",
+    "evidences": "N19_a_f=4,N24_a_f=2"
+  },
+  "test5_00": {
     "network": "./networks/link.xml",
     "query": "Z_27_a_f,N60_a_f,Z_47_a_f",
     "evidences": "N19_a_f=4,N24_a_f=2"

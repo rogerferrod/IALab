@@ -16,44 +16,30 @@ import java.util.stream.Collectors;
 
 public class StaticBN {
     public static void main(String[] args) throws IOException {
-        args = new String[4];
-        args[0] = EliminationAskStatic.TOPOLOGICAL;
-        //args[0] = EliminationAskStatic.MIN_DEGREE;
-        //args[0] = EliminationAskStatic.MIN_FILL;
+        args = new String[5];
+//        args[0] = EliminationAskStatic.TOPOLOGICAL;
+//        args[0] = EliminationAskStatic.MIN_DEGREE;
+        args[0] = EliminationAskStatic.MIN_FILL;
 
-        args[1] = "false";
-        //args[2] = "./input/static/BNexperiments.json";
-        args[2] = "./input/static/E0_baseline.json";
+        args[1] = "false"; // pruning
+        args[2] = "false"; // verbose
+        args[3] = "./input/static/E0_baseline.json"; // queries
 
-        //args[3] = "asia_00";
-        //args[3] = "cow_01";
-        //args[3] = "cow_02";
-        //args[3] = "earthquake_00";
-        //args[3] = "sachs_00";
-        //args[3] = "survey_00";
-        //args[3] = "alarm_00";
-        //args[3] = "insurance_00";
-        //args[3] = "insurance_01";
-        //args[3] = "win95pts_00";
-        //args[3] = "link_00";
-        //args[3] = "andes_00"; //TODO troppo grossa??
-        //args[3] = "munin_full_00";
+        // network
+//        args[4] = "earthquake_00";
+//        args[4] = "asia_00";
+//        args[4] = "sachs_00";
+//        args[4] = "alarm_00";
+//        args[4] = "win95pts_00"; // LOOP
+//        args[4] = "insurance_00";
+//        args[4] = "munin_full_00"; // LOOP
+//        args[4] = "pigs_00"; // Exception: Java Heap Space
+//        args[4] = "andes_00"; // LOOP
+        args[4] = "link_00"; // LOOP
 
-        args[3] = "earthquake_00";
-        args[3] = "asia_00";
-        args[3] = "sachs_00";
-//        args[3] = "mildew_00";       // Exception: ProbabilityTable of length 31 is not the correct size, should be 2560 in order to represent all possible combinations.
-        args[3] = "win95pts_00";
-//        args[3] = "pathfinder_00";   // NON usare
-//        args[3] = "water_00";        // Exception: ProbabilityTable of length 190 is not the correct size, should be 3072 in order to represent all possible combinations.
-//        args[3] = "munin_full_00";   // Exception: Row 1 of CPT does not sum to 1.0.
-//        args[3] = "pigs_00";         // Exception: The Random Variable for the Term must be specified.
-//        args[3] = "andes_00";        // troppo grossa
-//        args[3] = "link_00";         // troppo grossa
-
-        String jsonData = new String(Files.readAllBytes(Paths.get(args[2])));
+        String jsonData = new String(Files.readAllBytes(Paths.get(args[3])));
         JSONObject obj = new JSONObject(jsonData);
-        JSONObject experiment = (JSONObject) obj.get(args[3]);
+        JSONObject experiment = (JSONObject) obj.get(args[4]);
 
         String network = experiment.getString("network");
         String query = experiment.getString("query");
@@ -80,14 +66,16 @@ public class StaticBN {
         AssignmentProposition[] aps = assignements.stream()
                 .map(x -> new AssignmentProposition(vaNames.get(x[0]), x[1])).toArray(AssignmentProposition[]::new);
 
-        NetworkPruning pruning = new NetworkPruning(bn, queryVariables, aps);
-        pruning.updateNetwork(pruning.theorem1(), false, false);
-        pruning.updateNetwork(pruning.theorem2(), true, false);
-        pruning.updateNetwork(pruning.pruningEdges(), false, true);
+        if (Boolean.parseBoolean(args[1])){
+//            NetworkPruning pruning = new NetworkPruning(bn, queryVariables, aps);
+//            pruning.updateNetwork(pruning.theorem1(), false, false);
+//            pruning.updateNetwork(pruning.theorem2(), true, false);
+//            pruning.updateNetwork(pruning.pruningEdges(), false, true);
+//
+//            bn = pruning.getNetwork();
+        }
 
-        bn = pruning.getNetwork();
-
-        BayesInference inference = new EliminationAskStatic(args[0], Boolean.parseBoolean(args[1]));
+        BayesInference inference = new EliminationAskStatic(args[0], Boolean.parseBoolean(args[2]));
 
         long start = System.currentTimeMillis();
         CategoricalDistribution distribution = inference.ask(queryVariables, aps, bn);
