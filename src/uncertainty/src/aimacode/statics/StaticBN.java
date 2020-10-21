@@ -39,17 +39,17 @@ public class StaticBN {
         //args[3] = "andes_00"; //TODO troppo grossa??
         //args[3] = "munin_full_00";
 
-//        args[3] = "earthquake_00"; // OK
+        args[3] = "earthquake_00";
         args[3] = "asia_00";
-//        args[3] = "sachs_00";
-//        args[3] = "mildew_00";
-//        args[3] = "win95pts_00";
-//        args[3] = "pathfinder_00";
-//        args[3] = "water_00";
-//        args[3] = "munin_full_00";
-//        args[3] = "pigs_00";
-//        args[3] = "andes_00"; //TODO troppo grossa??
-//        args[3] = "link_00";
+        args[3] = "sachs_00";
+//        args[3] = "mildew_00";       // Exception: ProbabilityTable of length 31 is not the correct size, should be 2560 in order to represent all possible combinations.
+        args[3] = "win95pts_00";
+//        args[3] = "pathfinder_00";   // NON usare
+//        args[3] = "water_00";        // Exception: ProbabilityTable of length 190 is not the correct size, should be 3072 in order to represent all possible combinations.
+//        args[3] = "munin_full_00";   // Exception: Row 1 of CPT does not sum to 1.0.
+//        args[3] = "pigs_00";         // Exception: The Random Variable for the Term must be specified.
+//        args[3] = "andes_00";        // troppo grossa
+//        args[3] = "link_00";         // troppo grossa
 
         String jsonData = new String(Files.readAllBytes(Paths.get(args[2])));
         JSONObject obj = new JSONObject(jsonData);

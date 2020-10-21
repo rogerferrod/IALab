@@ -7,22 +7,22 @@
   "asia_00": {
     "network": "./networks/asia.xml",
     "query": "Asia,Smoke",
-    "evidences": "Either=yes"
+    "evidences": "Either=yes,Bronc=no"
   },
   "sachs_00": {
     "network": "./networks/sachs.xml",
     "query": "PKC,Plcg",
-    "evidences": "Mek=LOW,PIP3=LOW"
+    "evidences": "Mek=HIGH,PIP3=AVG"
   },
   "mildew_00": {
     "network": "./networks/mildew.xml",
-    "query": "S",
-    "evidences": "T=Car"
+    "query": "straaling_1,meldug_1,middel_1",
+    "evidences": "dm_3=0_04_kg_m2,mikro_3=T_rt_og_koldt"
   },
   "win95pts_00": {
     "network": "./networks/win95pts.xml",
-    "query": "PrtCbl",
-    "evidences": "TnrSpply=Low"
+    "query": "FllCrrptdBffr,NtwrkCnfg,PrtSpool",
+    "evidences": "Problem3=yes,NtSpd=Slow"
   },
   "pathfinder_00": {
     "network": "./networks/alarm.xml",
@@ -31,27 +31,27 @@
   },
   "water_00": {
     "network": "./networks/water.xml",
-    "query": "DrivQuality",
-    "evidences": "Accident=Mild"
+    "query": "CKNI_12_00,C_NI_12_00,CBODD_12_00",
+    "evidences": "CKNN_12_15=2_MG_L,CNOD_12_30=4_MG_L"
   },
   "munin_full_00": {
     "network": "./networks/munin_full.xml",
-    "query": "DIFFN_DISTR",
-    "evidences": "DIFFN_M_SEV_DIST=NO"
+    "query": "R_LNLW_ADM_MUSIZE,L_DELT_VOL_ACT,L_OTHER_DELT_MALOSS",
+    "evidences": "R_DELT_SF_DENSITY=x_2SD,R_APB_MUSIZE=LARGE"
   },
   "pigs_00": {
     "network": "./networks/pigs.xml",
-    "query": "Age",
-    "evidences": "PropCost=Million"
+    "query": "p630475686,p751106191,p197130888",
+    "evidences": "p197211690=1,p609133389=0"
   },
   "andes_00": {
     "network": "./networks/andes.xml",
-    "query": "GOAL_53",
-    "evidences": "GOAL_149=false"
+    "query": "SNode_16,DEFINE23,VECTOR73",
+    "evidences": "GOAL_87=false,RApp5=true"
   },
   "link_00": {
     "network": "./networks/link.xml",
-    "query": "Z_2_a_f",
-    "evidences": "D0_10_d_p=A"
+    "query": "Z_27_a_f,N60_a_f,Z_47_a_f",
+    "evidences": "N19_a_f=4,N24_a_f=2"
   }
 }
