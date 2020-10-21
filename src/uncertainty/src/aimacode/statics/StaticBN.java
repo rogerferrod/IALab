@@ -40,14 +40,14 @@ public class StaticBN {
         //args[3] = "munin_full_00";
 
 //        args[3] = "earthquake_00"; // OK
-//        args[3] = "asia_00"; // OK
-//        args[3] = "sachs_00"; // OK
+        args[3] = "asia_00";
+//        args[3] = "sachs_00";
 //        args[3] = "mildew_00";
-//        args[3] = "win95pts_00"; // OK
+//        args[3] = "win95pts_00";
 //        args[3] = "pathfinder_00";
 //        args[3] = "water_00";
-//        args[3] = "munin_full_00"; // OK
-        args[3] = "pigs_00";
+//        args[3] = "munin_full_00";
+//        args[3] = "pigs_00";
 //        args[3] = "andes_00"; //TODO troppo grossa??
 //        args[3] = "link_00";
 

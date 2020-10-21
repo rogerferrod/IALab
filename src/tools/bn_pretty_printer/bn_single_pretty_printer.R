@@ -5,7 +5,7 @@ library(bnlearn)
 library(bnviewer)
 
 # Load the BN from bif file
-nh <- read.bif("/Users/lorenzotabasso/Desktop/University/IALAB/Progetto/IALab/src/uncertainty/networks/bif/munin.bif")
+nh <- read.bif("/Users/lorenzotabasso/Desktop/University/IALAB/Progetto/IALab/src/uncertainty/networks/bif/earthquake.bif")
 
 # Converting "network_handler" (a list of objects) to a "bn" object
 n <- bn.net(nh)
@@ -18,7 +18,12 @@ bnviewer::viewer(n,
        bayesianNetwork.layout = "layout_with_sugiyama",
        bayesianNetwork.title="Discrete Bayesian Network - Alarm",
        bayesianNetwork.subtitle = "Monitoring of emergency care patients",
-       bayesianNetwork.footer = "Fig. 1 - Layout with Sugiyama"
+       bayesianNetwork.footer = "Fig. 1 - Layout with Sugiyama",
+       
+       node.colors = list(background = "#f4bafd",
+                          border = "#2b7ce9",
+                          highlight = list(background = "#97c2fc",
+                                           border = "#2b7ce9"))
 )
 
 
