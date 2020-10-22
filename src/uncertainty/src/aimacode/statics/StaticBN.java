@@ -20,19 +20,19 @@ public class StaticBN {
         args = new String[2];
 
         // Experiments configuration
-        args[0] = "./input/static/E1_ordering.json"; // queries
+        args[0] = "./input/static/E2_ordering_pruning.json"; // queries
 
         // Chosen network
-        args[1] = "earthquake_00";
-//        args[1] = "asia_00";
-//        args[1] = "sachs_00";
-//        args[1] = "alarm_00";
-//        args[1] = "win95pts_00"; // LOOP
-//        args[1] = "insurance_00";
-//        args[1] = "munin_full_00"; // LOOP
-//        args[1] = "pigs_00"; // Exception: Java Heap Space
-//        args[1] = "andes_00"; // LOOP
-//        args[1] = "link_00"; // LOOP
+//        args[1] = "earthquake";
+//        args[1] = "asia";
+        args[1] = "sachs";
+//        args[1] = "alarm";
+//        args[1] = "win95pts";
+//        args[1] = "insurance";
+//        args[1] = "munin_full";
+//        args[1] = "pigs";
+//        args[1] = "andes";
+//        args[1] = "link";
 
         // Reading the experiment's JSON
         String jsonData = new String(Files.readAllBytes(Paths.get(args[0])));
@@ -54,9 +54,12 @@ public class StaticBN {
                 break;
         }
 
-        System.out.println(configOrder);
+        System.out.println("Actual configuration:\n- Ordering: " + configOrder);
 
-        boolean configPruning = config.getBoolean("pruning");
+        boolean configPruningTh1 = config.getBoolean("pruning_th1");
+        boolean configPruningTh2 = config.getBoolean("pruning_th2");
+        boolean configPruningPruningEdges = config.getBoolean("pruning_pruningEdges");
+
         boolean configVerbose = config.getBoolean("verbose");
 
         JSONObject queries = (JSONObject) obj.get("queries");
@@ -87,13 +90,24 @@ public class StaticBN {
         AssignmentProposition[] aps = assignments.stream()
                 .map(x -> new AssignmentProposition(vaNames.get(x[0]), x[1])).toArray(AssignmentProposition[]::new);
 
-        if (configPruning) {
+        // Pruning - DON'T change the parameters!!
+        if (configPruningTh1 || configPruningTh2 || configPruningPruningEdges) {
+            System.out.println("- Pruning:");
             NetworkPruning pruning = new NetworkPruning(bn, queryVariables, aps);
-            pruning.updateNetwork(pruning.theorem1(), false, false);
-            pruning.updateNetwork(pruning.theorem2(), true, false);
-            pruning.updateNetwork(pruning.pruningEdges(), false, true);
-
+            if (configPruningTh1){
+                System.out.println("\t- Theorem 1");
+                pruning.updateNetwork(pruning.theorem1(), false, false);
+            }
+            if (configPruningTh2) {
+                System.out.println("\t- Theorem 2");
+                pruning.updateNetwork(pruning.theorem2(), true, false);
+            }
+            if (configPruningPruningEdges) {
+                System.out.println("\t- PruningEdges()");
+                pruning.updateNetwork(pruning.pruningEdges(), false, true);
+            }
             bn = pruning.getNetwork();
+            System.out.println(); // just for prettier output
         }
 
         BayesInference inference = new EliminationAskStatic(configOrder, configVerbose);

@@ -1,9 +1,9 @@
 {
   "config": {
-    "order": "TOPOLOGICAL",
-    "pruning_th1": false,
-    "pruning_th2": false,
-    "pruning_pruningEdges": false,
+    "order": "MIN_DEGREE",
+    "pruning_th1": true,
+    "pruning_th2": true,
+    "pruning_pruningEdges": true,
     "verbose": false
   },
   "queries": {
