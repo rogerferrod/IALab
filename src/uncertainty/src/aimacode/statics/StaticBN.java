@@ -23,9 +23,9 @@ public class StaticBN {
         args[0] = "./input/static/E2_ordering_pruning.json"; // queries
 
         // Chosen network
-//        args[1] = "earthquake";
+        args[1] = "earthquake";
 //        args[1] = "asia";
-        args[1] = "sachs";
+//        args[1] = "sachs";
 //        args[1] = "alarm";
 //        args[1] = "win95pts";
 //        args[1] = "insurance";
@@ -54,7 +54,9 @@ public class StaticBN {
                 break;
         }
 
-        System.out.println("Actual configuration:\n- Ordering: " + configOrder);
+        System.out.println("Actual configuration:");
+        System.out.println("- Network: " + args[1]);
+        System.out.println("- Ordering: " + configOrder);
 
         boolean configPruningTh1 = config.getBoolean("pruning_th1");
         boolean configPruningTh2 = config.getBoolean("pruning_th2");
