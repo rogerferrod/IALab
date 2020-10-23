@@ -85,7 +85,7 @@ public class NetworkPruning {
                             String evidenceVal = (String) evidence.getValue();
                             cpt = new double[values.length];
                             for (int i = 0; i < values.length; i++) {
-                                cpt[i] = values[i].equals(evidenceVal) ? 1.0 : 0.0;
+                                cpt[i] = values[i].trim().equals(evidenceVal) ? 1.0 : 0.0;
                             }
                         }
                     }
