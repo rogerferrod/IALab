@@ -23,11 +23,11 @@ public class StaticBN {
         args[0] = "./input/static/E2_ordering_pruning.json"; // queries
 
         // Chosen network
-        args[1] = "earthquake";
+//        args[1] = "earthquake";
 //        args[1] = "asia";
 //        args[1] = "sachs";
 //        args[1] = "alarm";
-//        args[1] = "win95pts";
+        args[1] = "win95pts";
 //        args[1] = "insurance";
 //        args[1] = "munin_full";
 //        args[1] = "pigs";
