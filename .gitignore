@@ -81,4 +81,4 @@ src/uncertainty/*.iml
 .Rhistory
 
 # JARs ----------------------------------------------------------------------
-# src/uncertanty/out/
+src/uncertanty/out/static/*.txt
