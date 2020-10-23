@@ -18,7 +18,7 @@ public class DynamicBN {
         //args[0] = EliminationAskDynamic.MIN_FILL;
 
         args[1] = "true";
-        args[2] = "./input/DBNexperiments.json";
+        args[2] = "./input/dynamic/DBNexperiments.json";
         //args[3] = "Umbrella_00";
         //args[3] = "UmbrellaWind_00";
         args[3] = "TwoFactors_00";
@@ -66,9 +66,13 @@ public class DynamicBN {
             }
         }
 
+        long start = System.currentTimeMillis();
         RollupFiltering filtering = new RollupFiltering(dbn, query, evidencesOverTime, args[0], Boolean.parseBoolean(args[1]));
+        long finish = System.currentTimeMillis();
+        long timeElapsed = finish - start;
         System.out.println(filtering);
 
         System.out.println("\nFinal distribution " + filtering.rollup() + "\n");
+        System.out.println("Time elapsed " + timeElapsed + " milliseconds");
     }
 }
