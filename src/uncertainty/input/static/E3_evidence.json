@@ -1,52 +1,52 @@
 {
     "E3_evidence_run#1": {
-        "network": "../../networks/insurance.xml",
-        "query": "MedCost",
-        "evidences": "SocioEcon=Prole,DrivHist=One,ThisCarDam=Severe,SeniorTrain=False,AntiTheft=False"
+        "network": "../../networks/test100.xml",
+        "query": "Node86",
+        "evidences": "Node28=State1,Node28=State1,Node59=State1,Node98=State1,Node90=State0"
     },
     "E3_evidence_run#2": {
-        "network": "../../networks/insurance.xml",
-        "query": "OtherCar",
-        "evidences": "Airbag=True,Theft=False,VehicleYear=Older,DrivHist=Many,VehicleYear=Current"
+        "network": "../../networks/test100.xml",
+        "query": "Node91",
+        "evidences": "Node30=State1,Node69=State1,Node45=State0,Node50=State0,Node24=State0"
     },
     "E3_evidence_run#3": {
-        "network": "../../networks/insurance.xml",
-        "query": "Accident",
-        "evidences": "OtherCarCost=HundredThou,Airbag=False,DrivingSkill=Expert,DrivHist=Zero,SeniorTrain=True"
+        "network": "../../networks/test100.xml",
+        "query": "Node26",
+        "evidences": "Node68=State1,Node63=State0,Node84=State0,Node44=State0,Node26=State1"
     },
     "E3_evidence_run#4": {
-        "network": "../../networks/insurance.xml",
-        "query": "DrivingSkill",
-        "evidences": "Antilock=False,Age=Adolescent,Antilock=True,HomeBase=Rural,DrivHist=Zero"
+        "network": "../../networks/test100.xml",
+        "query": "Node45",
+        "evidences": "Node44=State0,Node11=State0,Node65=State1,Node75=State1,Node49=State1"
     },
     "E3_evidence_run#5": {
-        "network": "../../networks/insurance.xml",
-        "query": "GoodStudent",
-        "evidences": "MakeModel=SuperLuxury,MedCost=Thousand,MakeModel=Economy,VehicleYear=Current,OtherCar=False"
+        "network": "../../networks/test100.xml",
+        "query": "Node96",
+        "evidences": "Node8=State0,Node22=State0,Node72=State0,Node21=State1,Node49=State0"
     },
     "E3_evidence_run#6": {
-        "network": "../../networks/insurance.xml",
-        "query": "HomeBase",
-        "evidences": "OtherCar=True,RiskAversion=Adventurous,Age=Adolescent,GoodStudent=True,ILiCost=TenThou"
+        "network": "../../networks/test100.xml",
+        "query": "Node85",
+        "evidences": "Node3=State1,Node33=State0,Node96=State1,Node49=State0,Node90=State0"
     },
     "E3_evidence_run#7": {
-        "network": "../../networks/insurance.xml",
-        "query": "HomeBase",
-        "evidences": "DrivHist=Zero,RuggedAuto=Tank,CarValue=TwentyThou,MedCost=Million,Accident=Moderate"
+        "network": "../../networks/test100.xml",
+        "query": "Node38",
+        "evidences": "Node54=State1,Node39=State0,Node21=State1,Node21=State0,Node24=State0"
     },
     "E3_evidence_run#8": {
-        "network": "../../networks/insurance.xml",
-        "query": "OtherCar",
-        "evidences": "OtherCar=False,Airbag=False,HomeBase=Rural,OtherCarCost=Thousand,DrivQuality=Normal"
+        "network": "../../networks/test100.xml",
+        "query": "Node91",
+        "evidences": "Node49=State1,Node52=State0,Node9=State1,Node92=State1,Node36=State1"
     },
     "E3_evidence_run#9": {
-        "network": "../../networks/insurance.xml",
-        "query": "VehicleYear",
-        "evidences": "Mileage=Domino,DrivQuality=Normal,DrivingSkill=Expert,CarValue=TwentyThou,ThisCarDam=Severe"
+        "network": "../../networks/test100.xml",
+        "query": "Node76",
+        "evidences": "Node16=State0,Node69=State1,Node11=State1,Node95=State1,Node81=State0"
     },
     "E3_evidence_run#10": {
-        "network": "../../networks/insurance.xml",
-        "query": "Antilock",
-        "evidences": "Accident=Mild,HomeBase=City,OtherCar=False,AntiTheft=False,RiskAversion=Cautious"
+        "network": "../../networks/test100.xml",
+        "query": "Node53",
+        "evidences": "Node99=State0,Node31=State1,Node87=State1,Node63=State1,Node27=State1"
     }
 }
