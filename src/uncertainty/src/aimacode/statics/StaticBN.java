@@ -34,7 +34,7 @@ public class StaticBN {
         for (String assignement : evidencesInput) {
             String[] splits = assignement.split("=");
             if (!splits[0].equals("")) {
-                assignments.add(splits);
+                assignements.add(splits);
             }
         }
 
