@@ -82,3 +82,9 @@ src/uncertainty/*.iml
 
 # JARs ----------------------------------------------------------------------
 src/uncertainty/out/static/*.txt
+
+# VSCode --------------------------------------------------------------------
+src/uncertainty/.classpath
+src/uncertainty/.project
+.settings
+.vscode
