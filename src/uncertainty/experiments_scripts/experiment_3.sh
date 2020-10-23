@@ -7,6 +7,8 @@ VERBOSE="false"
 NETWORK="insurance"
 PRUNING="true true true"
 
+RUN=10
+
 cd ../out/static/
 for query in $QTYPES # loop trough scenario
 do 
@@ -14,16 +16,19 @@ do
     OUTFILE=${EXPERIMENT}_${query}_out.txt
     echo "last execution " $(date) >> $OUTFILE
     echo "processing..."
-
-    echo  "Network:"$NETWORK "Order:"$ORDERING "Pruning:"$PRUNING # to stdout
-    
-    echo __________________________________________________________________>> $OUTFILE
-    echo  "Network:"$NETWORK "Order:"$ORDERING "Pruning:"$PRUNING >> $OUTFILE
-    echo >> $OUTFILE
-    java -Xms$MEM -jar static.jar $ORDERING $VERBOSE $JSON $NETWORK $PRUNING >> $OUTFILE # execute
-    
-    echo __________________________________________________________________>> $OUTFILE
-    echo >> $OUTFILE
-    echo >> $OUTFILE
-
+    for run in $(seq 1 $RUN)
+    do
+        echo  "Query:"$query "Network:"$NETWORK "Order:"$ORDERING "Pruning:"$PRUNING "Run:"$run # to stdout
+        
+        echo __________________________________________________________________>> $OUTFILE
+        echo  "Network:"$NETWORK "Order:"$ORDERING "Pruning:"$PRUNING "Run:"$run>> $OUTFILE
+        echo >> $OUTFILE
+        EXP="${EXPERIMENT}_${query}_run#${run}"
+        echo $EXP
+        java -Xms$MEM -jar static.jar $ORDERING $VERBOSE $JSON $EXP $PRUNING >> $OUTFILE # execute
+        
+        echo __________________________________________________________________>> $OUTFILE
+        echo >> $OUTFILE
+        echo >> $OUTFILE
+    done
 done
