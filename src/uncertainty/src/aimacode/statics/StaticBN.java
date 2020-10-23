@@ -17,59 +17,37 @@ import java.util.stream.Collectors;
 public class StaticBN {
 
     public static void main(String[] args) throws IOException {
-        //args = new String[2];
-
-        // Experiments configuration
-        //args[0] = "./input/static/E2_ordering_pruning.json"; // queries
-
-        // Chosen network
-        // args[1] = "earthquake";
-        // args[1] = "asia";
-        // args[1] = "sachs";
-        // args[1] = "alarm";
-        // args[1] = "win95pts";
-        // args[1] = "insurance";
-        // args[1] = "munin_full";
-        // args[1] = "pigs";
-        // args[1] = "andes";
-        // args[1] = "link";
-
         // Reading the experiment's JSON
-        String jsonData = new String(Files.readAllBytes(Paths.get(args[0])));
+        String jsonData = new String(Files.readAllBytes(Paths.get(args[2])));
         JSONObject obj = new JSONObject(jsonData);
-
-        // Reading the experiment configuration
-        JSONObject config = (JSONObject) obj.get("config");
+        JSONObject experiment = (JSONObject) obj.get(args[3]);
 
         String configOrder = "";
-        switch (config.getString("order")) {
-            case "TOPOLOGICAL":
+        switch (args[0]) {
+            case "topological":
                 configOrder = EliminationAskStatic.TOPOLOGICAL;
                 break;
-            case "MIN_DEGREE":
+            case "mindegree":
                 configOrder = EliminationAskStatic.MIN_DEGREE;
                 break;
-            case "MIN_FILL":
+            case "minfill":
                 configOrder = EliminationAskStatic.MIN_FILL;
                 break;
         }
 
+        boolean configVerbose = Boolean.parseBoolean(args[1]);
+
         System.out.println("Actual configuration:");
-        System.out.println("- Network: " + args[1]);
+        System.out.println("- Network: " + args[2]);
         System.out.println("- Ordering: " + configOrder);
 
-        boolean configPruningTh1 = config.getBoolean("pruning_th1");
-        boolean configPruningTh2 = config.getBoolean("pruning_th2");
-        boolean configPruningPruningEdges = config.getBoolean("pruning_pruningEdges");
+        boolean configPruningTh1 = Boolean.parseBoolean(args[4]);
+        boolean configPruningTh2 = Boolean.parseBoolean(args[5]);
+        boolean configPruningPruningEdges = Boolean.parseBoolean(args[6]);
 
-        boolean configVerbose = config.getBoolean("verbose");
-
-        JSONObject queries = (JSONObject) obj.get("queries");
-        JSONObject chosenQuery = (JSONObject) queries.get(args[1]);
-
-        String network = chosenQuery.getString("network");
-        String query = chosenQuery.getString("query");
-        String evidences = chosenQuery.getString("evidences");
+        String network = experiment.getString("network");
+        String query = experiment.getString("query");
+        String evidences = experiment.getString("evidences");
 
         List<String> queryInput = Arrays.stream(query.split(",")).collect(Collectors.toList());
         List<String> evidencesInput = Arrays.stream(evidences.split(",")).collect(Collectors.toList());
