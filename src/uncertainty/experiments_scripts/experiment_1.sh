@@ -5,14 +5,14 @@ MEM="8G"
 cd ../out/static/
 ORDERINGS=("mindegree" "minfill")
 VERBOSE="false"
-JSON="../../input/static/E2_ordering_pruning.json"
+JSON="../../input/static/Avg_queries.json"
 NETWORKS="earthquake asia sachs alarm win95pts insurance munin_full pigs link andes"
 PRUNING="false false false"
 
 echo "last execution " $(date) >>$OUTFILE
 for network in $NETWORKS; do # loop trough networks
   echo "processing..."
-  for i in 0 1 2; do # loop trough orderings
+  for i in 0 1; do # loop trough orderings
     echo "Network:"$network "Order:"${ORDERINGS[i]} "Pruning:"$PRUNING # to stdout
 
     echo __________________________________________________________________ >>$OUTFILE

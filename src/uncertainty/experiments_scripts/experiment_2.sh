@@ -5,7 +5,7 @@ MEM="8G"
 cd ../out/static/
 ORDERING="topological"
 VERBOSE="false"
-JSON="../../input/static/E1_ordering.json"
+JSON="../../input/static/Avg_queries.json"
 NETWORKS="earthquake asia sachs alarm win95pts insurance munin_full pigs link andes"
 PRUNINGS=("true false false"
   "false true false"
