@@ -87,8 +87,8 @@ public class StaticBN {
                 pruning.updateNetwork(pruning.pruningEdges(), false, true);
             }
             bn = pruning.getNetwork();
-            System.out.println(); // just for prettier output
         }
+        System.out.println(); // just for prettier output
 
         BayesInference inference = new EliminationAskStatic(configOrder, configVerbose);
 
