@@ -1,11 +1,11 @@
 EXPERIMENT="E3"
 QTYPES="evidence conjunctive simple"
-MEM="8G" # assigning 10 GB of memory
+MEM="8G"
 
 ORDERING="minfill"
 VERBOSE="false"
 NETWORK="test100"
-PRUNING="false true false"
+PRUNING="true true true"
 
 RUN=10
 
