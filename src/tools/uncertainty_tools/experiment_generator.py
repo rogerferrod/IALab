@@ -6,37 +6,37 @@ from pathlib import Path
 
 """
 Experiment 3-simple setup:
-
 EXP = "E3"
 QTYPE = "simple"
 N_RUNS = 10
 N_QUERY = 1
 N_EVIDENCES = 0
-network_file = "./networks/insurance.xml"
+network_file = "./networks/insurance.bif"
 
 Experiment 3-evidence setup:
-
 EXP = "E3"
-QTYPE = "conjunctive"
+QTYPE = "evidence"
 N_RUNS = 10
 N_QUERY = 1
 N_EVIDENCES = 5
-network_file = "./networks/insurance.xml"
+network_file = "./networks/insurance.bif"
 Experiment 3-conjunctive setup:
+
+
+Experiment 3-conjunctive setup:
+EXP = "E3"
+QTYPE = "conjunctive"
+N_RUNS = 10
+N_QUERY = 3
+N_EVIDENCES = 5
+network_file = "./networks/insurance.bif"
+"""
 
 EXP = "E3"
 QTYPE = "conjunctive"
 N_RUNS = 10
 N_QUERY = 3
 N_EVIDENCES = 5
-network_file = "./networks/insurance.xml"
-"""
-
-EXP = "E3"
-QTYPE = "simple"
-N_RUNS = 10
-N_QUERY = 1
-N_EVIDENCES = 0
 network_file = "./networks/insurance.bif"
 
 def generate_json_experiment(network, query, evidences):
