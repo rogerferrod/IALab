@@ -4,7 +4,6 @@ import aima.core.probability.RandomVariable;
 import aima.core.probability.bayes.*;
 import aima.core.probability.bayes.impl.BayesNet;
 import aima.core.probability.proposition.AssignmentProposition;
-import aima.core.probability.util.ProbUtil;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -40,7 +39,7 @@ public class NetworkPruning {
      * @param removeEdges true se l'operazione richiede la rimozione degli archi (pruning edges)
      */
     public void updateNetwork(List<RandomVariable> variables, boolean modifyCPT, boolean removeEdges) {
-        if (variables.size() == bn.getVariablesInTopologicalOrder().size()) {
+        if (!removeEdges && variables.size() == bn.getVariablesInTopologicalOrder().size()) {
             return;
         }
 
@@ -69,12 +68,9 @@ public class NetworkPruning {
                     }
                 }
 
-                RandomVariable[] parentVars = newParents.stream()
-                        .map(Node::getRandomVariable).toArray(RandomVariable[]::new);
-
                 if (modifyCPT) {
                     // se ho eliminato dei nodi padri, allora modifico la CPT del figlio
-                    if (cpt.length != ProbUtil.expectedSizeOfProbabilityTable(parentVars)) {
+                    if (originalParents.size() != newParents.size()) {
                         if (evidenceVariablesList.contains(var)) {
                             AssignmentProposition evidence = null;
                             for (AssignmentProposition ap : evidences) {
@@ -95,6 +91,7 @@ public class NetworkPruning {
                     }
                 }
                 if (removeEdges) {
+                    newParents = newParents.stream().filter(x -> !evidenceVariablesList.contains(x.getRandomVariable())).collect(Collectors.toList());
                     Set<RandomVariable> originalParentVars = originalParents.stream()
                             .map(Node::getRandomVariable).collect(Collectors.toSet());
 
@@ -145,7 +142,7 @@ public class NetworkPruning {
         List<RandomVariable> nodes = bn.getVariablesInTopologicalOrder();
         return nodes.stream()
                 .filter(x -> ancestors.contains(x) || queryVariablesList.contains(x) || evidenceVariablesList.contains(x))
-                .collect(Collectors.toList()); //TODO sicuro di mantenere query?
+                .collect(Collectors.toList());
     }
 
     /**
@@ -184,8 +181,7 @@ public class NetworkPruning {
      * @return lista di nodi rilevandi (i.e. da mantenere)
      */
     public List<RandomVariable> pruningEdges() {
-        return bn.getVariablesInTopologicalOrder().stream()
-                .filter(x -> !evidenceVariablesList.contains(x)).collect(Collectors.toList());
+        return bn.getVariablesInTopologicalOrder();
     }
 
     private Set<RandomVariable> getAncestors(RandomVariable var) {
