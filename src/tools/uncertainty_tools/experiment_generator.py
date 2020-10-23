@@ -11,7 +11,7 @@ QTYPE = "simple"
 N_RUNS = 10
 N_QUERY = 1
 N_EVIDENCES = 0
-network_file = "./networks/insurance.bif"
+network_file = "../../networks/insurance.bif"
 
 Experiment 3-evidence setup:
 EXP = "E3"
@@ -19,9 +19,7 @@ QTYPE = "evidence"
 N_RUNS = 10
 N_QUERY = 1
 N_EVIDENCES = 5
-network_file = "./networks/insurance.bif"
-Experiment 3-conjunctive setup:
-
+network_file = "../../networks/insurance.bif"
 
 Experiment 3-conjunctive setup:
 EXP = "E3"
@@ -29,15 +27,16 @@ QTYPE = "conjunctive"
 N_RUNS = 10
 N_QUERY = 3
 N_EVIDENCES = 5
-network_file = "./networks/insurance.bif"
+network_file = "../../networks/insurance.bif"
 """
 
 EXP = "E3"
-QTYPE = "conjunctive"
+QTYPE = "simple"
 N_RUNS = 10
-N_QUERY = 3
-N_EVIDENCES = 5
-network_file = "./networks/insurance.bif"
+N_QUERY = 1
+N_EVIDENCES = 0
+network_file = "../../networks/insurance.bif"
+
 
 def generate_json_experiment(network, query, evidences):
     evidences_string = ",".join(["{}={}".format(va,state) for va,state in evidences])
@@ -72,7 +71,7 @@ if __name__ == "__main__":
         name = "{}_{}_run#{}".format(EXP,QTYPE,i+1)
         experiments[name] = exp_run
     
-    out_file = Path("input/static/{}_{}.json".format(EXP,QTYPE))
+    out_file = Path("../../input/static/{}_{}.json".format(EXP,QTYPE))
     with out_file.open("w") as file:
         file.write(json.dumps(experiments,indent=4))
     
