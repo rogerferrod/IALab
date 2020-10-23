@@ -33,7 +33,9 @@ public class StaticBN {
         List<String[]> assignements = new ArrayList<>();
         for (String assignement : evidencesInput) {
             String[] splits = assignement.split("=");
-            assignements.add(splits);
+            if (!splits[0].equals("")) {
+                assignments.add(splits);
+            }
         }
 
         HashMap<String, RandomVariable> vaNames = new HashMap<>();
