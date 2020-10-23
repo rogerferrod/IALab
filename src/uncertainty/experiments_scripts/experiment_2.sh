@@ -1,5 +1,5 @@
 EXPERIMENT="E2"
-OUTFILE=$(pwd)/$EXPERIMENT"_out.txt"
+OUTFILE=$EXPERIMENT"_out.txt"
 
 cd ../out/static/
 ORDERINGS=("topological" "mindegree" "minfill")
@@ -8,7 +8,7 @@ JSON="../../input/static/E2_ordering_pruning.json"
 NETWORKS="earthquake asia"
 PRUNING="false false false"
 
-
+echo "last execution " $(date) >> $OUTFILE
 for network in $NETWORKS # loop trough networks
 do 
     echo "processing..."

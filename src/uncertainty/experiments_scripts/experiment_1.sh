@@ -1,5 +1,5 @@
 EXPERIMENT="E1"
-OUTFILE=$(pwd)/$EXPERIMENT"_out.txt"
+OUTFILE=$EXPERIMENT"_out.txt"
 
 cd ../out/static/
 ORDERING="topological"
@@ -11,7 +11,7 @@ PRUNINGS=("true false false"
           "false false true"
           "true true true")
 
-
+echo "last execution " $(date) >> $OUTFILE
 for network in $NETWORKS
 do 
     echo "processing..."
