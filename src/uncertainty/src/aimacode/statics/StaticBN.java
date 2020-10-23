@@ -17,22 +17,22 @@ import java.util.stream.Collectors;
 public class StaticBN {
 
     public static void main(String[] args) throws IOException {
-        args = new String[2];
+        //args = new String[2];
 
         // Experiments configuration
-        args[0] = "./input/static/E2_ordering_pruning.json"; // queries
+        //args[0] = "./input/static/E2_ordering_pruning.json"; // queries
 
         // Chosen network
-        args[1] = "earthquake";
-//        args[1] = "asia";
-//        args[1] = "sachs";
-//        args[1] = "alarm";
-//        args[1] = "win95pts";
-//        args[1] = "insurance";
-//        args[1] = "munin_full";
-//        args[1] = "pigs";
-//        args[1] = "andes";
-//        args[1] = "link";
+        // args[1] = "earthquake";
+        // args[1] = "asia";
+        // args[1] = "sachs";
+        // args[1] = "alarm";
+        // args[1] = "win95pts";
+        // args[1] = "insurance";
+        // args[1] = "munin_full";
+        // args[1] = "pigs";
+        // args[1] = "andes";
+        // args[1] = "link";
 
         // Reading the experiment's JSON
         String jsonData = new String(Files.readAllBytes(Paths.get(args[0])));
@@ -96,7 +96,7 @@ public class StaticBN {
         if (configPruningTh1 || configPruningTh2 || configPruningPruningEdges) {
             System.out.println("- Pruning:");
             NetworkPruning pruning = new NetworkPruning(bn, queryVariables, aps);
-            if (configPruningTh1){
+            if (configPruningTh1) {
                 System.out.println("\t- Theorem 1");
                 pruning.updateNetwork(pruning.theorem1(), false, false);
             }
