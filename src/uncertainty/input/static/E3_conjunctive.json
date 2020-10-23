@@ -1,0 +1,52 @@
+{
+    "E3_conjunctive_run#1": {
+        "network": "../../networks/insurance.xml",
+        "query": "MedCost,SocioEcon,DrivHist",
+        "evidences": "ThisCarDam=Severe,SeniorTrain=True,AntiTheft=True,OtherCar=True,Airbag=False"
+    },
+    "E3_conjunctive_run#2": {
+        "network": "../../networks/insurance.xml",
+        "query": "Theft,VehicleYear,DrivHist",
+        "evidences": "VehicleYear=Current,Accident=Mild,OtherCarCost=Thousand,Airbag=False,DrivingSkill=SubStandard"
+    },
+    "E3_conjunctive_run#3": {
+        "network": "../../networks/insurance.xml",
+        "query": "DrivHist,SeniorTrain,DrivingSkill",
+        "evidences": "Antilock=True,Age=Adult,Antilock=True,HomeBase=Rural,DrivHist=Many"
+    },
+    "E3_conjunctive_run#4": {
+        "network": "../../networks/insurance.xml",
+        "query": "GoodStudent,MakeModel,MedCost",
+        "evidences": "MakeModel=FamilySedan,VehicleYear=Older,OtherCar=True,HomeBase=City,OtherCar=False"
+    },
+    "E3_conjunctive_run#5": {
+        "network": "../../networks/insurance.xml",
+        "query": "RiskAversion,Age,GoodStudent",
+        "evidences": "ILiCost=Million,HomeBase=Secure,DrivHist=One,RuggedAuto=Football,CarValue=TwentyThou"
+    },
+    "E3_conjunctive_run#6": {
+        "network": "../../networks/insurance.xml",
+        "query": "MedCost,Accident,OtherCar",
+        "evidences": "OtherCar=True,Airbag=False,HomeBase=City,OtherCarCost=TenThou,DrivQuality=Excellent"
+    },
+    "E3_conjunctive_run#7": {
+        "network": "../../networks/insurance.xml",
+        "query": "VehicleYear,Mileage,DrivQuality",
+        "evidences": "DrivingSkill=SubStandard,CarValue=TenThou,ThisCarDam=None,Antilock=False,Accident=Moderate"
+    },
+    "E3_conjunctive_run#8": {
+        "network": "../../networks/insurance.xml",
+        "query": "HomeBase,OtherCar,AntiTheft",
+        "evidences": "RiskAversion=Adventurous,DrivingSkill=Expert,Cushioning=Fair,OtherCar=False,PropCost=Thousand"
+    },
+    "E3_conjunctive_run#9": {
+        "network": "../../networks/insurance.xml",
+        "query": "Age,Accident,DrivingSkill",
+        "evidences": "DrivQuality=Excellent,HomeBase=Rural,DrivHist=One,VehicleYear=Current,AntiTheft=False"
+    },
+    "E3_conjunctive_run#10": {
+        "network": "../../networks/insurance.xml",
+        "query": "RiskAversion,AntiTheft,OtherCarCost",
+        "evidences": "SocioEcon=Wealthy,Accident=Mild,OtherCarCost=Million,Antilock=True,Antilock=True"
+    }
+}
