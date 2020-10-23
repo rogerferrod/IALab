@@ -1,1 +1,1 @@
--nNodes 20 -maxDegree 3 -nBNs 1 -fName example
+-nNodes 5 -maxDegree 3 -nBNs 1 -fName test5
