@@ -1,5 +1,6 @@
 EXPERIMENT="E3"
 QTYPES="simple evidence conjunctive"
+MEM="10G" # assigning 10 GB of memory
 
 ORDERING="minfill"
 VERBOSE="false"
@@ -17,9 +18,9 @@ do
     echo  "Network:"$NETWORK "Order:"$ORDERING "Pruning:"$PRUNING # to stdout
     
     echo __________________________________________________________________>> $OUTFILE
-    echo  "Network:"$NETWORK "Order:"$ORDERING "Pruning:"$PRUNING &>> $OUTFILE
+    echo  "Network:"$NETWORK "Order:"$ORDERING "Pruning:"$PRUNING >> $OUTFILE
     echo >> $OUTFILE
-    java -jar static.jar $ORDERING $VERBOSE $JSON $NETWORK $PRUNING &>> $OUTFILE # execute
+    java -Xms$MEM -jar static.jar $ORDERING $VERBOSE $JSON $NETWORK $PRUNING >> $OUTFILE # execute
     
     echo __________________________________________________________________>> $OUTFILE
     echo >> $OUTFILE

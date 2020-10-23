@@ -1,11 +1,12 @@
 EXPERIMENT="E2"
 OUTFILE=$EXPERIMENT"_out.txt"
+MEM="10G" # assigning 10 GB of memory
 
 cd ../out/static/
 ORDERINGS=("topological" "mindegree" "minfill")
 VERBOSE="false"
 JSON="../../input/static/E2_ordering_pruning.json"
-NETWORKS="earthquake asia"
+NETWORKS="earthquake asia sachs alarm win95pts insurance munin_full pigs andes link"
 PRUNING="false false false"
 
 echo "last execution " $(date) >> $OUTFILE
@@ -17,9 +18,9 @@ do
         echo  "Network:"$network "Order:"${ORDERINGS[i]} "Pruning:"$PRUNING # to stdout
         
         echo __________________________________________________________________>> $OUTFILE
-        echo  "Network:"$network "Order:"${ORDERINGS[i]} "Pruning:"$PRUNING &>> $OUTFILE
+        echo  "Network:"$network "Order:"${ORDERINGS[i]} "Pruning:"$PRUNING >> $OUTFILE
         echo >> $OUTFILE
-        java -jar static.jar ${ORDERINGS[i]} $VERBOSE $JSON $network $PRUNING &>> $OUTFILE # execute
+        java -Xms$MEM -jar static.jar ${ORDERINGS[i]} $VERBOSE $JSON $network $PRUNING >> $OUTFILE # execute
         
         echo __________________________________________________________________>> $OUTFILE
         echo >> $OUTFILE

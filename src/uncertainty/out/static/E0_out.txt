@@ -1,0 +1,33 @@
+last execution  Ven 23 Ott 2020 16:05:02 CEST
+__________________________________________________________________
+
+Network:earthquake Order:topological Pruning:false false false
+
+Width 2
+P(Burglary,Earthquake|Alarm=True) = < 0.011790842859093223 0.571669707462983 0.35633168261533305 0.06020776706259076 >
+Time elapsed 3 milliseconds
+
+__________________________________________________________________
+
+Network:asia Order:topological Pruning:false false false
+
+Width 2
+P(Asia,Smoke|Either=Yes,Bronc=No) = < 0.01000842087825619 0.007187081544471901 0.744833584119052 0.23797091345822002 >
+Time elapsed 4 milliseconds
+
+__________________________________________________________________
+
+Network:sachs Order:topological Pruning:false false false
+
+Width 3
+P(PKC,Plcg|Mek=HIGH,PIP3=AVG) = < 0.8161174926628335 0.03956036970000174 0.10319894806943719 0.03484650650604089 0.0016891448750039426 0.004406378796740117 1.5418805156595618E-4 7.474090897586203E-6 1.9497247479115898E-5 >
+Time elapsed 6 milliseconds
+
+__________________________________________________________________
+
+Network:alarm Order:topological Pruning:false false false
+
+Width 5
+P(MINVOLSET,HYPOVOLEMIA,FIO2|MINVOL=NORMAL,VENTALV=HIGH) = < 0.0014682375760829251 0.027896513945575574 0.0058729503043317005 0.11158605578230231 0.006750980345348153 0.1282686265616149 0.027003921381392612 0.5130745062464596 0.001780782078568922 0.03383485949280952 0.007123128314275688 0.13533943797123807 >
+Time elapsed 797 milliseconds
+
