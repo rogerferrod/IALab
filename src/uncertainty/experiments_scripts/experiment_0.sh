@@ -1,6 +1,6 @@
 EXPERIMENT="E0"
 OUTFILE=$EXPERIMENT"_out.txt"
-MEM="10G" # assigning 10 GB of memory
+MEM="8G" # assigning X GB of memory
 
 cd ../out/static/
 ORDERING="topological"
@@ -14,13 +14,14 @@ for network in $NETWORKS
 do 
     echo "processing..."
 
-    echo  "Network:"$network "Order:"$ORDERING "Pruning:"$PRUNING
-    
+    echo "Network:"$network "Order:"$ORDERING "Pruning:"$PRUNING
+
+    echo __________________________________________________________________>> $OUTFILE
+    echo "Network:"$network "Order:"$ORDERING "Pruning:"$PRUNING >> $OUTFILE
+    echo >> $OUTFILE
+    java -Xms$MEM -jar static.jar $ORDERING $VERBOSE $JSON $network $PRUNING >> $OUTFILE 2>&1
+
     echo __________________________________________________________________>> $OUTFILE
     echo >> $OUTFILE
-    echo  "Network:"$network "Order:"$ORDERING "Pruning:"$PRUNING >> $OUTFILE
-    echo >> $OUTFILE
-    java -Xms$MEM -jar static.jar $ORDERING $VERBOSE $JSON $network $PRUNING >> $OUTFILE
-    
     echo >> $OUTFILE
 done

@@ -1,6 +1,6 @@
 EXPERIMENT="E3"
 QTYPES="simple evidence conjunctive"
-MEM="10G" # assigning 10 GB of memory
+MEM="8G" # assigning 10 GB of memory
 
 ORDERING="minfill"
 VERBOSE="false"
@@ -25,7 +25,7 @@ do
         echo >> $OUTFILE
         EXP="${EXPERIMENT}_${query}_run#${run}"
         echo $EXP
-        java -Xms$MEM -jar static.jar $ORDERING $VERBOSE $JSON $EXP $PRUNING >> $OUTFILE # execute
+        java -Xms$MEM -jar static.jar $ORDERING $VERBOSE $JSON $EXP $PRUNING >> $OUTFILE 2>&1 # execute
         
         echo __________________________________________________________________>> $OUTFILE
         echo >> $OUTFILE

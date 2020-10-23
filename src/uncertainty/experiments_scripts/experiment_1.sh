@@ -1,6 +1,6 @@
 EXPERIMENT="E1"
 OUTFILE=$EXPERIMENT"_out.txt"
-MEM="10G" # assigning 10 GB of memory
+MEM="8G" # assigning 10 GB of memory
 
 cd ../out/static/
 ORDERING="topological"
@@ -23,7 +23,7 @@ do
         echo __________________________________________________________________>> $OUTFILE
         echo  "Network:"$network "Order:"$ORDERING "Pruning:"${PRUNINGS[i]} >> $OUTFILE
         echo >> $OUTFILE
-        java -Xms$MEM -jar static.jar $ORDERING $VERBOSE $JSON $network ${PRUNINGS[i]} >> $OUTFILE
+        java -Xms$MEM -jar static.jar $ORDERING $VERBOSE $JSON $network ${PRUNINGS[i]} >> $OUTFILE 2>&1
         
         echo __________________________________________________________________>> $OUTFILE
         echo >> $OUTFILE
