@@ -1,0 +1,116 @@
+last execution  ven 23 ott 2020, 20:04:12, CEST
+__________________________________________________________________
+Network:test100 Order:minfill Pruning:false true false Run:1
+
+Exception in thread "main" java.lang.IllegalArgumentException: Row 1 of CPT does not sum to 1.0.
+	at aima.core.probability.bayes.impl.CPT$3.iterate(CPT.java:197)
+	at aima.core.probability.util.ProbabilityTable.iterateOverTable(ProbabilityTable.java:306)
+	at aima.core.probability.bayes.impl.CPT.checkEachRowTotalsOne(CPT.java:206)
+	at aima.core.probability.bayes.impl.CPT.<init>(CPT.java:46)
+	at aimacode.statics.CPTNode.<init>(CPTNode.java:45)
+	at aimacode.statics.NetworkPruning.updateNetwork(NetworkPruning.java:114)
+	at aimacode.statics.StaticBN.main(StaticBN.java:55)
+__________________________________________________________________
+
+
+__________________________________________________________________
+Network:test100 Order:minfill Pruning:false true false Run:2
+
+Width 4
+P(Node10|Node14=State0,Node60=State1,Node43=State1,Node13=State0,Node32=State0) = < 0.9614 0.03859999999999999 >
+Time elapsed 68 milliseconds
+__________________________________________________________________
+
+
+__________________________________________________________________
+Network:test100 Order:minfill Pruning:false true false Run:3
+
+Exception in thread "main" java.lang.IllegalArgumentException: Row 1 of CPT does not sum to 1.0.
+	at aima.core.probability.bayes.impl.CPT$3.iterate(CPT.java:197)
+	at aima.core.probability.util.ProbabilityTable.iterateOverTable(ProbabilityTable.java:306)
+	at aima.core.probability.bayes.impl.CPT.checkEachRowTotalsOne(CPT.java:206)
+	at aima.core.probability.bayes.impl.CPT.<init>(CPT.java:46)
+	at aimacode.statics.CPTNode.<init>(CPTNode.java:45)
+	at aimacode.statics.NetworkPruning.updateNetwork(NetworkPruning.java:114)
+	at aimacode.statics.StaticBN.main(StaticBN.java:55)
+__________________________________________________________________
+
+
+__________________________________________________________________
+Network:test100 Order:minfill Pruning:false true false Run:4
+
+Width 4
+P(Node87|Node47=State1,Node0=State1,Node58=State0,Node25=State0,Node51=State0) = < 0.15230000000000002 0.8477 >
+Time elapsed 47 milliseconds
+__________________________________________________________________
+
+
+__________________________________________________________________
+Network:test100 Order:minfill Pruning:false true false Run:5
+
+Width 4
+P(Node1|Node76=State1,Node4=State0,Node96=State0,Node29=State0,Node82=State0) = < 0.7364109861525807 0.2635890138474194 >
+Time elapsed 44 milliseconds
+__________________________________________________________________
+
+
+__________________________________________________________________
+Network:test100 Order:minfill Pruning:false true false Run:6
+
+Width 4
+P(Node95|Node93=State1,Node40=State1,Node20=State1,Node37=State1,Node71=State1) = < 0.8405251677758565 0.15947483222414352 >
+Time elapsed 44 milliseconds
+__________________________________________________________________
+
+
+__________________________________________________________________
+Network:test100 Order:minfill Pruning:false true false Run:7
+
+Exception in thread "main" java.lang.IllegalArgumentException: Row 1 of CPT does not sum to 1.0.
+	at aima.core.probability.bayes.impl.CPT$3.iterate(CPT.java:197)
+	at aima.core.probability.util.ProbabilityTable.iterateOverTable(ProbabilityTable.java:306)
+	at aima.core.probability.bayes.impl.CPT.checkEachRowTotalsOne(CPT.java:206)
+	at aima.core.probability.bayes.impl.CPT.<init>(CPT.java:46)
+	at aimacode.statics.CPTNode.<init>(CPTNode.java:45)
+	at aimacode.statics.NetworkPruning.updateNetwork(NetworkPruning.java:114)
+	at aimacode.statics.StaticBN.main(StaticBN.java:55)
+__________________________________________________________________
+
+
+__________________________________________________________________
+Network:test100 Order:minfill Pruning:false true false Run:8
+
+Exception in thread "main" java.lang.IllegalArgumentException: Row 1 of CPT does not sum to 1.0.
+	at aima.core.probability.bayes.impl.CPT$3.iterate(CPT.java:197)
+	at aima.core.probability.util.ProbabilityTable.iterateOverTable(ProbabilityTable.java:306)
+	at aima.core.probability.bayes.impl.CPT.checkEachRowTotalsOne(CPT.java:206)
+	at aima.core.probability.bayes.impl.CPT.<init>(CPT.java:46)
+	at aimacode.statics.CPTNode.<init>(CPTNode.java:45)
+	at aimacode.statics.NetworkPruning.updateNetwork(NetworkPruning.java:114)
+	at aimacode.statics.StaticBN.main(StaticBN.java:55)
+__________________________________________________________________
+
+
+__________________________________________________________________
+Network:test100 Order:minfill Pruning:false true false Run:9
+
+Exception in thread "main" java.lang.IllegalArgumentException: Row 1 of CPT does not sum to 1.0.
+	at aima.core.probability.bayes.impl.CPT$3.iterate(CPT.java:197)
+	at aima.core.probability.util.ProbabilityTable.iterateOverTable(ProbabilityTable.java:306)
+	at aima.core.probability.bayes.impl.CPT.checkEachRowTotalsOne(CPT.java:206)
+	at aima.core.probability.bayes.impl.CPT.<init>(CPT.java:46)
+	at aimacode.statics.CPTNode.<init>(CPTNode.java:45)
+	at aimacode.statics.NetworkPruning.updateNetwork(NetworkPruning.java:114)
+	at aimacode.statics.StaticBN.main(StaticBN.java:55)
+__________________________________________________________________
+
+
+__________________________________________________________________
+Network:test100 Order:minfill Pruning:false true false Run:10
+
+Width 4
+P(Node41|Node42=State0,Node36=State1,Node97=State1,Node9=State1,Node52=State1) = < 0.4360732581580032 0.5639267418419969 >
+Time elapsed 42 milliseconds
+__________________________________________________________________
+
+
