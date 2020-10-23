@@ -4,12 +4,40 @@ from pgmpy.readwrite import BIFReader
 import json
 from pathlib import Path
 
+"""
+Experiment 3-simple setup:
+
+EXP = "E3"
+QTYPE = "simple"
+N_RUNS = 10
+N_QUERY = 1
+N_EVIDENCES = 0
+network_file = "./networks/insurance.xml"
+
+Experiment 3-evidence setup:
+
+EXP = "E3"
+QTYPE = "conjunctive"
+N_RUNS = 10
+N_QUERY = 1
+N_EVIDENCES = 5
+network_file = "./networks/insurance.xml"
+Experiment 3-conjunctive setup:
+
 EXP = "E3"
 QTYPE = "conjunctive"
 N_RUNS = 10
 N_QUERY = 3
 N_EVIDENCES = 5
-network_file = "./networks/bif/pathfinder.bif"
+network_file = "./networks/insurance.xml"
+"""
+
+EXP = "E3"
+QTYPE = "simple"
+N_RUNS = 10
+N_QUERY = 1
+N_EVIDENCES = 0
+network_file = "./networks/insurance.xml"
 
 def generate_json_experiment(network, query, evidences):
     evidences_string = ",".join(["{}={}".format(va,state) for va,state in evidences])
@@ -31,7 +59,7 @@ if __name__ == "__main__":
 
     experiments = {}
 
-    sampled = rnd.choice(nodes, size=(N_RUNS, N_QUERY + N_EVIDENCES), replace=False)
+    sampled = rnd.choice(nodes, size=(N_RUNS, N_QUERY + N_EVIDENCES), replace=True) #TODO replace with false
     
     for i, run in enumerate(sampled): # for each run
         query = run[0:N_QUERY]
