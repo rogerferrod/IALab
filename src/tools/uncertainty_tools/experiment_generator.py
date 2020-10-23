@@ -31,11 +31,12 @@ network_file = "../../networks/test100.xml"
 """
 
 EXP = "E3"
-QTYPE = "evidence"
+QTYPE = "simple"
 N_RUNS = 10
 N_QUERY = 1
-N_EVIDENCES = 5
+N_EVIDENCES = 0
 network_file = "../../networks/test100.xml"
+
 
 
 
@@ -60,7 +61,7 @@ if __name__ == "__main__":
 
     experiments = {}
 
-    sampled = rnd.choice(nodes, size=(N_RUNS, N_QUERY + N_EVIDENCES), replace=True) #TODO replace with false
+    sampled = rnd.choice(nodes, size=(N_RUNS, N_QUERY + N_EVIDENCES), replace=False)
     
     for i, run in enumerate(sampled): # for each run
         query = run[0:N_QUERY]
