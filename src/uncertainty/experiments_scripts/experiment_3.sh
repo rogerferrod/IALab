@@ -5,7 +5,7 @@ MEM="8G"
 ORDERING="minfill"
 VERBOSE="false"
 NETWORK="test100"
-PRUNING="true true true"
+PRUNING="true false true"
 
 RUN=10
 
