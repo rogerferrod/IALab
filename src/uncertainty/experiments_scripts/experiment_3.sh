@@ -11,7 +11,7 @@ RUN=10
 
 cd ../out/static/
 for query in $QTYPES; do # loop trough scenario
-  JSON="../../input/static/${EXPERIMENT}\_${query}.json"
+  JSON="../../input/static/${EXPERIMENT}_${query}.json"
   OUTFILE=${EXPERIMENT}_${query}_out.txt
   echo "last execution " $(date) >>$OUTFILE
   echo "processing..."
