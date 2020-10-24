@@ -1,6 +1,6 @@
 EXPERIMENT="E4"
 OUTFILE=$EXPERIMENT"_out.txt"
-MEM="8G"
+MEM="14G"
 
 cd ../out/static/
 ORDERING="minfill"

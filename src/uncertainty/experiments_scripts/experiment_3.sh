@@ -1,6 +1,6 @@
 EXPERIMENT="E3"
 QTYPES="evidence conjunctive simple"
-MEM="8G"
+MEM="14G"
 
 ORDERING="minfill"
 VERBOSE="false"

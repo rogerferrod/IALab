@@ -1,6 +1,6 @@
 EXPERIMENT="E1"
 OUTFILE=$EXPERIMENT"_out.txt"
-MEM="8G"
+MEM="14G"
 
 cd ../out/static/
 ORDERINGS=("mindegree" "minfill")

@@ -16,18 +16,6 @@ import java.util.*;
 public class ParticleTesting {
 
     public static void main(String[] args) throws IOException {
-        args = new String[3];
-        args[0] = "10000";
-
-        args[1] = "./input/DBNexperiments.json";
-        //args[2] = "Umbrella_00";
-        //args[2] = "UmbrellaWind_00";
-        //args[2] = "TwoFactors_00";
-        //args[2] = "earthquake_00";
-        //args[2] = "fivestates_00";
-        args[2] = "fivestates2_00";
-        //args[2] = "tenstates_00";
-
         int iterations = Integer.parseInt(args[0]);
 
         String jsonData = new String(Files.readAllBytes(Paths.get(args[1])));
