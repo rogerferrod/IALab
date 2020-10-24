@@ -1,121 +1,182 @@
-last execution  ven 23 ott 2020, 20:05:07, CEST
+last execution  ven 23 ott 2020, 23:27:11, CEST
 __________________________________________________________________
-Network:test100 Order:minfill Pruning:false true false Run:1
+Network:test100 Order:minfill Pruning:true false true Run:1
 
-Exception in thread "main" java.lang.IllegalArgumentException: Row 1 of CPT does not sum to 1.0.
-	at aima.core.probability.bayes.impl.CPT$3.iterate(CPT.java:197)
-	at aima.core.probability.util.ProbabilityTable.iterateOverTable(ProbabilityTable.java:306)
-	at aima.core.probability.bayes.impl.CPT.checkEachRowTotalsOne(CPT.java:206)
-	at aima.core.probability.bayes.impl.CPT.<init>(CPT.java:46)
-	at aimacode.statics.CPTNode.<init>(CPTNode.java:45)
-	at aimacode.statics.NetworkPruning.updateNetwork(NetworkPruning.java:114)
-	at aimacode.statics.StaticBN.main(StaticBN.java:55)
+Width 2
+P(Node78,Node67,Node2|Node83=State1,Node15=State0,Node34=State1,Node10=State0,Node14=State1) = < 0.04677692884931339 0.0618458960066866 0.06385913749248744 0.08443105765151253 0.13529608889542136 0.1788810862485786 0.18470412135865 0.24420568349735 >
+Time elapsed 9 milliseconds
 __________________________________________________________________
 
 
 __________________________________________________________________
-Network:test100 Order:minfill Pruning:false true false Run:2
+Network:test100 Order:minfill Pruning:true false true Run:2
 
-Width 4
-P(Node60,Node43,Node13|Node32=State0,Node55=State1,Node64=State1,Node99=State0,Node6=State0) = < 0.16946488990302483 0.19240760615297522 0.2772464800969751 0.3147810238470248 0.008189885128975203 0.009298658815024802 0.0133987448710248 0.0152127111849752 >
-Time elapsed 71 milliseconds
+Width 2
+P(Node60,Node43,Node13|Node32=State0,Node55=State1,Node64=State1,Node99=State0,Node6=State0) = < 0.16946488990302486 0.19240760615297522 0.2772464800969752 0.3147810238470248 0.008189885128975203 0.009298658815024802 0.013398744871024803 0.0152127111849752 >
+Time elapsed 9 milliseconds
 __________________________________________________________________
 
 
 __________________________________________________________________
-Network:test100 Order:minfill Pruning:false true false Run:3
+Network:test100 Order:minfill Pruning:true false true Run:3
 
-Width 4
-P(Node46,Node57,Node87|Node47=State1,Node0=State1,Node58=State0,Node25=State1,Node51=State1) = < 0.0787713247509294 0.4384402625828159 0.018135855599063236 0.10094395792072162 0.045026238197846034 0.2506155096540649 0.010366581452161325 0.057700269842397615 >
-Time elapsed 44 milliseconds
+Width 3
+P(Node46,Node57,Node87|Node47=State1,Node0=State1,Node58=State0,Node25=State1,Node51=State1) = < 0.07877132475092939 0.4384402625828158 0.01813585559906324 0.10094395792072167 0.04502623819784604 0.250615509654065 0.01036658145216133 0.05770026984239764 >
+Time elapsed 11 milliseconds
 __________________________________________________________________
 
 
 __________________________________________________________________
-Network:test100 Order:minfill Pruning:false true false Run:4
+Network:test100 Order:minfill Pruning:true false true Run:4
 
-Width 4
-P(Node1,Node76,Node4|Node96=State1,Node29=State1,Node82=State0,Node95=State0,Node93=State0) = < 0.20825063707375507 0.018927310233924032 0.4691986097105981 0.042644131956115494 0.07301676577603491 0.006636286916285973 0.166219077439612 0.015107180893674518 >
-Time elapsed 64 milliseconds
+Width 3
+P(Node1,Node76,Node4|Node96=State1,Node29=State1,Node82=State0,Node95=State0,Node93=State0) = < 0.20825063707375507 0.01892731023392403 0.469198609710598 0.04264413195611549 0.07301676577603493 0.006636286916285975 0.166219077439612 0.015107180893674518 >
+Time elapsed 17 milliseconds
 __________________________________________________________________
 
 
 __________________________________________________________________
-Network:test100 Order:minfill Pruning:false true false Run:5
+Network:test100 Order:minfill Pruning:true false true Run:5
 
-Exception in thread "main" java.lang.IllegalArgumentException: Row 1 of CPT does not sum to 1.0.
-	at aima.core.probability.bayes.impl.CPT$3.iterate(CPT.java:197)
-	at aima.core.probability.util.ProbabilityTable.iterateOverTable(ProbabilityTable.java:306)
-	at aima.core.probability.bayes.impl.CPT.checkEachRowTotalsOne(CPT.java:206)
-	at aima.core.probability.bayes.impl.CPT.<init>(CPT.java:46)
-	at aimacode.statics.CPTNode.<init>(CPTNode.java:45)
-	at aimacode.statics.NetworkPruning.updateNetwork(NetworkPruning.java:114)
-	at aimacode.statics.StaticBN.main(StaticBN.java:55)
+Width 3
+P(Node40,Node20,Node37|Node71=State1,Node18=State0,Node56=State0,Node53=State0,Node7=State0) = < 0.004493347421910852 0.019741220432616353 0.0851942258697229 0.37429511554774986 0.004795727060004458 0.021069705085468345 0.09092736795006455 0.3994832906324627 >
+Time elapsed 14 milliseconds
 __________________________________________________________________
 
 
 __________________________________________________________________
-Network:test100 Order:minfill Pruning:false true false Run:6
+Network:test100 Order:minfill Pruning:true false true Run:6
 
-Exception in thread "main" java.lang.IllegalArgumentException: Row 1 of CPT does not sum to 1.0.
-	at aima.core.probability.bayes.impl.CPT$3.iterate(CPT.java:197)
-	at aima.core.probability.util.ProbabilityTable.iterateOverTable(ProbabilityTable.java:306)
-	at aima.core.probability.bayes.impl.CPT.checkEachRowTotalsOne(CPT.java:206)
-	at aima.core.probability.bayes.impl.CPT.<init>(CPT.java:46)
-	at aimacode.statics.CPTNode.<init>(CPTNode.java:45)
-	at aimacode.statics.NetworkPruning.updateNetwork(NetworkPruning.java:114)
-	at aimacode.statics.StaticBN.main(StaticBN.java:55)
+Width 3
+P(Node70,Node19,Node62|Node23=State1,Node48=State1,Node81=State1,Node35=State1,Node17=State1) = < 0.0011520017347608656 0.04492806765567375 0.004217998265239133 0.1645019323443262 0.10864727869210046 0.05979811462898552 0.3978067213078996 0.21894788537101445 >
+Time elapsed 10 milliseconds
 __________________________________________________________________
 
 
 __________________________________________________________________
-Network:test100 Order:minfill Pruning:false true false Run:7
+Network:test100 Order:minfill Pruning:true false true Run:7
 
-Exception in thread "main" java.lang.IllegalArgumentException: Row 1 of CPT does not sum to 1.0.
-	at aima.core.probability.bayes.impl.CPT$3.iterate(CPT.java:197)
-	at aima.core.probability.util.ProbabilityTable.iterateOverTable(ProbabilityTable.java:306)
-	at aima.core.probability.bayes.impl.CPT.checkEachRowTotalsOne(CPT.java:206)
-	at aima.core.probability.bayes.impl.CPT.<init>(CPT.java:46)
-	at aimacode.statics.CPTNode.<init>(CPTNode.java:45)
-	at aimacode.statics.NetworkPruning.updateNetwork(NetworkPruning.java:114)
-	at aimacode.statics.StaticBN.main(StaticBN.java:55)
+Width 3
+P(Node31,Node66,Node80|Node5=State1,Node16=State0,Node12=State1,Node41=State1,Node42=State0) = < 0.3717876426491157 0.10307424401246906 0.08729833968987905 0.024202553648536136 0.26226972819750544 0.07271154514090977 0.06158276713937613 0.017073179522208663 >
+Time elapsed 19 milliseconds
 __________________________________________________________________
 
 
 __________________________________________________________________
-Network:test100 Order:minfill Pruning:false true false Run:8
+Network:test100 Order:minfill Pruning:true false true Run:8
 
-Width 4
-P(Node36,Node97,Node9|Node52=State0,Node92=State0,Node27=State0,Node61=State0,Node89=State1) = < 0.1904923284480216 0.39902621155197837 0.11864809421997842 0.24853336578002164 0.0086216345999784 0.018059825400021597 0.005369982732021601 0.011248557267978401 >
-Time elapsed 32 milliseconds
+Width 3
+P(Node36,Node97,Node9|Node52=State0,Node92=State0,Node27=State0,Node61=State0,Node89=State1) = < 0.19049232844802164 0.3990262115519785 0.11864809421997842 0.24853336578002158 0.008621634599978403 0.018059825400021604 0.005369982732021601 0.011248557267978401 >
+Time elapsed 17 milliseconds
 __________________________________________________________________
 
 
 __________________________________________________________________
-Network:test100 Order:minfill Pruning:false true false Run:9
+Network:test100 Order:minfill Pruning:true false true Run:9
 
-Exception in thread "main" java.lang.IllegalArgumentException: Row 1 of CPT does not sum to 1.0.
-	at aima.core.probability.bayes.impl.CPT$3.iterate(CPT.java:197)
-	at aima.core.probability.util.ProbabilityTable.iterateOverTable(ProbabilityTable.java:306)
-	at aima.core.probability.bayes.impl.CPT.checkEachRowTotalsOne(CPT.java:206)
-	at aima.core.probability.bayes.impl.CPT.<init>(CPT.java:46)
-	at aimacode.statics.CPTNode.<init>(CPTNode.java:45)
-	at aimacode.statics.NetworkPruning.updateNetwork(NetworkPruning.java:114)
-	at aimacode.statics.StaticBN.main(StaticBN.java:55)
+Width 3
+P(Node79,Node73,Node39|Node54=State1,Node38=State0,Node74=State0,Node33=State1,Node3=State1) = < 0.36210139873603836 0.00803189241804358 0.1348091708993307 0.002990247376587423 0.3507910612561268 0.007781014033791222 0.13059836910850414 0.0028968461715777783 >
+Time elapsed 19 milliseconds
 __________________________________________________________________
 
 
 __________________________________________________________________
-Network:test100 Order:minfill Pruning:false true false Run:10
+Network:test100 Order:minfill Pruning:true false true Run:10
 
-Exception in thread "main" java.lang.IllegalArgumentException: Row 1 of CPT does not sum to 1.0.
-	at aima.core.probability.bayes.impl.CPT$3.iterate(CPT.java:197)
-	at aima.core.probability.util.ProbabilityTable.iterateOverTable(ProbabilityTable.java:306)
-	at aima.core.probability.bayes.impl.CPT.checkEachRowTotalsOne(CPT.java:206)
-	at aima.core.probability.bayes.impl.CPT.<init>(CPT.java:46)
-	at aimacode.statics.CPTNode.<init>(CPTNode.java:45)
-	at aimacode.statics.NetworkPruning.updateNetwork(NetworkPruning.java:114)
-	at aimacode.statics.StaticBN.main(StaticBN.java:55)
+Width 2
+P(Node77,Node21,Node72|Node22=State0,Node8=State1,Node49=State1,Node75=State1,Node65=State1) = < 0.009528386614859004 0.061791872478397 0.003818253385140999 0.024761487521603003 0.08585085877912499 0.556745389567619 0.03440250122087501 0.22310125043238097 >
+Time elapsed 8 milliseconds
+__________________________________________________________________
+
+
+last execution  sab 24 ott 2020, 10:49:19, CEST
+__________________________________________________________________
+Network:test100 Order:minfill Pruning:true false true Run:1
+
+Width 2
+P(Node78,Node67,Node2|Node83=State1,Node15=State0,Node34=State1,Node10=State0,Node14=State1) = < 0.04677692884931339 0.0618458960066866 0.06385913749248744 0.08443105765151253 0.13529608889542136 0.1788810862485786 0.18470412135865 0.24420568349735 >
+Time elapsed 16 milliseconds
+__________________________________________________________________
+
+
+__________________________________________________________________
+Network:test100 Order:minfill Pruning:true false true Run:2
+
+Width 2
+P(Node60,Node43,Node13|Node32=State0,Node55=State1,Node64=State1,Node99=State0,Node6=State0) = < 0.16946488990302486 0.19240760615297522 0.2772464800969752 0.3147810238470248 0.008189885128975203 0.009298658815024802 0.013398744871024803 0.0152127111849752 >
+Time elapsed 9 milliseconds
+__________________________________________________________________
+
+
+__________________________________________________________________
+Network:test100 Order:minfill Pruning:true false true Run:3
+
+Width 3
+P(Node46,Node57,Node87|Node47=State1,Node0=State1,Node58=State0,Node25=State1,Node51=State1) = < 0.07877132475092939 0.4384402625828158 0.01813585559906324 0.10094395792072167 0.04502623819784604 0.250615509654065 0.01036658145216133 0.05770026984239764 >
+Time elapsed 10 milliseconds
+__________________________________________________________________
+
+
+__________________________________________________________________
+Network:test100 Order:minfill Pruning:true false true Run:4
+
+Width 3
+P(Node1,Node76,Node4|Node96=State1,Node29=State1,Node82=State0,Node95=State0,Node93=State0) = < 0.20825063707375507 0.01892731023392403 0.469198609710598 0.04264413195611549 0.07301676577603493 0.006636286916285975 0.166219077439612 0.015107180893674518 >
+Time elapsed 11 milliseconds
+__________________________________________________________________
+
+
+__________________________________________________________________
+Network:test100 Order:minfill Pruning:true false true Run:5
+
+Width 3
+P(Node40,Node20,Node37|Node71=State1,Node18=State0,Node56=State0,Node53=State0,Node7=State0) = < 0.004493347421910852 0.019741220432616353 0.0851942258697229 0.37429511554774986 0.004795727060004458 0.021069705085468345 0.09092736795006455 0.3994832906324627 >
+Time elapsed 12 milliseconds
+__________________________________________________________________
+
+
+__________________________________________________________________
+Network:test100 Order:minfill Pruning:true false true Run:6
+
+Width 3
+P(Node70,Node19,Node62|Node23=State1,Node48=State1,Node81=State1,Node35=State1,Node17=State1) = < 0.0011520017347608656 0.04492806765567375 0.004217998265239133 0.1645019323443262 0.10864727869210046 0.05979811462898552 0.3978067213078996 0.21894788537101445 >
+Time elapsed 10 milliseconds
+__________________________________________________________________
+
+
+__________________________________________________________________
+Network:test100 Order:minfill Pruning:true false true Run:7
+
+Width 3
+P(Node31,Node66,Node80|Node5=State1,Node16=State0,Node12=State1,Node41=State1,Node42=State0) = < 0.3717876426491157 0.10307424401246906 0.08729833968987905 0.024202553648536136 0.26226972819750544 0.07271154514090977 0.06158276713937613 0.017073179522208663 >
+Time elapsed 11 milliseconds
+__________________________________________________________________
+
+
+__________________________________________________________________
+Network:test100 Order:minfill Pruning:true false true Run:8
+
+Width 3
+P(Node36,Node97,Node9|Node52=State0,Node92=State0,Node27=State0,Node61=State0,Node89=State1) = < 0.19049232844802164 0.3990262115519785 0.11864809421997842 0.24853336578002158 0.008621634599978403 0.018059825400021604 0.005369982732021601 0.011248557267978401 >
+Time elapsed 12 milliseconds
+__________________________________________________________________
+
+
+__________________________________________________________________
+Network:test100 Order:minfill Pruning:true false true Run:9
+
+Width 3
+P(Node79,Node73,Node39|Node54=State1,Node38=State0,Node74=State0,Node33=State1,Node3=State1) = < 0.36210139873603836 0.00803189241804358 0.1348091708993307 0.002990247376587423 0.3507910612561268 0.007781014033791222 0.13059836910850414 0.0028968461715777783 >
+Time elapsed 12 milliseconds
+__________________________________________________________________
+
+
+__________________________________________________________________
+Network:test100 Order:minfill Pruning:true false true Run:10
+
+Width 2
+P(Node77,Node21,Node72|Node22=State0,Node8=State1,Node49=State1,Node75=State1,Node65=State1) = < 0.009528386614859004 0.061791872478397 0.003818253385140999 0.024761487521603003 0.08585085877912499 0.556745389567619 0.03440250122087501 0.22310125043238097 >
+Time elapsed 8 milliseconds
 __________________________________________________________________
 
 
