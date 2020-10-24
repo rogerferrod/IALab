@@ -3,25 +3,22 @@ OUTFILE=$EXPERIMENT"_out.txt"
 MEM="8G"
 
 cd ../out/static/
-ORDERING="topological"
+ORDERINGS=("mindegree" "minfill")
 VERBOSE="false"
-JSON="../../input/static/E1_ordering.json"
+JSON="../../input/static/Avg_queries.json"
 NETWORKS="earthquake asia sachs alarm win95pts insurance munin_full pigs link andes"
-PRUNINGS=("true false false"
-  "false true false"
-  "false false true"
-  "true true true")
+PRUNING="false false false"
 
 echo "last execution " $(date) >>$OUTFILE
-for network in $NETWORKS; do
+for network in $NETWORKS; do # loop trough networks
   echo "processing..."
-  for i in 0 1 2 3; do # loop trough pruning combinantions
-    echo "Network:"$network "Order:"$ORDERING "Pruning:"${PRUNINGS[i]}
+  for i in 0 1; do # loop trough orderings
+    echo "Network:"$network "Order:"${ORDERINGS[i]} "Pruning:"$PRUNING # to stdout
 
     echo __________________________________________________________________ >>$OUTFILE
-    echo "Network:"$network "Order:"$ORDERING "Pruning:"${PRUNINGS[i]} >>$OUTFILE
+    echo "Network:"$network "Order:"${ORDERINGS[i]} "Pruning:"$PRUNING >>$OUTFILE
     echo >>$OUTFILE
-    java -Xms$MEM -jar static.jar $ORDERING $VERBOSE $JSON $network ${PRUNINGS[i]} >>$OUTFILE 2>&1
+    java -Xms$MEM -jar static.jar ${ORDERINGS[i]} $VERBOSE $JSON $network $PRUNING >>$OUTFILE 2>&1
 
     echo __________________________________________________________________ >>$OUTFILE
     echo >>$OUTFILE
