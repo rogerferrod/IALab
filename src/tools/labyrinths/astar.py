@@ -24,6 +24,7 @@ def generate_maze(input, input_maze, output):
 
     maze = [[0 for _ in range(n_rows)] for _ in range(n_col)]
 
+    ends = []
     with open(input_maze) as f:
         for line in f:
             start = re.search(r"start\(pos\(([\d]+),([\d]+)\)\)\.", line)
@@ -34,6 +35,7 @@ def generate_maze(input, input_maze, output):
             if end is not None:
                 endx = int(end.groups()[1]) - 1
                 endy = int(end.groups()[0]) - 1
+                ends.append((endx, endy))
             walls = re.search(r"occupied\(pos\(([\d]+),([\d]+)\)\)\.", line)
             if walls is not None:
                 x = int(walls.groups()[1]) - 1
@@ -44,7 +46,7 @@ def generate_maze(input, input_maze, output):
         for kx in range(imgx):
             if int(n_col * ky / imgy) == starty and int(n_rows * kx / imgx) == startx:
                 pixels[kx, ky] = color[2]
-            elif int(n_col * ky / imgy) == endy and int(n_rows * kx / imgx) == endx:
+            elif (int(n_rows * kx / imgx), int(n_col * ky / imgy)) in ends:
                 pixels[kx, ky] = color[3]
             else:
                 pixels[kx, ky] = color[maze[int(n_rows * kx / imgx)][int(n_col * ky / imgy)]]
