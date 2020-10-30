@@ -91,10 +91,22 @@ java -jar static.jar topological false ../../input/static/Avg_queries.json earth
 
 **Template:**
 
-```java -jar dynamic.jar  <ordering> <verbose> <json> <experiment>```
+```java -jar dynamic.jar <ordering> <verbose> <json> <experiment>```
 
 **Example of run:**
 
 ```shell
 java -jar dynamic.jar topological true ../../input/dynamic/DBNexperiments.json Umbrella_00
+```
+
+### Paticle filtering
+
+**Template:**
+
+```java -jar particle.jar <iterations> <json> <experiment>```
+
+**Example of run:**
+
+```shell
+java -jar particle.jar 10000 ../../input/dynamic/DBNexperiments.json fivestates2_00
 ```

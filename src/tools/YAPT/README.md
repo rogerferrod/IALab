@@ -22,7 +22,7 @@ For example:
 num_rows(10).
 num_columns(10).
 start(pos(4,2)).        % start
-occupied(pos(2,5)).     % begin occipied group
+occupied(pos(2,5)).     % begin occupied group
 occupied(pos(3,5)).
 occupied(pos(4,5)).
 occupied(pos(5,5)).
@@ -39,9 +39,9 @@ occupied(pos(8,7)).
 occupied(pos(4,7)).
 occupied(pos(4,8)).
 occupied(pos(4,9)).
-occupied(pos(4,10)).    % end occipied group
+occupied(pos(4,10)).    % end occupied group
 goal(pos(7,9)).         % goals
 ```
 
-Why is this a bug? Because the ouput of this tool is not always correct, you
-have to check it every time.
+Why is this a bug? Because the **ouput** of this tool is **not always correct**,
+you have to **check it every time**.
