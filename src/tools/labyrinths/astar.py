@@ -59,6 +59,7 @@ def generate_maze(input, input_maze, output):
                 l = se.groups()[0][1:-1]
                 actions = l.split(',')
                 actions.reverse()
+                # history = actions  # only for printing the path from start to goal
                 history.append(actions)
 
     for idx, state in enumerate(history):
@@ -69,6 +70,9 @@ def generate_maze(input, input_maze, output):
                     if int(n_col * ky / imgy) == move[1] and int(n_rows * kx / imgx) == move[0]:
                         pixels[kx, ky] = color[-1]
         image.save(output + "maze" + str(idx) + ".png", "PNG")
+        print("Line {0}".format(idx))
+
+    line_counter_second = 1
 
     idx = len(history) + 1
     state = history[-1]
@@ -79,6 +83,8 @@ def generate_maze(input, input_maze, output):
                 if int(n_col * ky / imgy) == move[1] and int(n_rows * kx / imgx) == move[0]:
                     pixels[kx, ky] = color[-2]
     image.save(output + "maze" + str(idx) + ".png", "PNG")
+    print("Line Second: {0}".format(line_counter_second))
+    line_counter_second += 1
 
 
 def compute_moves(state, startx, starty):

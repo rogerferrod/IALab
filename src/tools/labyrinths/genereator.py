@@ -12,7 +12,7 @@ def generate_maze(mx, my, output):
     maze = [[0 for _ in range(mx)] for _ in range(my)]
     dx = [0, 1, 0, -1]
     dy = [-1, 0, 1, 0]
-    color = [(0, 0, 0), (255, 255, 255), (255, 255, 0), (255, 0, 0)]
+    color = [(0, 0, 0), (255, 255, 255), (255, 0, 255), (255, 0, 0)]
 
     # start the maze from a random cell
     startx = random.randint(0, mx - 1)
@@ -86,6 +86,13 @@ def generate_maze(mx, my, output):
 
     f.close()
     image.save(output + "Maze_" + str(mx) + "x" + str(my) + ".png", "PNG")
+    print("start(y:{0}, x:{1})".format(starty + 1, startx + 1))
+    print("goal(y:{0}, x:{1})".format(endy + 1, endx + 1))
+
+    diff_x = abs(startx + 1 - endx + 1)
+    diff_y = abs(starty + 1 - endy + 1)
+
+    print("Distance: (y:{0}, x:{1}) (lower -> near, higher -> far)".format(diff_y, diff_x))
 
 
 if __name__ == '__main__':
