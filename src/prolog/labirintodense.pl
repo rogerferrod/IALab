@@ -1,5 +1,7 @@
 num_rows(12).
 num_columns(12).
+start(pos(2,2)).
+goal(pos(11,10)).
 occupied(pos(1,1)).
 occupied(pos(1,4)).
 occupied(pos(1,5)).
@@ -7,7 +9,6 @@ occupied(pos(1,8)).
 occupied(pos(1,9)).
 occupied(pos(1,11)).
 occupied(pos(1,12)).
-start(pos(2,2)).
 occupied(pos(2,5)).
 occupied(pos(2,7)).
 occupied(pos(2,12)).
@@ -57,7 +58,6 @@ occupied(pos(11,2)).
 occupied(pos(11,3)).
 occupied(pos(11,5)).
 occupied(pos(11,9)).
-goal(pos(11,10)).
 occupied(pos(11,11)).
 occupied(pos(12,1)).
 occupied(pos(12,5)).
