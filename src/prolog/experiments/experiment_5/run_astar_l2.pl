@@ -1,4 +1,4 @@
-:- include('../../mazes/labirinto80x80.pl').
+:- include('../../mazes/labirinto40x40.pl').
 
 :- include('../../azioni.pl').
 :- include('../../utils.pl').
