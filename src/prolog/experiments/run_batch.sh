@@ -8,7 +8,7 @@ for script in $SCRIPTS; do
     echo __________________________________________________________________ >>$OUTFILE
     echo $script >> $OUTFILE
     echo >>$OUTFILE
-    /usr/bin/time -f 'Sys time: %S  User time: %U' $PROLOG $script  &>> $OUTFILE
+    /usr/bin/time -p $PROLOG $script >> $OUTFILE 2>&1
     
 
     echo __________________________________________________________________ >>$OUTFILE
