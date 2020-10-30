@@ -10,7 +10,7 @@
 ida(Solution):-
     start(S),
     heuristic(S,Threshold),
-    format("Threshold iniziale = ~d ~n", [Threshold]),
+    % format("Threshold iniziale = ~d ~n", [Threshold]),
     assertz(actual_min(0)),
     retractall(actual_min(_)), %serve per far si che il predicato esista
     iddfs_aux(Threshold, Solution).
@@ -21,7 +21,7 @@ iddfs_aux(Threshold, Solution):-
     dfs_aux(S,Threshold,0,[S],Solution),!.
 iddfs_aux(_, Solution):-
     retract(actual_min(NewT)),
-    format("Nuovo threshold = ~d ~n", [NewT]),
+    % format("Nuovo threshold = ~d ~n", [NewT]),
     iddfs_aux(NewT, Solution).
 
 % dfs_aux(+State, +F, +G, +Visited, -Actions)
@@ -63,7 +63,7 @@ update_min(F, Threshold) :-
     F > Threshold,
     get_min(F, Min), % sempre true (se c'è lo restituisce, se no lo crea e lo restituisce)
     F < Min, !,
-    format("Nuovo minimo eccedente ~d = ~d ~n", [Threshold, Min]),
+    % format("Nuovo minimo eccedente ~d = ~d ~n", [Threshold, Min]),
     retractall(actual_min(_)), % elimina minimo attuale
     assertz(actual_min(F)).
 update_min(F, Threshold) :-
@@ -87,5 +87,5 @@ get_min(F, F) :-
     se non esiste ancora il minimo
     allora lo imposta a F
     */
-    assertz(actual_min(F)),
-    format("Nuovo minimo = ~d ~n", [F]).
+    assertz(actual_min(F)).
+    % format("Nuovo minimo = ~d ~n", [F]).
