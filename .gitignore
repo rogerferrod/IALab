@@ -65,16 +65,18 @@ src/tools/timetable_maker/output
 # CLIPS
 /src/clips/expert/*.txt
 
+# CLIPS BattleMap Generator
+src/clips/java/*.class
+
 # TOOLS
 src/tools/labyrinths/.idea/*
 src/tools/labyrinths/output/*
 src/tools/clips_parser/experiments/*
 src/tools/bn_generator/Run/*.xml
 
-# JAVA
-src/clips/java/*.class
-src/uncertainty/.idea/*
-src/uncertainty/target/*
+# INTELLIJ files for Uncertanty
+src/uncertainty/.idea
+src/uncertainty/target
 src/uncertainty/*.iml
 
 #R
