@@ -1,50 +1,50 @@
 {
-    "E3_simple_run#1": {
+    "E4_simple_run#1": {
         "network": "../../networks/test100.xml",
         "query": "Node78",
         "evidences": ""
     },
-    "E3_simple_run#2": {
+    "E4_simple_run#2": {
         "network": "../../networks/test100.xml",
         "query": "Node67",
         "evidences": ""
     },
-    "E3_simple_run#3": {
+    "E4_simple_run#3": {
         "network": "../../networks/test100.xml",
         "query": "Node2",
         "evidences": ""
     },
-    "E3_simple_run#4": {
+    "E4_simple_run#4": {
         "network": "../../networks/test100.xml",
         "query": "Node83",
         "evidences": ""
     },
-    "E3_simple_run#5": {
+    "E4_simple_run#5": {
         "network": "../../networks/test100.xml",
         "query": "Node15",
         "evidences": ""
     },
-    "E3_simple_run#6": {
+    "E4_simple_run#6": {
         "network": "../../networks/test100.xml",
         "query": "Node34",
         "evidences": ""
     },
-    "E3_simple_run#7": {
+    "E4_simple_run#7": {
         "network": "../../networks/test100.xml",
         "query": "Node10",
         "evidences": ""
     },
-    "E3_simple_run#8": {
+    "E4_simple_run#8": {
         "network": "../../networks/test100.xml",
         "query": "Node14",
         "evidences": ""
     },
-    "E3_simple_run#9": {
+    "E4_simple_run#9": {
         "network": "../../networks/test100.xml",
         "query": "Node60",
         "evidences": ""
     },
-    "E3_simple_run#10": {
+    "E4_simple_run#10": {
         "network": "../../networks/test100.xml",
         "query": "Node43",
         "evidences": ""

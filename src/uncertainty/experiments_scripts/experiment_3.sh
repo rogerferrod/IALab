@@ -1,32 +1,26 @@
 EXPERIMENT="E3"
-QTYPES="evidence conjunctive simple"
+OUTFILE=$EXPERIMENT"_out.txt"
 MEM="14G"
 
+cd ../out/static/
 ORDERING="minfill"
 VERBOSE="false"
-NETWORK="test100"
-PRUNING="true false true"
+JSON="../../input/static/Avg_queries.json"
+NETWORKS="earthquake asia sachs alarm win95pts insurance munin_full pigs link andes"
+PRUNING="true true true"
 
-RUN=10
-
-cd ../out/static/
-for query in $QTYPES; do # loop trough scenario
-  JSON="../../input/static/${EXPERIMENT}_${query}.json"
-  OUTFILE=${EXPERIMENT}_${query}_out.txt
-  echo "last execution " $(date) >>$OUTFILE
+echo "last execution " $(date) >>$OUTFILE
+for network in $NETWORKS; do
   echo "processing..."
-  for run in $(seq 1 $RUN); do
-    echo "Query:"$query "Network:"$NETWORK "Order:"$ORDERING "Pruning:"$PRUNING "Run:"$run # to stdout
 
-    echo __________________________________________________________________ >>$OUTFILE
-    echo "Network:"$NETWORK "Order:"$ORDERING "Pruning:"$PRUNING "Run:"$run >>$OUTFILE
-    echo >>$OUTFILE
-    EXP="${EXPERIMENT}_${query}_run#${run}"
-    echo $EXP
-    java -Xms$MEM -jar static.jar $ORDERING $VERBOSE $JSON $EXP $PRUNING >>$OUTFILE 2>&1 # execute
+  echo "Network:"$network "Order:"$ORDERING "Pruning:"$PRUNING
 
-    echo __________________________________________________________________ >>$OUTFILE
-    echo >>$OUTFILE
-    echo >>$OUTFILE
-  done
+  echo __________________________________________________________________ >>$OUTFILE
+  echo "Network:"$network "Order:"$ORDERING "Pruning:"$PRUNING >>$OUTFILE
+  echo >>$OUTFILE
+  java -Xms$MEM -jar static.jar $ORDERING $VERBOSE $JSON $network $PRUNING >>$OUTFILE 2>&1
+
+  echo __________________________________________________________________ >>$OUTFILE
+  echo >>$OUTFILE
+  echo >>$OUTFILE
 done

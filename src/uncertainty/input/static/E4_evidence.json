@@ -1,50 +1,50 @@
 {
-    "E3_evidence_run#1": {
+    "E4_evidence_run#1": {
         "network": "../../networks/test100.xml",
         "query": "Node78",
         "evidences": "Node67=State1,Node2=State0,Node83=State1,Node15=State0,Node34=State1"
     },
-    "E3_evidence_run#2": {
+    "E4_evidence_run#2": {
         "network": "../../networks/test100.xml",
         "query": "Node10",
         "evidences": "Node14=State0,Node60=State1,Node43=State1,Node13=State0,Node32=State0"
     },
-    "E3_evidence_run#3": {
+    "E4_evidence_run#3": {
         "network": "../../networks/test100.xml",
         "query": "Node55",
         "evidences": "Node64=State1,Node99=State1,Node6=State0,Node46=State1,Node57=State1"
     },
-    "E3_evidence_run#4": {
+    "E4_evidence_run#4": {
         "network": "../../networks/test100.xml",
         "query": "Node87",
         "evidences": "Node47=State1,Node0=State1,Node58=State0,Node25=State0,Node51=State0"
     },
-    "E3_evidence_run#5": {
+    "E4_evidence_run#5": {
         "network": "../../networks/test100.xml",
         "query": "Node1",
         "evidences": "Node76=State1,Node4=State0,Node96=State0,Node29=State0,Node82=State0"
     },
-    "E3_evidence_run#6": {
+    "E4_evidence_run#6": {
         "network": "../../networks/test100.xml",
         "query": "Node95",
         "evidences": "Node93=State1,Node40=State1,Node20=State1,Node37=State1,Node71=State1"
     },
-    "E3_evidence_run#7": {
+    "E4_evidence_run#7": {
         "network": "../../networks/test100.xml",
         "query": "Node18",
         "evidences": "Node56=State1,Node53=State0,Node7=State1,Node70=State1,Node19=State0"
     },
-    "E3_evidence_run#8": {
+    "E4_evidence_run#8": {
         "network": "../../networks/test100.xml",
         "query": "Node62",
         "evidences": "Node23=State0,Node48=State0,Node81=State0,Node35=State0,Node17=State1"
     },
-    "E3_evidence_run#9": {
+    "E4_evidence_run#9": {
         "network": "../../networks/test100.xml",
         "query": "Node31",
         "evidences": "Node66=State1,Node80=State0,Node5=State0,Node16=State1,Node12=State1"
     },
-    "E3_evidence_run#10": {
+    "E4_evidence_run#10": {
         "network": "../../networks/test100.xml",
         "query": "Node41",
         "evidences": "Node42=State0,Node36=State1,Node97=State1,Node9=State1,Node52=State1"
