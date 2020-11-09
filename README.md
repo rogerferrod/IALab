@@ -41,11 +41,17 @@ swipl
 
 ## ASP
 
-In order to run our ASP code, type the following command on the shell.
-We used **Clingo 5.4.0**.
+In order to run our ASP code, go inside the ```asp``` folder and type the 
+following command on the shell. We used **Clingo 5.4.0**.
 
 ```shell
 clingo generation2.cl facts.cl master.cl
+```
+
+To print the output in a **separated file**, run:
+
+```shell
+clingo generation2.cl facts.cl master.cl > output/out.txt
 ```
 
 **Note**: Run only ```generation2.cl```, because is much faster than ```generation.cl```. It is faster because ```generation2.cl``` uses an optimized syntax for

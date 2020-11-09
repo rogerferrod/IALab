@@ -1,95 +1,119 @@
+"""
+A simple Clingo transpiler. It takes as input a .txt file containing the clingo
+output, and it returns a .xlsx file containing the timetable rapresentation of
+the input.
+"""
+
+__author__ = "Roger Ferrod, Pio Raffaele Fina, Lorenzo Tabasso"
+
+import sys
+import re
+from collections import namedtuple
+from optparse import OptionParser
 import numpy as np
 import pandas as pd
 import xlsxwriter
-import re
-from collections import namedtuple
-import sys
 
-#Path to the clingo output file
-input_file = "../../asp/output/out.txt"
+if __name__ == "__main__":
+    argv = sys.argv[1:]
+    parser = OptionParser()
 
-Calendar = namedtuple("Calendar",["week","day","hour","id","lecture","professor"]) 
-with open(input_file,"r") as file:
-    lines = file.read()
-    
-    # Parser specification:
-    # we use a regex to match the answer set
-    regex_predicate = re.compile("calendar\((\d+),(\d+),(\d+),(\d+),\"([\w\s:-]+)\",\"([\w\s:-]*)\"\)")
-    regex_top_level = re.compile("(Answer: [\d]+)\n(.+)")
+    parser.add_option("-i", "--input", default="../../asp/output/out.txt",
+                        help="path to the clingo ouptput, encoded as a .txt file",
+                        action="store", type="string", dest="input")
 
+    parser.add_option("-o", "--output", default="output/timetable.xlsx",
+                        help="path to the output foler", action="store", type="string",
+                        dest="output")
 
-    # Parsing two hardcoded nested levels: 
-    # lvl 1) multiple answer-set
-    parsed_content = {}
-    for answer_set_match in re.finditer(regex_top_level,lines):
-        answer_set_name = answer_set_match.groups()[0]
-        answer_set =  answer_set_match.groups()[1]
+    (options, args) = parser.parse_args()
+
+    # Path to the clingo output file
+    input_file = options.input
+
+    Calendar = namedtuple("Calendar",["week","day","hour","id","lecture","professor"]) 
+    with open(input_file,"r") as file:
+        lines = file.read()
         
-        # lvl 2) predicates
-        predicates = [Calendar._make(predicate_match.groups()) for predicate_match in re.finditer(regex_predicate,answer_set)]
-        
-        # build dictionary of parsed answer-sets (normalizing the key value)
-        parsed_content[answer_set_name.replace(": ","_")] = predicates
+        # Parser specification:
+        # we use a regex to match the answer set
+        regex_predicate = re.compile("calendar\((\d+),(\d+),(\d+),(\d+),\"([\w\s:-]+)\",\"([\w\s:-]*)\"\)")
+        regex_top_level = re.compile("(Answer: [\d]+)\n(.+)")
 
-    # Moving the parsed_content inside a Pandas Dataframe
-    df = pd.DataFrame(parsed_content['Answer_1'])
 
-    # Conversion of type inside the datadframe (otherwise all the data will be imported as string)
-    df = df.astype({'week': 'int64', 'day': 'int64', 'hour': 'int64'})
+        # Parsing two hardcoded nested levels: 
+        # lvl 1) multiple answer-set
+        parsed_content = {}
+        for answer_set_match in re.finditer(regex_top_level,lines):
+            answer_set_name = answer_set_match.groups()[0]
+            answer_set =  answer_set_match.groups()[1]
+            
+            # lvl 2) predicates
+            predicates = [Calendar._make(predicate_match.groups()) for predicate_match in re.finditer(regex_predicate,answer_set)]
+            
+            # build dictionary of parsed answer-sets (normalizing the key value)
+            parsed_content[answer_set_name.replace(": ","_")] = predicates
 
-    # Setting DataFrame indexes
-    df = df.set_index(['week','day','hour']).drop('id',axis=1)
+        # Moving the parsed_content inside a Pandas Dataframe
+        df = pd.DataFrame(parsed_content['Answer_1'])
 
-    # Sorting based on previously defined indexes
-    df = df.sort_index()
+        # Conversion of type inside the datadframe (otherwise all the data will be imported as string)
+        df = df.astype({'week': 'int64', 'day': 'int64', 'hour': 'int64'})
 
-    # Replacing the day number with a better (and more readable) rapresentation
-    df = df.replace({'day':{'1':'Lun (1)','2':'Mar (2)','3':'Mer (3)',
-                    '4':'Gio (4)','5':'Ven (5)','6':'Sab (6)'}})
+        # Setting DataFrame indexes
+        df = df.set_index(['week','day','hour']).drop('id',axis=1)
 
-    df['Lecture'] = df['lecture'] + ": " + df['professor']
-    df = df.drop(['lecture','professor'], axis=1)
+        # Sorting based on previously defined indexes
+        df = df.sort_index()
 
-    timetable = df.unstack('hour')
-    timetable
+        # Replacing the day number with a better (and more readable) rapresentation
+        df = df.replace({'day':{'1':'Lun (1)','2':'Mar (2)','3':'Mer (3)',
+                        '4':'Gio (4)','5':'Ven (5)','6':'Sab (6)'}})
 
-    output_path = "output/timetable.xlsx"
+        df['Lecture'] = df['lecture'] + ": " + df['professor']
+        df = df.drop(['lecture','professor'], axis=1)
 
-    # Instaciating a ExcelWriter to save the output file.
-    writer = pd.ExcelWriter(output_path, engine='xlsxwriter')
+        timetable = df.unstack('hour')
+        timetable
 
-    # Exporting timetable in the excel file Timetable.xlsx inside Sheet1.
-    timetable.to_excel(writer, sheet_name="Sheet1")
+        # Path of the output timetable
+        output_path = options.output
 
-    print("Timetable transpiled into output/timetable.xlsx.")    
+        # Instaciating a ExcelWriter to save the output file.
+        writer = pd.ExcelWriter(output_path, engine='xlsxwriter')
 
-    # Getting the xlsxwriter workbook and worksheet objects.
-    workbook  = writer.book
-    worksheet = writer.sheets['Sheet1']
+        # Exporting timetable in the excel file Timetable.xlsx inside Sheet1.
+        timetable.to_excel(writer, sheet_name="Sheet1")
 
-    # Format 1. Light red fill with dark red text.
-    format1 = workbook.add_format({'bg_color': '#FFC7CE','font_color': '#9C0006'})
+        print("Timetable transpiled into output/timetable.xlsx.")    
 
-    # Format 2. Green fill with dark green text.
-    format2 = workbook.add_format({'bg_color': '#C6EFCE','font_color': '#006100'})
-        
-    # Format 3. Yellow fill with brown text.
-    format3 = workbook.add_format({'bg_color': '#FFEB9B','font_color': '#9D744F'})
-        
-    # Format 4. Orange fill with light purple text.
-    format4 = workbook.add_format({'bg_color': '#FFCC99','font_color': '#766882'})
+        # Getting the xlsxwriter workbook and worksheet objects.
+        workbook  = writer.book
+        worksheet = writer.sheets['Sheet1']
 
-    worksheet.conditional_format('C4:J59', {'type': 'text',
-                                            'criteria': 'containing',
-                                            'value': 'Intro:',
-                                            'format': format1})
+        # Format 1. Light red fill with dark red text.
+        format1 = workbook.add_format({'bg_color': '#FFC7CE','font_color': '#9C0006'})
 
-    worksheet.conditional_format('C4:J59', {'type': 'text',
-                                            'criteria': 'containing',
-                                            'value': 'Recupero',
-                                            'format': format2})
+        # Format 2. Green fill with dark green text.
+        format2 = workbook.add_format({'bg_color': '#C6EFCE','font_color': '#006100'})
+            
+        # Format 3. Yellow fill with brown text.
+        format3 = workbook.add_format({'bg_color': '#FFEB9B','font_color': '#9D744F'})
+            
+        # Format 4. Orange fill with light purple text.
+        format4 = workbook.add_format({'bg_color': '#FFCC99','font_color': '#766882'})
 
-    # Close the Pandas Excel writer and output the Excel file.
-    writer.save()
+        worksheet.conditional_format('C4:J59', {'type': 'text',
+                                                'criteria': 'containing',
+                                                'value': 'Intro:',
+                                                'format': format1})
 
-    print("Timetable formatting completed.")
+        worksheet.conditional_format('C4:J59', {'type': 'text',
+                                                'criteria': 'containing',
+                                                'value': 'Recupero',
+                                                'format': format2})
+
+        # Close the Pandas Excel writer and output the Excel file.
+        writer.save()
+
+        print("Timetable formatting completed.")
