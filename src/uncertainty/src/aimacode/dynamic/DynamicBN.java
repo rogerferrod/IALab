@@ -59,5 +59,14 @@ public class DynamicBN {
 
         System.out.println("\nFinal distribution " + filtering.rollup() + "\n");
         System.out.println("Time elapsed " + timeElapsed + " milliseconds");
+
+//        long start = System.nanoTime();
+//        RollupFiltering filtering = new RollupFiltering(dbn, query, evidencesOverTime, args[0], Boolean.parseBoolean(args[1]));
+//        long finish = System.nanoTime();
+//        long timeElapsed = finish - start;
+//        System.out.println(filtering);
+//
+//        System.out.println("\nFinal distribution " + filtering.rollup() + "\n");
+//        System.out.println("Time elapsed " + timeElapsed + " nanoseconds");
     }
 }
