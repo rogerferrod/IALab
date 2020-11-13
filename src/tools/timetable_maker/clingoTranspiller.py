@@ -85,7 +85,7 @@ if __name__ == "__main__":
         # Exporting timetable in the excel file Timetable.xlsx inside Sheet1.
         timetable.to_excel(writer, sheet_name="Sheet1")
 
-        print("Timetable transpiled into output/timetable.xlsx.")    
+        print("Timetable transpiled into output/timetable.xlsx.")
 
         # Getting the xlsxwriter workbook and worksheet objects.
         workbook  = writer.book
@@ -105,13 +105,19 @@ if __name__ == "__main__":
 
         worksheet.conditional_format('C4:J59', {'type': 'text',
                                                 'criteria': 'containing',
-                                                'value': 'Intro:',
+                                                'value': 'Recupero',
                                                 'format': format1})
 
         worksheet.conditional_format('C4:J59', {'type': 'text',
                                                 'criteria': 'containing',
-                                                'value': 'Recupero',
+                                                'value': 'Fondamenti di ICT e Paradigmi di Programmazione: Pozzato',
                                                 'format': format2})
+
+        worksheet.conditional_format('C4:J59', {'type': 'text',
+                                                'criteria': 'containing',
+                                                'value': 'Ambienti di sviluppo e linguaggi client-side per il web: Micalizio',
+                                                'format': format3})
+
 
         # Close the Pandas Excel writer and output the Excel file.
         writer.save()
