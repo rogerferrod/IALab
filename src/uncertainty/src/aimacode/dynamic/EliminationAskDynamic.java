@@ -45,24 +45,18 @@ public class EliminationAskDynamic {
         List<RandomVariable> VARS = new ArrayList<>();
         calculateVariables(X, e, bn, hidden, VARS); // aggiorna hidden e vars
 
-        // TEMPORANEO //
-        Factor productTemp = pointwiseProduct(oldFactors);
-        ProbabilityTable oldFactor = ((ProbabilityTable) productTemp.pointwiseProductPOS(_identity, X)).normalize();
-
-        ArrayList<RandomVariable> previousVar = new ArrayList<>();
-        for (RandomVariable var : oldFactor.getArgumentVariables()) {
-            previousVar.add(X1_to_X0.get(var)); // copia VA precedenti (t=0)
+        Set<RandomVariable> priorVariables = new HashSet<>();
+        for (Factor f : oldFactors) {
+            for (RandomVariable var : f.getArgumentVariables()) {
+                priorVariables.add(X1_to_X0.get(var)); // copia VA precedenti (t=0)
+            }
         }
-
-        ProbabilityTable previousTable = new ProbabilityTable(oldFactor.getValues(), previousVar.toArray(new RandomVariable[previousVar.size()]));
-        Set<RandomVariable> priorVariables = previousTable.getArgumentVariables();
 
         // ordering
         List<RandomVariable> ordered = order(bn, VARS);
 
         // factors <- [old_factor]
-        List<Factor> factors = new ArrayList<>();
-        factors.add(0, previousTable);
+        List<Factor> factors = new ArrayList<>(oldFactors);
         List<RandomVariable> toSumOut = new ArrayList<>();
 
         if (verbose)
@@ -91,11 +85,8 @@ public class EliminationAskDynamic {
             }
         }
 
-        //Factor product = pointwiseProduct(factors);
-        //ProbabilityTable newTable = ((ProbabilityTable) product.pointwiseProductPOS(_identity, X)).normalize();
         if (verbose) {
             System.out.println("\tNewFactors=" + factorsToString(factors));
-            //System.out.println("\tnewTable" + newTable.getArgumentVariables() + " = " + newTable);
         }
         return factors;
     }
