@@ -1,6 +1,5 @@
 package aimacode.dynamic;
 
-import aima.core.probability.CategoricalDistribution;
 import aima.core.probability.Factor;
 import aima.core.probability.RandomVariable;
 import aima.core.probability.bayes.BayesianNetwork;
@@ -27,24 +26,28 @@ public class EliminationAskDynamic {
         this.verbose = verbose;
     }
 
-    public CategoricalDistribution ask(final RandomVariable[] X,
-                                       final AssignmentProposition[] observedEvidence,
-                                       final BayesianNetwork bn,
-                                       Map<RandomVariable, RandomVariable> X1_to_X0,
-                                       ProbabilityTable oldFactor) {
-        return this.eliminationAsk(X, observedEvidence, bn, X1_to_X0, oldFactor);
+    public List<Factor> ask(final RandomVariable[] X,
+                            final AssignmentProposition[] observedEvidence,
+                            final BayesianNetwork bn,
+                            Map<RandomVariable, RandomVariable> X1_to_X0,
+                            List<Factor> factors) {
+        return this.eliminationAsk(X, observedEvidence, bn, X1_to_X0, factors);
     }
 
 
-    public CategoricalDistribution eliminationAsk(final RandomVariable[] X,
-                                                  final AssignmentProposition[] e,
-                                                  final BayesianNetwork bn,
-                                                  Map<RandomVariable, RandomVariable> X1_to_X0,
-                                                  ProbabilityTable oldFactor) {
+    public List<Factor> eliminationAsk(final RandomVariable[] X,
+                                       final AssignmentProposition[] e,
+                                       final BayesianNetwork bn,
+                                       Map<RandomVariable, RandomVariable> X1_to_X0,
+                                       List<Factor> oldFactors) {
 
         Set<RandomVariable> hidden = new HashSet<>();
         List<RandomVariable> VARS = new ArrayList<>();
         calculateVariables(X, e, bn, hidden, VARS); // aggiorna hidden e vars
+
+        // TEMPORANEO //
+        Factor productTemp = pointwiseProduct(oldFactors);
+        ProbabilityTable oldFactor = ((ProbabilityTable) productTemp.pointwiseProductPOS(_identity, X)).normalize();
 
         ArrayList<RandomVariable> previousVar = new ArrayList<>();
         for (RandomVariable var : oldFactor.getArgumentVariables()) {
@@ -88,13 +91,18 @@ public class EliminationAskDynamic {
             }
         }
 
-        Factor product = pointwiseProduct(factors);
-        ProbabilityTable newTable = ((ProbabilityTable) product.pointwiseProductPOS(_identity, X)).normalize();
+        //Factor product = pointwiseProduct(factors);
+        //ProbabilityTable newTable = ((ProbabilityTable) product.pointwiseProductPOS(_identity, X)).normalize();
         if (verbose) {
             System.out.println("\tNewFactors=" + factorsToString(factors));
-            System.out.println("\tnewTable" + newTable.getArgumentVariables() + " = " + newTable);
+            //System.out.println("\tnewTable" + newTable.getArgumentVariables() + " = " + newTable);
         }
-        return newTable;
+        return factors;
+    }
+
+    public ProbabilityTable createTable(RandomVariable[] X, List<Factor> factors) {
+        Factor product = pointwiseProduct(factors);
+        return ((ProbabilityTable) product.pointwiseProductPOS(_identity, X)).normalize();
     }
 
     /**

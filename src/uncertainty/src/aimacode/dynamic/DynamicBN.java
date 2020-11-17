@@ -12,6 +12,10 @@ import org.json.*;
 
 public class DynamicBN {
     public static void main(String[] args) throws IOException {
+        args[0] = "topological";
+        args[1] = "true";
+        args[2] = "./input/dynamic/DBNexperiments.json";
+        args[3] = "TwoFactors_00";
         String jsonData = new String(Files.readAllBytes(Paths.get(args[2])));
         JSONObject obj = new JSONObject(jsonData);
         JSONObject experiment = (JSONObject) obj.get(args[3]);

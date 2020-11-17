@@ -1,6 +1,7 @@
 package aimacode.dynamic;
 
 import aima.core.probability.CategoricalDistribution;
+import aima.core.probability.Factor;
 import aima.core.probability.RandomVariable;
 import aima.core.probability.bayes.BayesianNetwork;
 import aima.core.probability.proposition.AssignmentProposition;
@@ -34,18 +35,20 @@ public class RollupFiltering {
 
     public CategoricalDistribution rollup() {
         // slice 0 - 1
+        List<Factor> factors = new ArrayList<>();
         ProbabilityTable previousTable = (ProbabilityTable) new EliminationAskStatic(ordering, verbose)
                 .ask(queryVariables, evidenceOverTime.get(1), network);
         System.out.println("Time 1 [slice 0-1]: " + previousTable + "\n");
+        factors.add(previousTable);
 
         // altre slices
         for (int i = 2; i < evidenceOverTime.size(); i++) {
-            previousTable = (ProbabilityTable) new EliminationAskDynamic(ordering, verbose)
-                    .ask(queryVariables, evidenceOverTime.get(i), network, X1_to_X0, previousTable);
-            System.out.println("Time " + i + " [slice " + (i - 1) + "-" + i + "]: " + previousTable + "\n");
+            factors = new EliminationAskDynamic(ordering, verbose)
+                    .ask(queryVariables, evidenceOverTime.get(i), network, X1_to_X0, factors);
+            System.out.println("Time " + i + " [slice " + (i - 1) + "-" + i + "]: " + factors + "\n");
         }
 
-        return previousTable;
+        return new EliminationAskDynamic(ordering, verbose).createTable(queryVariables, factors);
     }
 
     @Override
