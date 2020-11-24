@@ -14,20 +14,7 @@ import numpy as np
 import pandas as pd
 import xlsxwriter
 
-if __name__ == "__main__":
-    argv = sys.argv[1:]
-    parser = OptionParser()
-
-    parser.add_option("-i", "--input", default="../../asp/output/out.txt",
-                        help="path to the clingo ouptput, encoded as a .txt file",
-                        action="store", type="string", dest="input")
-
-    parser.add_option("-o", "--output", default="output/timetable.xlsx",
-                        help="path to the output foler", action="store", type="string",
-                        dest="output")
-
-    (options, args) = parser.parse_args()
-
+def transpile():
     # Path to the clingo output file
     input_file = options.input
 
@@ -123,3 +110,24 @@ if __name__ == "__main__":
         writer.save()
 
         print("Timetable formatting completed.")
+
+if __name__ == "__main__":
+    argv = sys.argv[1:]
+    parser = OptionParser()
+
+    parser.add_option("-i", "--input", default="../../asp/output/out.txt",
+                        help="path to the clingo ouptput, encoded as a .txt file",
+                        action="store", type="string", dest="input")
+
+    parser.add_option("-o", "--output", default="output/timetable.xlsx",
+                        help="path to the output foler", action="store", type="string",
+                        dest="output")
+
+    (options, args) = parser.parse_args()
+
+    transpile()
+
+    # Usage:
+    # python3 clingo_transpiler.py -i input_path -o output_path
+
+    

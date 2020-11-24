@@ -1,3 +1,9 @@
+"""
+Frame generator for A* algorithm. It generates a frame for each algorithm's move inside the maze.
+"""
+
+__author__ = "Roger Ferrod, Pio Raffaele Fina, Lorenzo Tabasso"
+
 from PIL import Image
 import argparse
 import re

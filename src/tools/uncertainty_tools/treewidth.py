@@ -1,3 +1,9 @@
+"""
+Script used to determine the treewidth of a BN.
+"""
+
+__author__ = "Roger Ferrod, Pio Raffaele Fina, Lorenzo Tabasso"
+
 import networkx as nx
 from pgmpy.readwrite import BIFReader
 from networkx.algorithms.approximation.treewidth import treewidth_min_degree,treewidth_min_fill_in

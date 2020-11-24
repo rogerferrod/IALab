@@ -1,3 +1,10 @@
+"""
+Config generator for Experiment 3 of Uncertainty project.
+"""
+
+__author__ = "Roger Ferrod, Pio Raffaele Fina, Lorenzo Tabasso"
+
+
 import numpy as np
 import numpy.random as rnd
 from pgmpy.readwrite import XMLBIFReader as BIFReader
@@ -53,7 +60,6 @@ def generate_json_experiment(network, query, evidences):
 
 if __name__ == "__main__":
     np.random.seed(1620)
-    
 
     reader = BIFReader(network_file)   
     nodes = reader.get_variables()
@@ -80,7 +86,3 @@ if __name__ == "__main__":
     out_file = Path("../../input/static/{}_{}.json".format(EXP,QTYPE))
     with out_file.open("w") as file:
         file.write(json.dumps(experiments,indent=4))
-    
-
-
-    

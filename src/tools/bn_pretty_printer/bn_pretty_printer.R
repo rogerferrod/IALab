@@ -1,187 +1,43 @@
+# BN Pretty Printer
+#
+# A simple R script that pretty prints a BN in a customizable way.
+# To check out more, see bnlearn and bnviewer documentation (the second one is recomended).
+# bnleanr: https://www.bnlearn.com/
+# bnviewer: http://robsonfernandes.net/bnviewer/ (mirror 1)
+# bnviewer: https://github.com/robson-fernandes/bnviewer (mirror 2)
+
+# First, install the required packages
+#install.packages("bnlearn")
 #install.packages("devtools")
 #devtools::install_github("robson-fernandes/bnviewer")
 
+# Load the packages
 library(bnlearn)
 library(bnviewer)
 
-# Setting the working directory to the folder which contains the script
-setwd("/Users/lorenzotabasso/Desktop/University/IALAB/Progetto/IALab/src/uncertainty/networks/bif/")
-cat("working directory set to:", getwd())
+# Load the BN from .net file
+nh <- read.net("/Users/lorenzotabasso/Desktop/University/IALAB/Progetto/IALab/src/uncertainty/networks/earthquake.bif")
 
+# You can also read the BN from the ".bif" format, but we encourage you to use ".net" format.
+#nh <- read.bif(path to BN)
 
-# EARTHQUAKE  -----------------------------------------------------------------
-
-# Load the BN from bif file
-network_handler <- read.bif("earthquake.bif")
-cat("network in use:", n)
-    
-# Alternatives using .net, .rda, .rds files: 
-# https://www.bnlearn.com/documentation/man/foreign.html
-    
 # Converting "network_handler" (a list of objects) to a "bn" object
-network <- bn.net(network_handler)
-    
+n <- bn.net(nh)
+
 # Pretty print the network
-viewer(network,
-    bayesianNetwork.width = "100%",
-    bayesianNetwork.height = "500px",
-    bayesianNetwork.layout = "layout_with_sugiyama",
-    bayesianNetwork.title="Static Bayesian Network - Earthquake",
-    )
-
-# ASIA ------------------------------------------------------------------------
-network_handler <- read.bif("asia.bif")
-cat("network in use:", n)
-
-network <- bn.net(network_handler)
-
-viewer(network,
+# TODO: change the descriptions and comment for each network
+bnviewer::viewer(n,
        bayesianNetwork.width = "100%",
-       bayesianNetwork.height = "500px",
+       bayesianNetwork.height = "80vh",
        bayesianNetwork.layout = "layout_with_sugiyama",
-       bayesianNetwork.title="Static Bayesian Network - Asia",
+       bayesianNetwork.title="Discrete Bayesian Network - Alarm",
+       bayesianNetwork.subtitle = "Monitoring of emergency care patients",
+       bayesianNetwork.footer = "Fig. 1 - Layout with Sugiyama",
+       
+       node.colors = list(background = "#f4bafd",
+                          border = "#2b7ce9",
+                          highlight = list(background = "#97c2fc",
+                                           border = "#2b7ce9"))
 )
 
-# SACHS -----------------------------------------------------------------------
-network_handler <- read.bif("sachs.bif")
-cat("network in use:", n)
-
-network <- bn.net(network_handler)
-
-viewer(network,
-       bayesianNetwork.width = "100%",
-       bayesianNetwork.height = "500px",
-       bayesianNetwork.layout = "layout_with_sugiyama",
-       bayesianNetwork.title="Static Bayesian Network - Sachs",
-)
-
-# ALARM -----------------------------------------------------------------------
-network_handler <- read.bif("alarm.bif")
-cat("network in use:", n)
-
-network <- bn.net(network_handler)
-
-viewer(network,
-       bayesianNetwork.width = "100%",
-       bayesianNetwork.height = "500px",
-       bayesianNetwork.layout = "layout_with_sugiyama",
-       bayesianNetwork.title="Static Bayesian Network - Alarm",
-)
-
-# MILDEW ----------------------------------------------------------------------
-network_handler <- read.bif("mildew.bif")
-cat("network in use:", n)
-
-network <- bn.net(network_handler)
-
-viewer(network,
-       bayesianNetwork.width = "100%",
-       bayesianNetwork.height = "500px",
-       bayesianNetwork.layout = "layout_with_sugiyama",
-       bayesianNetwork.title="Static Bayesian Network - Mildew",
-)
-
-# WIN95PTS --------------------------------------------------------------------
-network_handler <- read.bif("win95pts.bif")
-cat("network in use:", n)
-
-network <- bn.net(network_handler)
-
-viewer(network,
-       bayesianNetwork.width = "100%",
-       bayesianNetwork.height = "500px",
-       bayesianNetwork.layout = "layout_with_sugiyama",
-       bayesianNetwork.title="Static Bayesian Network - Win95pts",
-)
-
-# INSURANCE -------------------------------------------------------------------
-network_handler <- read.bif("insurance.bif")
-cat("network in use:", n)
-
-network <- bn.net(network_handler)
-
-viewer(network,
-       bayesianNetwork.width = "100%",
-       bayesianNetwork.height = "500px",
-       bayesianNetwork.layout = "layout_with_sugiyama",
-       bayesianNetwork.title="Static Bayesian Network - Insurance",
-)
-
-# BARLEY ----------------------------------------------------------------------
-network_handler <- read.bif("barley.bif")
-cat("network in use:", n)
-
-network <- bn.net(network_handler)
-
-viewer(network,
-       bayesianNetwork.width = "100%",
-       bayesianNetwork.height = "500px",
-       bayesianNetwork.layout = "layout_with_sugiyama",
-       bayesianNetwork.title="Static Bayesian Network - Barley",
-)
-
-# WATER -----------------------------------------------------------------------
-network_handler <- read.bif("water.bif")
-cat("network in use:", n)
-
-network <- bn.net(network_handler)
-
-viewer(network,
-       bayesianNetwork.width = "100%",
-       bayesianNetwork.height = "500px",
-       bayesianNetwork.layout = "layout_with_sugiyama",
-       bayesianNetwork.title="Static Bayesian Network - Water",
-)
-
-# MUNIN -----------------------------------------------------------------------
-network_handler <- read.bif("munin.bif")
-cat("network in use:", n)
-
-network <- bn.net(network_handler)
-
-viewer(network,
-       bayesianNetwork.width = "100%",
-       bayesianNetwork.height = "500px",
-       bayesianNetwork.layout = "layout_with_sugiyama",
-       bayesianNetwork.title="Static Bayesian Network - Munin",
-)
-
-# PIGS ------------------------------------------------------------------------
-network_handler <- read.bif("pigs.bif")
-cat("network in use:", n)
-
-network <- bn.net(network_handler)
-
-viewer(network,
-       bayesianNetwork.width = "100%",
-       bayesianNetwork.height = "500px",
-       bayesianNetwork.layout = "layout_with_sugiyama",
-       bayesianNetwork.title="Static Bayesian Network - Pigs",
-)
-
-# ANDES -----------------------------------------------------------------------
-network_handler <- read.bif("andes.bif")
-cat("network in use:", n)
-
-network <- bn.net(network_handler)
-
-viewer(network,
-       bayesianNetwork.width = "100%",
-       bayesianNetwork.height = "500px",
-       bayesianNetwork.layout = "layout_with_sugiyama",
-       bayesianNetwork.title="Static Bayesian Network - Andes",
-)
-
-# LINK ------------------------------------------------------------------------
-network_handler <- read.bif("link.bif")
-cat("network in use:", n)
-
-network <- bn.net(network_handler)
-
-viewer(network,
-       bayesianNetwork.width = "100%",
-       bayesianNetwork.height = "500px",
-       bayesianNetwork.layout = "layout_with_sugiyama",
-       bayesianNetwork.title="Static Bayesian Network - Link",
-)
 

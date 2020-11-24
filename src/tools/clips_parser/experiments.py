@@ -1,3 +1,9 @@
+"""
+Script used to run our experiment with CLIPS. It invokes CLIPS from command line and it runs some experiments.
+"""
+
+__author__ = "Roger Ferrod, Pio Raffaele Fina, Lorenzo Tabasso"
+
 from pathlib import Path
 import subprocess
 import argparse

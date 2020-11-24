@@ -1,3 +1,9 @@
+"""
+Maze generator for prolog project.
+"""
+
+__author__ = "Roger Ferrod, Pio Raffaele Fina, Lorenzo Tabasso"
+
 import random
 from PIL import Image
 import argparse
