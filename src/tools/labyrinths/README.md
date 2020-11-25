@@ -36,4 +36,15 @@ python3 heatmap_parser.py -o <output path> -r <rows> -c <cols>
 
 ## Parser
 
-Sorry, we no longer remember... :(
+Script that prints the optimum path inside the maze found by A\* in the run.
+
+### Usage
+
+In order to improve readability, we'll use the following shortening:
+
+- ```input path```: path of the .pl file containing the A\* output,
+- ```output path```: path of the folder in which save the final image of the algorithm. That image contains the optimum path from the start to the end inside the maze found by A\*.
+
+```python
+python3 parser.py -i <input path> -o <output path>
+```
