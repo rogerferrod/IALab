@@ -1,5 +1,8 @@
 """
-Config generator for Experiment 3 of Uncertainty project.
+Given a config in input, it generates a single JSON file containing the 
+configuration for the third experiment (Experiment S3 in summary). In the 
+configuration building process, it randomly samples the given number of query
+and evidence varibles from the BN passed in input.
 """
 
 __author__ = "Roger Ferrod, Pio Raffaele Fina, Lorenzo Tabasso"

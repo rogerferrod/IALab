@@ -1,5 +1,6 @@
 """
-Script used to determine the treewidth of a BN.
+Script used to determine the treewidth of a set of BN (it reads the bif file
+inside a specific folder passed in input).
 """
 
 __author__ = "Roger Ferrod, Pio Raffaele Fina, Lorenzo Tabasso"

@@ -1,10 +1,8 @@
 # YAPT
 
-Yet Another Pathfinding Tool (YAPT) is a small javascript based utility to
-paint mazes and transpile them in Prolog predicates.
+Yet Another Pathfinding Tool (YAPT) is a small javascript based utility to paint mazes and transpile them in Prolog predicates.
 
-The utility is pretty basic and doesn't enforce any semantic control on the
-generated predicates (eg. multiple start and end cells).
+The utility is pretty basic and doesn't enforce any semantic control on the generated predicates (eg. multiple start and end cells).
 
 ## TODO
 
@@ -43,5 +41,4 @@ occupied(pos(4,10)).    % end occupied group
 goal(pos(7,9)).         % goals
 ```
 
-Why is this a bug? Because the **ouput** of this tool is **not always correct**,
-you have to **check it every time**.
+Why is this a bug? Because the **ouput** of this tool is **not always correct**, you have to **check it every time**.

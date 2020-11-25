@@ -16,10 +16,10 @@ library(bnlearn)
 library(bnviewer)
 
 # Load the BN from .net file
-nh <- read.net("/Users/lorenzotabasso/Desktop/University/IALAB/Progetto/IALab/src/uncertainty/networks/earthquake.bif")
+nh <- read.bif("/Users/lorenzotabasso/Desktop/University/IALAB/Progetto/IALab/src/uncertainty/networks/earthquake.bif")
 
-# You can also read the BN from the ".bif" format, but we encourage you to use ".net" format.
-#nh <- read.bif(path to BN)
+# You can also read the BN from the ".net" format.
+#nh <- read.net(path to BN)
 
 # Converting "network_handler" (a list of objects) to a "bn" object
 n <- bn.net(nh)

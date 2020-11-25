@@ -1,7 +1,7 @@
 """
-A simple Clingo transpiler. It takes as input a .txt file containing the clingo
-output, and it returns a .xlsx file containing the timetable rapresentation of
-the input.
+A simple Clingo transpiler script that produces an Excel timetable. It takes as
+input a .txt file containing the clingo output, and it returns a .xlsx file
+containing the timetable rapresentation of the input.
 """
 
 __author__ = "Roger Ferrod, Pio Raffaele Fina, Lorenzo Tabasso"
