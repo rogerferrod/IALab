@@ -1,3 +1,7 @@
+"""
+Prints an image with the optimum path inside the maze found by A\* in the run.
+"""
+
 __author__ = "Roger Ferrod, Pio Raffaele Fina, Lorenzo Tabasso"
 
 from PIL import Image

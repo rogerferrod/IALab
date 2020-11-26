@@ -20,7 +20,7 @@ python3 heatmap_parser.py -i <input path> -m <maze path> -o <output path>
 
 ## Generator
 
-Simple maze generator.
+Simple random maze generator.
 
 ### Usage
 
@@ -36,7 +36,7 @@ python3 heatmap_parser.py -o <output path> -r <rows> -c <cols>
 
 ## Parser
 
-Script that prints the optimum path inside the maze found by A\* in the run.
+Script that prints (save) and image with the optimum path inside the maze found by A\* in the run.
 
 ### Usage
 
