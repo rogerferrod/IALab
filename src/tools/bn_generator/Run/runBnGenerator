@@ -1,3 +1,3 @@
-# Runs BN Genetator, which creates a BN with the specified parameters (in bnconfig.txt). 
+# Runs BN Genetator, which creates a BN with the specified parameters. 
 # The output format is XML-BIF.
-java -classpath ../Classes/colt.jar:../Classes/embayes.jar:../Classes BNGenerator $(<bnconfig.txt)
+java -classpath ../Classes/colt.jar:../Classes/embayes.jar:../Classes BNGenerator -nNodes 100 -maxDegree 3 -nBNs 1 -fName test100 -structure singly

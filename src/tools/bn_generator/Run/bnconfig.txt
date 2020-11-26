@@ -1,1 +1,0 @@
--nNodes 100 -maxDegree 3 -nBNs 1 -fName test100 -structure singly
