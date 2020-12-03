@@ -1,5 +1,7 @@
 # IALab
 
+![Repository Logo](repo-logo.jpeg)
+
 Repository for the IALab exam's projects, session 2019-2020.
 
 You can find the final summaries of each project inside the ```docs``` folder.
